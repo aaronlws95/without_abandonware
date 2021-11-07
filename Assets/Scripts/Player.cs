@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [Header("Wall Run")]
     public float wallRunSpeed = 5f;
     public float wallRunRayCastLength = 0.01f;
+    public float waypointDistThreshold = 0.5f;
     public bool isClockwise = false;
     bool startWallRun = false;
     Waypoints curWaypoints;
@@ -41,10 +42,11 @@ public class Player : MonoBehaviour
 
     [Header("Gravity")]
     public float gravitySpeed = 10f;
-    public float gravityRayCastLength = 0.6f;
+    public float gravityRayCastLength = 1.0f;
     public bool isReverse = false;
     int gravitySign = 1;
     bool isGrounded = false;
+    bool isFalling = false;
 
     [Header("Bounce")]
     public float bounceRayCastLength = 0.5f;
@@ -135,6 +137,7 @@ public class Player : MonoBehaviour
                 startWallRun = false;
                 break;
             case (MoveState.GRAVITY):
+                isFalling = false;
                 isGrounded = false;
                 break;
             case (MoveState.BOUNCE):
@@ -142,7 +145,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void ChangePlayerState(PlayerState _state)
+    public void ChangePlayerState(PlayerState _state)
     {
         switch (_state)
         {
@@ -168,7 +171,7 @@ public class Player : MonoBehaviour
 
         if (startWallRun)
         {
-            if (Vector2.Distance(transform.position, nextWaypointPos) < 0.2f)
+            if (Vector2.Distance(transform.position, nextWaypointPos) < waypointDistThreshold)
             {
                 curWaypointPos = nextWaypointPos;
                 nextWaypointPos = curWaypoints.GetNextWaypointPosition();
@@ -185,22 +188,32 @@ public class Player : MonoBehaviour
         RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign*Vector2.down, gravityRayCastLength, 1 << WALL_LAYER);
         if (hitGround)
         {
-            rb.velocity = Vector2.zero;
-            transform.position = new Vector3(hitGround.point.x, hitGround.point.y + PLAYER_SIZE/2, transform.position.z);
-            // Vector3Int cellPosition = grid.WorldToCell(transform.position);
-            // transform.position = grid.GetCellCenterWorld(cellPosition);
-            isGrounded = true;
+            // Wait until it is falling before grounding
+            // This allows the player to get a jump off instead of getting stuck
+            if (isFalling)
+            {
+                rb.velocity = Vector2.zero;
+                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign*PLAYER_SIZE/2, transform.position.z);
+                isGrounded = true;
+                isFalling = false;
+            }
         }
-        else 
+        else
         {
             RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravityRayCastLength, 1 << WALL_LAYER);
             RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravityRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign*Vector2.up, gravityRayCastLength, 1 << WALL_LAYER);
             if (hitLeftWall || hitRightWall)
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
-            }    
-        }        
-        if (!isGrounded)
+            }
+            if (hitUp)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
+            isFalling = true;
+        }
+        if (!isGrounded && isFalling)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
         }
@@ -232,6 +245,7 @@ public class Player : MonoBehaviour
             Gizmos.DrawLine(pos, pos + gravitySign*Vector2.down*gravityRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.left*gravityRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.right*gravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.up*gravityRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (player.playerState == Player.PlayerState.DEAD)
+        if (player.playerState == Player.PlayerState.DEAD || Input.GetKeyDown(KeyCode.X))
         {
             StartCoroutine(RestartLevel());
         }

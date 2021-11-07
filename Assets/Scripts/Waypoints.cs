@@ -13,8 +13,13 @@ public class Waypoints : MonoBehaviour
     {
         foreach (GameObject waypoint in waypoints)
         {
-            Vector3Int cellPosition = grid.WorldToCell(waypoint.transform.position);
-            waypoint.transform.position = grid.GetCellCenterWorld(cellPosition);      
+            bool snapToGrid = waypoint.GetComponent<WaypointSettings>().snapToGrid;
+
+            if (snapToGrid)
+            {
+                Vector3Int cellPosition = grid.WorldToCell(waypoint.transform.position);
+                waypoint.transform.position = grid.GetCellCenterWorld(cellPosition); 
+            }
         }
     }
 
