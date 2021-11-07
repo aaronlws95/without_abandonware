@@ -53,9 +53,11 @@ public class Player : MonoBehaviour
 
     [Header("Gravity")]
     public float gravitySpeed = 10f;
-    public float gravityRayCastLength = 0.01f;
+    // public float gravityRayCastLength = 0.01f; // for dying
+    public float gravityRayCastLength = 0.5f;
     public bool isReverse = false;
     int gravitySign = 1;
+    bool isGrounded = false;
 
     [Header("Bounce")]
     public float bounceRayCastLength = 0.5f;
@@ -105,6 +107,7 @@ public class Player : MonoBehaviour
                 wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
                 break;
             case (MoveState.GRAVITY):
+                isGrounded = false;
                 gravitySign *= -1;
                 break;
         }
@@ -130,6 +133,11 @@ public class Player : MonoBehaviour
 
     void ChangeMoveState(MoveState _state)
     {
+        if (moveState == _state)
+        {
+            return;
+        }
+
         switch (_state)
         {
             case (MoveState.WALLRUN):
@@ -139,6 +147,7 @@ public class Player : MonoBehaviour
                 break;
             case (MoveState.GRAVITY):
                 moveState = _state;
+                isGrounded = false;
                 sr.sprite = sprites[1];
                 break;
             case (MoveState.BOUNCE):
@@ -372,7 +381,10 @@ public class Player : MonoBehaviour
     ////////// GRAVITY //////////
     void UpdateGravity()
     {
-        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
+        if (!isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
+        }
     }
 
     ////////// BOUNCE //////////
@@ -386,19 +398,26 @@ public class Player : MonoBehaviour
         }
     }
 
-
     void OnCollisionStay2D(Collision2D col)
     {
         if (moveState == MoveState.GRAVITY)
         {
             if (col.gameObject.layer == WALL_LAYER)
             {
-                colContactPoint = col.contacts[0].point;
-                Vector2 dir = new Vector2(transform.position.x, transform.position.y) - col.contacts[0].point;
-                RaycastHit2D hit = Physics2D.Raycast(col.contacts[0].point + dir * PLAYER_DIAGONAL, -dir.normalized, gravityRayCastLength, 1 << WALL_LAYER);
+                // colContactPoint = col.contacts[0].point;
+                // Vector2 dir = new Vector2(transform.position.x, transform.position.y) - col.contacts[0].point;
+                // RaycastHit2D hit = Physics2D.Raycast(col.contacts[0].point + dir * PLAYER_DIAGONAL, -dir.normalized, gravityRayCastLength, 1 << WALL_LAYER);
+                // if (hit)
+                // {
+                //     ChangePlayerState(PlayerState.DEAD);
+                // }
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, gravitySign*Vector2.down, gravityRayCastLength, 1 << WALL_LAYER);
                 if (hit)
                 {
-                    ChangePlayerState(PlayerState.DEAD);
+                    transform.position = hit.point + gravitySign*Vector2.up*PLAYER_SIZE/2;
+                    rb.velocity = Vector2.zero;
+                    isGrounded = true;
                 }
             }
         }
@@ -417,9 +436,12 @@ public class Player : MonoBehaviour
         else if (moveState == MoveState.GRAVITY)
         {
             Gizmos.color = Color.blue;
-            Vector2 dir = new Vector2(transform.position.x, transform.position.y) - colContactPoint;
-            Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y), colContactPoint);
-            Gizmos.DrawLine(colContactPoint + dir * PLAYER_DIAGONAL, colContactPoint + dir * PLAYER_DIAGONAL - dir.normalized * 1f);
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+            Vector2 dir = pos - colContactPoint;
+            // Gizmos.DrawLine(pos, colContactPoint);
+            // Gizmos.DrawLine(colContactPoint + dir * PLAYER_DIAGONAL, colContactPoint + dir * PLAYER_DIAGONAL - dir.normalized * 1f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.down*gravityRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {
