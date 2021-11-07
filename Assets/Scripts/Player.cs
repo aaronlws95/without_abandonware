@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // Enums
     public enum MoveState
     {
         WALLRUN,
@@ -23,17 +24,18 @@ public class Player : MonoBehaviour
     float PLAYER_SIZE = 1f;
 
     [Header("General")]
-    public Grid grid;
+    Grid grid;
     public Sprite[] sprites;
-    public float minSpeed = 5f;
+    public float minSpeed = 10f;
     public float maxSpeed = 15f;
     public MoveState moveState;
     public PlayerState playerState;
 
     [Header("Wall Run")]
-    public float wallRunSpeed = 5f;
+    public float wallRunSpeed = 10f;
     public float wallRunRayCastLength = 0.01f;
-    public float waypointDistThreshold = 0.5f;
+    public float wallRunRayCastGroundLength = 0.6f;
+    public float waypointDistThreshold = 0.7f;
     public bool isClockwise = false;
     bool startWallRun = false;
     Waypoints curWaypoints;
@@ -43,9 +45,11 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     public float gravitySpeed = 10f;
     public float gravityRayCastLength = 1.0f;
+    public float gravityFallingRayCastLength = 0.5f;
+    float activeGravityRayCastLength;
     public bool isReverse = false;
     int gravitySign = 1;
-    bool isGrounded = false;
+    bool isLanded = false;
     bool isFalling = false;
 
     [Header("Bounce")]
@@ -55,10 +59,6 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
 
-    // Debugging
-    Vector2 colContactPoint;
-    Vector2 colContactNormal;
-
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E };
 
     void Start()
@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         playerState = PlayerState.ACTIVE;
         ChangeMoveState(moveState);
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
     }
 
     void Update()
@@ -98,7 +99,7 @@ public class Player : MonoBehaviour
                 nextWaypointPos = tmp;
                 break;
             case (MoveState.GRAVITY):
-                isGrounded = false;
+                isLanded = false;
                 gravitySign *= -1;
                 break;
         }
@@ -138,7 +139,8 @@ public class Player : MonoBehaviour
                 break;
             case (MoveState.GRAVITY):
                 isFalling = false;
-                isGrounded = false;
+                isLanded = false;
+                activeGravityRayCastLength = gravityRayCastLength;
                 break;
             case (MoveState.BOUNCE):
                 break;
@@ -158,17 +160,34 @@ public class Player : MonoBehaviour
     ////////// WALL RUN //////////
     void UpdateWallRun()
     {
+        // Check if the center is within the waypoint collider
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
-        if (hit && !startWallRun)
+
+        // Check if any part is touching a wall
+        RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastGroundLength, 1 << WALL_LAYER);
+        RaycastHit2D checkDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastGroundLength, 1 << WALL_LAYER);
+        RaycastHit2D checkLeft = Physics2D.Raycast(transform.position, Vector2.left, wallRunRayCastGroundLength, 1 << WALL_LAYER);
+        RaycastHit2D checkRight = Physics2D.Raycast(transform.position, Vector2.right, wallRunRayCastGroundLength, 1 << WALL_LAYER);
+
+        // If not running then latch on
+        if (hit && !startWallRun && (checkUp || checkDown || checkLeft || checkRight))
         {
             curWaypoints = hit.transform.parent.transform.parent.GetComponent<Waypoints>();
             curWaypointPos = curWaypoints.HandleArbitraryPosition(transform.position, isClockwise);
             nextWaypointPos = curWaypoints.GetNextWaypointPosition();
+
+            // Snap to grid
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
             transform.position = grid.GetCellCenterWorld(cellPosition);
+
+            // Transfer speed from previous state
+            wallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minSpeed);
+            wallRunSpeed = Mathf.Min(wallRunSpeed, maxSpeed);
+
             startWallRun = true;
         }        
 
+        // While running 
         if (startWallRun)
         {
             if (Vector2.Distance(transform.position, nextWaypointPos) < waypointDistThreshold)
@@ -185,24 +204,33 @@ public class Player : MonoBehaviour
     ////////// GRAVITY //////////
     void UpdateGravity()
     {
-        RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign*Vector2.down, gravityRayCastLength, 1 << WALL_LAYER);
+        // Set the falling ray cast length to be lower
+        // Needs to be longer to catch slopes but shorter so it doesn't detect the ground too fast
+        if (isFalling)
+        {
+            activeGravityRayCastLength = gravityFallingRayCastLength;
+        }
+
+        RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign*Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
         if (hitGround)
         {
             // Wait until it is falling before grounding
             // This allows the player to get a jump off instead of getting stuck
             if (isFalling)
             {
+                activeGravityRayCastLength = gravityRayCastLength;
                 rb.velocity = Vector2.zero;
                 transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign*PLAYER_SIZE/2, transform.position.z);
-                isGrounded = true;
+                isLanded = true;
                 isFalling = false;
             }
         }
         else
         {
-            RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravityRayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravityRayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign*Vector2.up, gravityRayCastLength, 1 << WALL_LAYER);
+            // Handle hitting walls on the way while moving down
+            RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, activeGravityRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, activeGravityRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign*Vector2.up, activeGravityRayCastLength, 1 << WALL_LAYER);
             if (hitLeftWall || hitRightWall)
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
@@ -213,7 +241,7 @@ public class Player : MonoBehaviour
             }
             isFalling = true;
         }
-        if (!isGrounded && isFalling)
+        if (!isLanded && isFalling)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
         }
@@ -236,16 +264,21 @@ public class Player : MonoBehaviour
 
         if (moveState == MoveState.WALLRUN)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.blue;
             Gizmos.DrawLine(pos, pos + Vector2.down*wallRunRayCastLength);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(pos, pos + Vector2.down*wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left*wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right*wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.up*wallRunRayCastGroundLength);            
         }
         else if (moveState == MoveState.GRAVITY)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.down*gravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left*gravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right*gravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.up*gravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.down*activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left*activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right*activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.up*activeGravityRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {

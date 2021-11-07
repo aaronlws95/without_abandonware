@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class WaypointSettings : MonoBehaviour
 {
-    public bool snapToGrid = true;
+    public bool snapToGridX = true;
+    public bool snapToGridY = true;
 }
