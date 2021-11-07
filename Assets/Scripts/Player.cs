@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     // Constants
     int WALL_LAYER = 6;
     float PLAYER_SIZE = 1f;
-    float PLAYER_DIAGONAL = 1.41f;
+    // float PLAYER_DIAGONAL = 1.41f;
 
     public Sprite[] sprites;
     public float minSpeed = 5f;
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
     [Header("Wall Run")]
     public float wallRunSpeed = 5f;
-    public float wallRunRayCastLength = 0.8f;
+    public float wallRunRayCastLength = 0.6f;
     public WallRunMoveDir wallRunMoveDir;
     public WallRunDirection wallRunDirection;
     bool waitForNextCheck = false; // wait for next check when moving on rectangular blocks
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     public float gravitySpeed = 10f;
     // public float gravityRayCastLength = 0.01f; // for dying
-    public float gravityRayCastLength = 0.5f;
+    public float gravityRayCastLength = 0.1f;
     public bool isReverse = false;
     int gravitySign = 1;
     bool isGrounded = false;
@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
             ReverseMoveState();
         }
 
+        // Debug.Log(rb.velocity);
         // Debug.Log(moveState);
         for (int i = 0; i < keyCodes.Length; ++i)
         {
@@ -115,8 +116,6 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        // WALL RUN
-        // Debug.Log(rb.velocity);
         switch (moveState)
         {
             case (MoveState.WALLRUN):
@@ -270,10 +269,15 @@ public class Player : MonoBehaviour
         if (checkDown && checkForward)
         {
             // make sure close enough to wall before moving tangentially
-            if (Vector2.Distance(checkForward.point, transform.position) < PLAYER_SIZE / 2)
+            if (Vector2.Distance(checkForward.point, transform.position) < (PLAYER_SIZE / 2 + 0.1f))
             {
                 int signModifier = dir == WallRunDirection.CCW ? 1 : -1;
                 rb.velocity = -signModifier * Vector2.Perpendicular(checkForward.normal).normalized * wallRunSpeed;
+            }
+            else 
+            {
+                rb.velocity = wallRunSpeed * forwardVector;
+                transform.position = new Vector3(downOffsetX, downOffsetY, transform.position.z);                
             }
         }
         // Moving forward
@@ -400,7 +404,17 @@ public class Player : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D col)
     {
-        if (moveState == MoveState.GRAVITY)
+        if (moveState == MoveState.WALLRUN)
+        {
+            colContactPoint = col.contacts[0].point;
+            Vector2 dir = new Vector2(transform.position.x, transform.position.y) - col.contacts[0].point;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.01f, 1 << WALL_LAYER);
+            if (hit)
+            {
+                transform.position = new Vector3(transform.position.x + col.contacts[0].normal.x, transform.position.y + col.contacts[0].normal.y, transform.position.z);
+            }
+        }
+        else if (moveState == MoveState.GRAVITY)
         {
             if (col.gameObject.layer == WALL_LAYER)
             {
