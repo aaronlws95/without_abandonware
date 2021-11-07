@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
     public enum MoveState
     {
         WALLRUN,
-        GRAVITY
+        GRAVITY,
+        BOUNCE
     }
 
     public enum WallRunMoveDir
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     // Constants
     int WALL_LAYER = 6;
     float PLAYER_SIZE = 1f;
+    float PLAYER_DIAGONAL = 1.41f;
 
     public Sprite[] sprites;
     public float minSpeed = 5f;
@@ -42,7 +44,7 @@ public class Player : MonoBehaviour
 
     [Header("Wall Run")]
     public float wallRunSpeed = 5f;
-    public float rayCastLength = 0.8f;
+    public float wallRunRayCastLength = 0.8f;
     public WallRunMoveDir wallRunMoveDir;
     public WallRunDirection wallRunDirection;
     bool waitForNextCheck = false; // wait for next check when moving on rectangular blocks
@@ -51,8 +53,12 @@ public class Player : MonoBehaviour
 
     [Header("Gravity")]
     public float gravitySpeed = 10f;
+    public float gravityRayCastLength = 0.01f;
     public bool isReverse = false;
     int gravitySign = 1;
+
+    [Header("Bounce")]
+    public float bounceRayCastLength = 0.5f;
 
     // Components
     Rigidbody2D rb;
@@ -61,7 +67,7 @@ public class Player : MonoBehaviour
     // Debugging
     Vector2 colContactPoint;
 
-    private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W };
+    private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E };
 
     void Start()
     {
@@ -116,6 +122,9 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 UpdateGravity();
                 break;
+            case (MoveState.BOUNCE):
+                UpdateBounce();
+                break;
         }
     }
 
@@ -131,6 +140,10 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 moveState = _state;
                 sr.sprite = sprites[1];
+                break;
+            case (MoveState.BOUNCE):
+                moveState = _state;
+                sr.sprite = sprites[2];
                 break;
         }
     }
@@ -151,10 +164,10 @@ public class Player : MonoBehaviour
         // Entering wall run
         if (!startWallRun)
         {
-            RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, rayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D checkDown = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D checkLeft = Physics2D.Raycast(transform.position, Vector2.left, rayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D checkRight = Physics2D.Raycast(transform.position, Vector2.right, rayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D checkDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D checkLeft = Physics2D.Raycast(transform.position, Vector2.left, wallRunRayCastLength, 1 << WALL_LAYER);
+            RaycastHit2D checkRight = Physics2D.Raycast(transform.position, Vector2.right, wallRunRayCastLength, 1 << WALL_LAYER);
 
             // On wall
             if (checkUp || checkDown || checkLeft || checkRight)
@@ -218,12 +231,12 @@ public class Player : MonoBehaviour
     void HandleWallRun(WallRunDirection dir, WallRunMoveDir moveDir)
     {
         Vector2 forwardVector = GetDirectionVector(moveDir);
-        RaycastHit2D checkForward = Physics2D.Raycast(transform.position, forwardVector, rayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D checkForward = Physics2D.Raycast(transform.position, forwardVector, wallRunRayCastLength, 1 << WALL_LAYER);
 
         WallRunMoveDir nextMoveDir = GetNextMoveDir(dir, moveDir);
         WallRunMoveDir downMoveDir = GetOppositeMoveDir(nextMoveDir);
         Vector2 downwardVector = GetDirectionVector(downMoveDir);
-        RaycastHit2D checkDown = Physics2D.Raycast(transform.position, downwardVector, rayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D checkDown = Physics2D.Raycast(transform.position, downwardVector, wallRunRayCastLength, 1 << WALL_LAYER);
 
         float downOffsetX = transform.position.x;
         float downOffsetY = transform.position.y;
@@ -279,8 +292,6 @@ public class Player : MonoBehaviour
             waitForNextCheck = false;
         }
     }
-
-
     WallRunMoveDir GetOppositeMoveDir(WallRunMoveDir moveDir)
     {
         switch (moveDir)
@@ -297,7 +308,6 @@ public class Player : MonoBehaviour
 
         return WallRunMoveDir.UP;
     }
-
     Vector2 GetDirectionVector(WallRunMoveDir moveDir)
     {
         switch (moveDir)
@@ -314,7 +324,6 @@ public class Player : MonoBehaviour
 
         return Vector2.up;
     }
-
     WallRunMoveDir GetNextMoveDir(WallRunDirection dir, WallRunMoveDir moveDir)
     {
         if (dir == WallRunDirection.CCW)
@@ -348,7 +357,6 @@ public class Player : MonoBehaviour
 
         return WallRunMoveDir.UP;
     }
-
     WallRunDirection GetOppositeRunDir(WallRunDirection dir)
     {
         if (dir == WallRunDirection.CW)
@@ -367,6 +375,18 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
     }
 
+    ////////// BOUNCE //////////
+    void UpdateBounce()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rb.velocity.normalized, bounceRayCastLength, 1 << WALL_LAYER);
+        if (hit)
+        {
+            Vector2 reflectDir = Vector2.Reflect(rb.velocity.normalized, hit.normal).normalized;
+            rb.velocity = reflectDir * rb.velocity.magnitude;
+        }
+    }
+
+
     void OnCollisionStay2D(Collision2D col)
     {
         if (moveState == MoveState.GRAVITY)
@@ -375,7 +395,7 @@ public class Player : MonoBehaviour
             {
                 colContactPoint = col.contacts[0].point;
                 Vector2 dir = new Vector2(transform.position.x, transform.position.y) - col.contacts[0].point;
-                RaycastHit2D hit = Physics2D.Raycast(col.contacts[0].point + dir * 1.41f, -dir.normalized, 0.01f, 1 << WALL_LAYER);
+                RaycastHit2D hit = Physics2D.Raycast(col.contacts[0].point + dir * PLAYER_DIAGONAL, -dir.normalized, gravityRayCastLength, 1 << WALL_LAYER);
                 if (hit)
                 {
                     ChangePlayerState(PlayerState.DEAD);
@@ -389,17 +409,23 @@ public class Player : MonoBehaviour
         if (moveState == MoveState.WALLRUN)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.up * rayCastLength);
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayCastLength);
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.left * rayCastLength);
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.right * rayCastLength);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.up * wallRunRayCastLength);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * wallRunRayCastLength);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wallRunRayCastLength);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallRunRayCastLength);
         }
         else if (moveState == MoveState.GRAVITY)
         {
             Gizmos.color = Color.blue;
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - colContactPoint;
             Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y), colContactPoint);
-            Gizmos.DrawLine(colContactPoint + dir * 1.41f, colContactPoint + dir * 1.41f - dir.normalized * 1f);
+            Gizmos.DrawLine(colContactPoint + dir * PLAYER_DIAGONAL, colContactPoint + dir * PLAYER_DIAGONAL - dir.normalized * 1f);
+        }
+        else if (moveState == MoveState.BOUNCE)
+        {
+            Gizmos.color = Color.green;
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+            Gizmos.DrawLine(pos, pos + rb.velocity.normalized*bounceRayCastLength);
         }
 
     }
