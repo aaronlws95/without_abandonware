@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    int WALL_LAYER = 1 << 6;
-    float PLAYER_HEIGHT = 1f;
-    float PLAYER_WIDTH = 1f;
-
-    public float wallRunSpeed = 5f;
-    public float rayCastLength = 0.8f;
-
     public enum MoveState
     {
-        WALLRUN
+        WALLRUN,
+        GRAVITY
     }
 
     public enum WallRunMoveDir
@@ -30,27 +24,41 @@ public class Player : MonoBehaviour
         CCW
     }
 
-    // States
+    // Constants
+    int WALL_LAYER = 1 << 6;
+    float PLAYER_SIZE = 1f;
+
+    public Sprite[] sprites;
+    public float minSpeed = 5f;
+    public float maxSpeed = 15f;
+
+    [Header("Wall Run")]
+    public float wallRunSpeed = 5f;
+    public float rayCastLength = 0.8f;
     public MoveState state;
     public WallRunMoveDir wallRunMoveDir;
     public WallRunDirection wallRunDirection;
+    bool waitForNextCheck = false; // wait for next check when moving on rectangular blocks
+    bool startWallRun = false;
 
-    RaycastHit2D checkUp;
-    RaycastHit2D checkDown;
-    RaycastHit2D checkLeft;
-    RaycastHit2D checkRight;
 
-    bool waitForNextCheck = false;
+    [Header("Gravity")]
+    public float gravitySpeed = 10f;
 
     // Components
     Rigidbody2D rb;
+    SpriteRenderer sr;
 
     // Debugging
     // Vector3 colContactPoint;
-    
+
+    private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W };
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        ChangeState(state);
     }
 
     void Update()
@@ -58,67 +66,186 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (wallRunDirection == WallRunDirection.CCW)
-            {
-                wallRunDirection = WallRunDirection.CW;
-                wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
-            }
-            else
-            {
-                wallRunDirection = WallRunDirection.CCW;
-                wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
-            }
+            wallRunDirection = GetOppositeRunDir(wallRunDirection);
+            wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
         }
 
-        // WALL RUN
-        // Debug.Log(rb.velocity);
-        if (state == MoveState.WALLRUN)
+        // Debug.Log(state);
+        for (int i = 0; i < keyCodes.Length; ++i)
         {
-            checkUp = Physics2D.Raycast(transform.position, Vector2.up, rayCastLength, WALL_LAYER);
-            checkDown = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, WALL_LAYER);
-            checkLeft = Physics2D.Raycast(transform.position, Vector2.left, rayCastLength, WALL_LAYER);
-            checkRight = Physics2D.Raycast(transform.position, Vector2.right, rayCastLength, WALL_LAYER);
-
-            // Debug.Log(wallRunDirection + " " + wallRunMoveDir);
-            if (wallRunDirection == WallRunDirection.CCW)
+            if (Input.GetKeyDown(keyCodes[i]))
             {
-                switch (wallRunMoveDir)
-                {
-                    case (WallRunMoveDir.RIGHT):
-                        HandleWallRun(checkDown, checkRight, transform.position.x, checkDown.point.y + PLAYER_HEIGHT / 2, Vector2.right, WallRunMoveDir.UP);
-                        break;
-                    case (WallRunMoveDir.UP):
-                        HandleWallRun(checkRight, checkUp, checkRight.point.x - PLAYER_WIDTH / 2, transform.position.y, Vector2.up, WallRunMoveDir.LEFT);
-                        break;
-                    case (WallRunMoveDir.LEFT):
-                        HandleWallRun(checkUp, checkLeft, transform.position.x, checkUp.point.y - PLAYER_HEIGHT / 2, Vector2.left, WallRunMoveDir.DOWN);
-                        break;
-                    case (WallRunMoveDir.DOWN):
-                        HandleWallRun(checkLeft, checkDown, checkLeft.point.x + PLAYER_WIDTH / 2, transform.position.y, Vector2.down, WallRunMoveDir.RIGHT);
-                        break;
-                }
+                ChangeState((MoveState)i);
             }
-            else if (wallRunDirection == WallRunDirection.CW)
-            {
-                switch (wallRunMoveDir)
-                {
-                    case (WallRunMoveDir.RIGHT):
-                        HandleWallRun(checkUp, checkRight, transform.position.x, checkUp.point.y - PLAYER_HEIGHT / 2, Vector2.right, WallRunMoveDir.DOWN);
-                        break;
-                    case (WallRunMoveDir.UP):
-                        HandleWallRun(checkLeft, checkUp, checkLeft.point.x + PLAYER_WIDTH / 2, transform.position.y, Vector2.up, WallRunMoveDir.RIGHT);
-                        break;
-                    case (WallRunMoveDir.LEFT):
-                        HandleWallRun(checkDown, checkLeft, transform.position.x, checkDown.point.y + PLAYER_HEIGHT / 2, Vector2.left, WallRunMoveDir.UP);
-                        break;
-                    case (WallRunMoveDir.DOWN):
-                        HandleWallRun(checkRight, checkDown, checkRight.point.x - PLAYER_WIDTH / 2, transform.position.y, Vector2.down, WallRunMoveDir.LEFT);
-                        break;
-                }
-            }                
-            
         }
     }
+
+    void FixedUpdate()
+    {
+        // WALL RUN
+        // Debug.Log(rb.velocity);
+        switch (state)
+        {
+            case (MoveState.WALLRUN):
+                UpdateWallRun();
+                break;
+            case (MoveState.GRAVITY):
+                UpdateGravity();
+                break;
+        }
+    }
+
+    void ChangeState(MoveState _state)
+    {
+        switch (_state)
+        {
+            case (MoveState.WALLRUN):
+                state = MoveState.WALLRUN;
+                startWallRun = false;
+                sr.sprite = sprites[0];
+                break;
+            case (MoveState.GRAVITY):
+                state = MoveState.GRAVITY;
+                sr.sprite = sprites[1];
+                break;
+        }
+    }
+
+    ////////// WALL RUN //////////
+    void UpdateWallRun()
+    {
+        // Entering wall run
+        if (!startWallRun)
+        {
+            RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, rayCastLength, WALL_LAYER);
+            RaycastHit2D checkDown = Physics2D.Raycast(transform.position, Vector2.down, rayCastLength, WALL_LAYER);
+            RaycastHit2D checkLeft = Physics2D.Raycast(transform.position, Vector2.left, rayCastLength, WALL_LAYER);
+            RaycastHit2D checkRight = Physics2D.Raycast(transform.position, Vector2.right, rayCastLength, WALL_LAYER);
+
+            // On wall
+            if (checkUp || checkDown || checkLeft || checkRight)
+            {
+                startWallRun = true;
+                wallRunDirection = WallRunDirection.CCW;
+
+                if (checkUp)
+                {
+                    wallRunMoveDir = WallRunMoveDir.LEFT;
+
+                    if (rb.velocity.x > 0.1f)
+                    {
+                        wallRunDirection = GetOppositeRunDir(wallRunDirection);
+                        wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
+                    }
+                }
+
+                else if (checkDown)
+                {
+                    wallRunMoveDir = WallRunMoveDir.RIGHT;
+                    if (rb.velocity.x < -0.1f)
+                    {
+                        wallRunDirection = GetOppositeRunDir(wallRunDirection);
+                        wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
+                    }
+                }
+
+                else if (checkLeft)
+                {
+                    wallRunMoveDir = WallRunMoveDir.DOWN;
+
+                    if (rb.velocity.y > 0.1f)
+                    {
+                        wallRunDirection = GetOppositeRunDir(wallRunDirection);
+                        wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
+                    }
+                }
+
+                else if (checkRight)
+                {
+                    wallRunMoveDir = WallRunMoveDir.UP;
+
+                    if (rb.velocity.y < -0.1f)
+                    {
+                        wallRunDirection = GetOppositeRunDir(wallRunDirection);
+                        wallRunMoveDir = GetOppositeMoveDir(wallRunMoveDir);
+                    }
+                }
+
+                wallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minSpeed);
+                wallRunSpeed = Mathf.Min(wallRunSpeed, maxSpeed);                
+            }
+        }
+
+        if (startWallRun)
+        {
+            HandleWallRun(wallRunDirection, wallRunMoveDir);
+        }
+    }
+    void HandleWallRun(WallRunDirection dir, WallRunMoveDir moveDir)
+    {
+        Vector2 forwardVector = GetDirectionVector(moveDir);
+        RaycastHit2D checkForward = Physics2D.Raycast(transform.position, forwardVector, rayCastLength, WALL_LAYER);
+
+        WallRunMoveDir nextMoveDir = GetNextMoveDir(dir, moveDir);
+        WallRunMoveDir downMoveDir = GetOppositeMoveDir(nextMoveDir);
+        Vector2 downwardVector = GetDirectionVector(downMoveDir);
+        RaycastHit2D checkDown = Physics2D.Raycast(transform.position, downwardVector, rayCastLength, WALL_LAYER);
+
+        float downOffsetX = transform.position.x;
+        float downOffsetY = transform.position.y;
+
+        switch (downMoveDir)
+        {
+            case (WallRunMoveDir.RIGHT):
+                downOffsetX = checkDown.point.x - PLAYER_SIZE / 2;
+                break;
+            case (WallRunMoveDir.UP):
+                downOffsetY = checkDown.point.y - PLAYER_SIZE / 2;
+                break;
+            case (WallRunMoveDir.LEFT):
+                downOffsetX = checkDown.point.x + PLAYER_SIZE / 2;
+                break;
+            case (WallRunMoveDir.DOWN):
+                downOffsetY = checkDown.point.y + PLAYER_SIZE / 2;
+                break;
+        }
+
+        // Moving up
+        if (checkDown && checkForward)
+        {
+            // make sure close enough to wall before moving tangentially
+            if (Vector2.Distance(checkForward.point, transform.position) < PLAYER_SIZE / 2)
+            {
+                int signModifier = dir == WallRunDirection.CCW ? 1 : -1;
+                rb.velocity = -signModifier * Vector2.Perpendicular(checkForward.normal).normalized * wallRunSpeed;
+            }
+        }
+        // Moving forward
+        else if (checkDown && !checkForward)
+        {
+            rb.velocity = wallRunSpeed * forwardVector;
+            transform.position = new Vector3(downOffsetX, downOffsetY, transform.position.z);
+        }
+        // Not touching anything
+        else if (!checkDown && !checkForward && !waitForNextCheck)
+        {
+            WallRunMoveDir oppNextMoveDir = GetOppositeMoveDir(nextMoveDir);
+            rb.velocity = wallRunSpeed * GetDirectionVector(oppNextMoveDir);
+            wallRunMoveDir = oppNextMoveDir;
+            waitForNextCheck = true;
+        }
+        // Changing directions
+        else if (!checkDown && checkForward)
+        {
+            wallRunMoveDir = nextMoveDir;
+        }
+
+        if (checkDown || checkForward)
+        {
+            waitForNextCheck = false;
+        }
+    }
+
 
     WallRunMoveDir GetOppositeMoveDir(WallRunMoveDir moveDir)
     {
@@ -134,7 +261,7 @@ public class Player : MonoBehaviour
                 return WallRunMoveDir.UP;
         }
 
-        return WallRunMoveDir.LEFT;
+        return WallRunMoveDir.UP;
     }
 
     Vector2 GetDirectionVector(WallRunMoveDir moveDir)
@@ -151,58 +278,69 @@ public class Player : MonoBehaviour
                 return Vector2.down;
         }
 
-        return Vector2.left;     
+        return Vector2.up;
     }
 
-    void HandleWallRun(RaycastHit2D checkFloor, RaycastHit2D checkAdj, float downOffsetX, float downOffsetY, Vector2 moveDir, WallRunMoveDir nextDir)
+    WallRunMoveDir GetNextMoveDir(WallRunDirection dir, WallRunMoveDir moveDir)
     {
-        // Moving up
-        if (checkFloor && checkAdj)
+        if (dir == WallRunDirection.CCW)
         {
-            if (wallRunDirection == WallRunDirection.CCW)
+            switch (moveDir)
             {
-                rb.velocity = -Vector2.Perpendicular(checkAdj.normal).normalized * wallRunSpeed;
+                case (WallRunMoveDir.RIGHT):
+                    return WallRunMoveDir.UP;
+                case (WallRunMoveDir.UP):
+                    return WallRunMoveDir.LEFT;
+                case (WallRunMoveDir.LEFT):
+                    return WallRunMoveDir.DOWN;
+                case (WallRunMoveDir.DOWN):
+                    return WallRunMoveDir.RIGHT;
             }
-            else 
+        }
+        else if (dir == WallRunDirection.CW)
+        {
+            switch (moveDir)
             {
-                rb.velocity = Vector2.Perpendicular(checkAdj.normal).normalized * wallRunSpeed;
+                case (WallRunMoveDir.RIGHT):
+                    return WallRunMoveDir.DOWN;
+                case (WallRunMoveDir.UP):
+                    return WallRunMoveDir.RIGHT;
+                case (WallRunMoveDir.LEFT):
+                    return WallRunMoveDir.UP;
+                case (WallRunMoveDir.DOWN):
+                    return WallRunMoveDir.LEFT;
             }
-        }
-        // Moving forward
-        else if (checkFloor && !checkAdj)
-        {
-            rb.velocity = wallRunSpeed * moveDir;
-            transform.position = new Vector3(downOffsetX, downOffsetY, transform.position.z);
-        }
-        // Not touching anything
-        else if (!checkFloor && !checkAdj && !waitForNextCheck)
-        {
-            WallRunMoveDir oppDir = GetOppositeMoveDir(nextDir);
-            rb.velocity = wallRunSpeed * GetDirectionVector(oppDir);
-            wallRunMoveDir = oppDir;
-            waitForNextCheck = true;
-        }
-        // Changing directions
-        else if (!checkFloor && checkAdj)
-        {
-            wallRunMoveDir = nextDir;
         }
 
-        if (checkFloor || checkAdj)
+        return WallRunMoveDir.UP;
+    }
+
+    WallRunDirection GetOppositeRunDir(WallRunDirection dir)
+    {
+        if (dir == WallRunDirection.CW)
         {
-            waitForNextCheck = false;
+            return WallRunDirection.CCW;
+        }
+        else
+        {
+            return WallRunDirection.CW;
         }
     }
 
+    ////////// GRAVITY //////////
 
-    // void OnCollisionStay2D(Collision2D col)
-    // {
-    //     if (state == MoveState.WALLRUN)
-    //     {
-    //         colContactPoint = col.contacts[0].point;
-    //     }
-    // }
+    void UpdateGravity()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySpeed * Time.fixedDeltaTime);
+    }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (state == MoveState.GRAVITY)
+        {
+            colContactPoint = col.contacts[0].point;
+        }
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -210,13 +348,5 @@ public class Player : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayCastLength);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left * rayCastLength);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * rayCastLength);
-
-        Gizmos.color = Color.blue;
-        // Gizmos.DrawLine(colContactPoint + (transform.position - colContactPoint).normalized*0.71f, colContactPoint);
-        if (checkDown)
-        {
-            Gizmos.DrawLine(transform.position, checkDown.point);
-        }
-
     }
 }
