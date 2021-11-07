@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
+  - Waypoints
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Waypoint
+    uniqueID: 1443645699
+    locked: 0
   - name: Background
     uniqueID: 2005879853
     locked: 0
