@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        
+
         moveState = _state;
         sr.sprite = sprites[(int)moveState];
 
@@ -172,6 +172,39 @@ public class Player : MonoBehaviour
         // If not running then latch on
         if (hit && !startWallRun && (checkUp || checkDown || checkLeft || checkRight))
         {
+            // isClockwise = false as default
+            if (checkUp)
+            {
+                if (rb.velocity.x > 0.1f)
+                {
+                    isClockwise = true;
+                }
+            }
+
+            else if (checkDown)
+            {
+                if (rb.velocity.x < -0.1f)
+                {
+                    isClockwise = true;
+                }
+            }
+
+            else if (checkLeft)
+            {
+                if (rb.velocity.y > 0.1f)
+                {
+                    isClockwise = true;
+                }
+            }
+
+            else if (checkRight)
+            {
+                if (rb.velocity.y < -0.1f)
+                {
+                    isClockwise = true;
+                }
+            }
+
             curWaypoints = hit.transform.parent.transform.parent.GetComponent<Waypoints>();
             curWaypointPos = curWaypoints.HandleArbitraryPosition(transform.position, isClockwise);
             nextWaypointPos = curWaypoints.GetNextWaypointPosition();
@@ -185,7 +218,7 @@ public class Player : MonoBehaviour
             wallRunSpeed = Mathf.Min(wallRunSpeed, maxSpeed);
 
             startWallRun = true;
-        }        
+        }
 
         // While running 
         if (startWallRun)
@@ -197,7 +230,7 @@ public class Player : MonoBehaviour
                 transform.position = curWaypointPos;
             }
             Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;
-            rb.velocity = dir * wallRunSpeed;           
+            rb.velocity = dir * wallRunSpeed;
         }
     }
 
@@ -211,7 +244,20 @@ public class Player : MonoBehaviour
             activeGravityRayCastLength = gravityFallingRayCastLength;
         }
 
-        RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign*Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
+        // Handle hitting walls other than the "ground"
+        RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravityFallingRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravityFallingRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign * Vector2.up, gravityFallingRayCastLength, 1 << WALL_LAYER);
+        if (hitLeftWall || hitRightWall)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+        if (hitUp)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+        }
+
+        RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
         if (hitGround)
         {
             // Wait until it is falling before grounding
@@ -220,25 +266,13 @@ public class Player : MonoBehaviour
             {
                 activeGravityRayCastLength = gravityRayCastLength;
                 rb.velocity = Vector2.zero;
-                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign*PLAYER_SIZE/2, transform.position.z);
+                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * PLAYER_SIZE / 2, transform.position.z);
                 isLanded = true;
                 isFalling = false;
             }
         }
         else
         {
-            // Handle hitting walls on the way while moving down
-            RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, activeGravityRayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, activeGravityRayCastLength, 1 << WALL_LAYER);
-            RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign*Vector2.up, activeGravityRayCastLength, 1 << WALL_LAYER);
-            if (hitLeftWall || hitRightWall)
-            {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-            }
-            if (hitUp)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-            }
             isFalling = true;
         }
         if (!isLanded && isFalling)
@@ -265,25 +299,25 @@ public class Player : MonoBehaviour
         if (moveState == MoveState.WALLRUN)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(pos, pos + Vector2.down*wallRunRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastLength);
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + Vector2.down*wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left*wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right*wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.up*wallRunRayCastGroundLength);            
+            Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastGroundLength);
+            Gizmos.DrawLine(pos, pos + Vector2.up * wallRunRayCastGroundLength);
         }
         else if (moveState == MoveState.GRAVITY)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.down*activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left*activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right*activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + gravitySign*Vector2.up*activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left * activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right * activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.up * activeGravityRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + rb.velocity.normalized*bounceRayCastLength);
+            Gizmos.DrawLine(pos, pos + rb.velocity.normalized * bounceRayCastLength);
         }
 
     }
