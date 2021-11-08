@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
+    int WALL_LAYER = 6;
     public Grid grid;
     public GameObject[] waypoints;
     int currentIndex = 0;
@@ -37,8 +38,11 @@ public class Waypoints : MonoBehaviour
         foreach (GameObject waypoint in waypoints)
         {
             float curDistance = Vector2.Distance(waypoint.transform.position, pos);
-            if (curDistance < lowestDistance)
+            // Check that no wall is in the way
+            RaycastHit2D hit = Physics2D.Raycast(pos, waypoint.transform.position - pos, curDistance, 1 << WALL_LAYER);
+            if (curDistance < lowestDistance && !hit)
             {
+                Debug.Log(index);
                 lowestDistance = curDistance;
                 bestIndex = index;
             }
