@@ -42,7 +42,6 @@ public class Waypoints : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(pos, waypoint.transform.position - pos, curDistance, 1 << WALL_LAYER);
             if (curDistance < lowestDistance && !hit)
             {
-                Debug.Log(index);
                 lowestDistance = curDistance;
                 bestIndex = index;
             }
