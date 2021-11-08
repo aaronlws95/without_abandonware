@@ -57,9 +57,9 @@ public class Waypoints : MonoBehaviour
         Vector2 nextDir = (nextWaypointPos - curWaypointPos).normalized;
         Vector2 prevDir = (prevWaypointPos - curWaypointPos).normalized;
 
+        clockwise = isClockwise;
         if (Vector2.Dot(curDir, nextDir) > Vector2.Dot(curDir, prevDir))
         {
-            clockwise = isClockwise;
             if (isClockwise)
             {
                 currentIndex = nextIndex;

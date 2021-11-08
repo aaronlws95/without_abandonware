@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
     public float gravitySpeed = 10f;
     public float gravityRayCastLength = 1.0f;
     public float gravityFallingRayCastLength = 0.5f;
+    public float gravitySideWallRayCastLength = 0.5f;
     float activeGravityRayCastLength;
     public bool isReverse = false;
     int gravitySign = 1;
@@ -140,6 +141,7 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 isFalling = false;
                 isLanded = false;
+                gravitySign = 1;
                 activeGravityRayCastLength = gravityRayCastLength;
                 break;
             case (MoveState.BOUNCE):
@@ -231,6 +233,7 @@ public class Player : MonoBehaviour
             }
             Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;
             rb.velocity = dir * wallRunSpeed;
+
         }
     }
 
@@ -245,9 +248,9 @@ public class Player : MonoBehaviour
         }
 
         // Handle hitting walls other than the "ground"
-        RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravityFallingRayCastLength, 1 << WALL_LAYER);
-        RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravityFallingRayCastLength, 1 << WALL_LAYER);
-        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign * Vector2.up, gravityFallingRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravitySideWallRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravitySideWallRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign * Vector2.up, gravitySideWallRayCastLength, 1 << WALL_LAYER);
         if (hitLeftWall || hitRightWall)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -258,6 +261,7 @@ public class Player : MonoBehaviour
         }
 
         RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
+
         if (hitGround)
         {
             // Wait until it is falling before grounding
@@ -269,6 +273,14 @@ public class Player : MonoBehaviour
                 transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * PLAYER_SIZE / 2, transform.position.z);
                 isLanded = true;
                 isFalling = false;
+            }
+            else 
+            {
+                // Deal with moving down slopes
+                if ((gravitySign == 1 && rb.velocity.y < -0.1f) || (gravitySign == -1 && rb.velocity.y > 0.1f))
+                {
+                    isFalling = true;
+                }
             }
         }
         else
