@@ -28,12 +28,14 @@ public class Player : MonoBehaviour
     public MoveState moveState;
     public PlayerState playerState;
     public float stateChangeCooldown = 0f;
+    public float reverseCooldown = 0f;
     float stateChangeCount = 0f;
+    float reverseCount = 0f;
 
     [Header("Wall Run")]
     public float defaultWallRunSpeed = 10f;
     public float minWallRunSpeed = 10f;
-    public float maxWallRunSpeed = 15f;    
+    public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
     public float wallRunRayCastLength = 0.01f;
     public float wallRunRayCastGroundLength = 0.6f;
@@ -82,17 +84,24 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Reverse
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
+        if (reverseCount < reverseCooldown)
         {
-            ReverseMoveState();
+            reverseCount += Time.deltaTime;
         }
-
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
+            {
+                ReverseMoveState();
+                reverseCount = 0f;
+            }
+        }
 
         if (stateChangeCount < stateChangeCooldown)
         {
             stateChangeCount += Time.deltaTime;
         }
-        else 
+        else
         {
             for (int i = 0; i < keyCodes.Length; ++i)
             {
@@ -244,7 +253,7 @@ public class Player : MonoBehaviour
                 curWaypoints.SetCurrentPath(wpcol.nextIndex, isClockwise);
                 curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.nextIndex);
             }
-            else 
+            else
             {
                 curWaypoints.SetCurrentPath(wpcol.index, isClockwise);
                 curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.index);
@@ -256,7 +265,7 @@ public class Player : MonoBehaviour
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
             transform.position = grid.GetCellCenterWorld(cellPosition);
 
-            if(rb.velocity.magnitude < 0.1f)
+            if (rb.velocity.magnitude < 0.1f)
             {
                 curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), defaultWallRunSpeed);
             }
@@ -325,7 +334,7 @@ public class Player : MonoBehaviour
                 isLanded = true;
                 isFalling = false;
             }
-            else 
+            else
             {
                 // Deal with moving down slopes
                 if ((gravitySign == 1 && rb.velocity.y < -0.1f) || (gravitySign == -1 && rb.velocity.y > 0.1f))
@@ -344,7 +353,7 @@ public class Player : MonoBehaviour
             float sign = Mathf.Sign(gravityVelocity);
             gravityVelocity = Mathf.Min(Mathf.Abs(gravityVelocity), gravityMaxSpeed);
 
-            rb.velocity = new Vector2(rb.velocity.x, sign*gravityVelocity);
+            rb.velocity = new Vector2(rb.velocity.x, sign * gravityVelocity);
         }
     }
 
