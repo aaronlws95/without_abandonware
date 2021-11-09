@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Reverse
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
         {
             ReverseMoveState();
         }
