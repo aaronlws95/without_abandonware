@@ -320,8 +320,8 @@ public class Player : MonoBehaviour
         if (!isLanded && isFalling)
         {
             float gravityVelocity = rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime;
-            float sign = -Mathf.Sign(gravityVelocity);
-            gravityVelocity = Mathf.Min(gravityVelocity, gravityMaxSpeed);
+            float sign = Mathf.Sign(gravityVelocity);
+            gravityVelocity = Mathf.Min(Mathf.Abs(gravityVelocity), gravityMaxSpeed);
 
             rb.velocity = new Vector2(rb.velocity.x, sign*gravityVelocity);
         }
