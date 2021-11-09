@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     // Components
     Rigidbody2D rb;
     SpriteRenderer sr;
+    BoxCollider2D col;
 
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E };
 
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        col = GetComponent<BoxCollider2D>();
         playerState = PlayerState.ACTIVE;
         ChangeMoveState(moveState);
         grid = GameObject.Find("Grid").GetComponent<Grid>();
@@ -207,9 +209,21 @@ public class Player : MonoBehaviour
                 }
             }
 
-            curWaypoints = hit.transform.parent.transform.parent.GetComponent<Waypoints>();
-            curWaypointPos = curWaypoints.HandleArbitraryPosition(transform.position, isClockwise);
-            nextWaypointPos = curWaypoints.GetNextWaypointPosition();
+            WaypointCollider wpcol = hit.transform.gameObject.GetComponent<WaypointCollider>();
+            curWaypoints = hit.transform.parent.GetComponent<Waypoints>();
+
+            if (isClockwise)
+            {
+                curWaypoints.SetCurrentPath(wpcol.nextIndex, isClockwise);
+                curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.nextIndex);
+            }
+            else 
+            {
+                curWaypoints.SetCurrentPath(wpcol.index, isClockwise);
+                curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.index);
+            }
+
+            nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
 
             // Snap to grid
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
@@ -228,7 +242,7 @@ public class Player : MonoBehaviour
             if (Vector2.Distance(transform.position, nextWaypointPos) < waypointDistThreshold)
             {
                 curWaypointPos = nextWaypointPos;
-                nextWaypointPos = curWaypoints.GetNextWaypointPosition();
+                nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
                 transform.position = curWaypointPos;
             }
             Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;

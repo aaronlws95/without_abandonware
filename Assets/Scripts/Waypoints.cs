@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
-    int WALL_LAYER = 6;
-    public Grid grid;
     public GameObject[] waypoints;
     int currentIndex = 0;
     bool clockwise = false;
+    Grid grid;
+
 
     void Start()
     {
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+
+        // Snap waypoints to grid
         foreach (GameObject waypoint in waypoints)
         {
             WaypointSettings ws = waypoint.GetComponent<WaypointSettings>();
@@ -23,72 +26,56 @@ public class Waypoints : MonoBehaviour
             float newY = snapToGridY ? gridPosition.y : waypoint.transform.position.y; 
             waypoint.transform.position = new Vector3(newX, newY, waypoint.transform.position.z);
         }
+
+        // Create colliders
+        for (int i = 0; i<waypoints.Length; i++)
+        {
+            int nextIndex = GetNextIndex(i, false);
+            Vector3 curWaypointPosition = waypoints[i].transform.position;
+            Vector3 nextWaypointPosition = waypoints[nextIndex].transform.position;
+            GameObject waypointCollider = new GameObject("Collider");
+            waypointCollider.layer = 7;
+            waypointCollider.transform.parent = transform;
+            WaypointCollider wpcol = waypointCollider.AddComponent<WaypointCollider>();
+            wpcol.index = i;
+            wpcol.nextIndex = nextIndex;
+            BoxCollider2D col = waypointCollider.AddComponent<BoxCollider2D>();
+            Vector3 dir = nextWaypointPosition - curWaypointPosition;
+            waypointCollider.transform.position = (curWaypointPosition + nextWaypointPosition) / 2;
+            float width = Mathf.Abs(dir.x);
+            float height = Mathf.Abs(dir.y);
+
+            if (width > 0.01f && height > 0.01f)
+            {
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                angle = width > height ? angle : angle - 90f;  
+                waypointCollider.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            }
+
+            if (width > height)
+            {
+                height = 1;
+                width += 1;
+            }
+            else 
+            {
+                height += 1;
+                width = 1;
+            }
+
+            col.size = new Vector2(width, height);
+        }
+    }
+
+    public void SetCurrentPath(int index, bool isClockwise)
+    {
+        currentIndex = index;
+        clockwise = isClockwise;
     }
 
     public void SetClockwise(bool value)
     {
         clockwise = value;
-    }
-
-    public Vector3 HandleArbitraryPosition(Vector3 pos, bool isClockwise)
-    {
-        float lowestDistance = 1000;
-        int bestIndex = 0;
-        int index = 0;
-        foreach (GameObject waypoint in waypoints)
-        {
-            float curDistance = Vector2.Distance(waypoint.transform.position, pos);
-            // Check that no wall is in the way
-            RaycastHit2D hit = Physics2D.Raycast(pos, waypoint.transform.position - pos, curDistance, 1 << WALL_LAYER);
-            if (curDistance < lowestDistance && !hit)
-            {
-                lowestDistance = curDistance;
-                bestIndex = index;
-            }
-            index++;
-        }
-
-        int nextIndex = GetNextIndex(bestIndex, false);
-        int prevIndex = GetNextIndex(bestIndex, true);
-
-        Vector2 curPos = new Vector2(pos.x, pos.y);
-        Vector2 curWaypointPos = new Vector2(waypoints[bestIndex].transform.position.x, waypoints[bestIndex].transform.position.y);
-        Vector2 nextWaypointPos = new Vector2(waypoints[nextIndex].transform.position.x, waypoints[nextIndex].transform.position.y);
-        Vector2 prevWaypointPos = new Vector2(waypoints[prevIndex].transform.position.x, waypoints[prevIndex].transform.position.y);
-
-        Vector2 curDir = (curPos - curWaypointPos).normalized;
-        Vector2 nextDir = (nextWaypointPos - curWaypointPos).normalized;
-        Vector2 prevDir = (prevWaypointPos - curWaypointPos).normalized;
-
-        clockwise = isClockwise;
-        if (Vector2.Dot(curDir, nextDir) > Vector2.Dot(curDir, prevDir))
-        {
-            if (isClockwise)
-            {
-                currentIndex = nextIndex;
-                return waypoints[nextIndex].transform.position;
-            }
-            else
-            {
-                currentIndex = bestIndex;
-                return waypoints[bestIndex].transform.position;
-            }
-
-        }
-        else 
-        {
-            if (!isClockwise)
-            {
-                currentIndex = prevIndex;
-                return waypoints[prevIndex].transform.position;
-            }
-            else
-            {
-                currentIndex = bestIndex;
-                return waypoints[bestIndex].transform.position;                
-            }
-
-        }
     }
 
     public int GetNextIndex(int _currentIndex, bool _clockwise)
@@ -114,7 +101,12 @@ public class Waypoints : MonoBehaviour
         return nextIndex;
     }
 
-    public Vector3 GetNextWaypointPosition()
+    public Vector3 GetWaypointPositionAt(int index)
+    {
+        return waypoints[index].transform.position;
+    }
+
+    public Vector3 GenerateNextWaypointPosition()
     {
         if (!clockwise)
         {
