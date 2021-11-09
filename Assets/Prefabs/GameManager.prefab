@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 225676232350278693}
   - component: {fileID: 225676232350278692}
+  - component: {fileID: 5986786269976188595}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,4 +44,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dbc430987295d4e8edfc99819d6b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionsMenu: {fileID: 6885625320916386576, guid: 220cd87bee140b943a654ca0b19a39ca, type: 3}
   player: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+--- !u!114 &5986786269976188595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225676232350278695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac6e6a9b39c0484799bc09afafb3de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSFX: 1
+  volumeBGM: 1
+  sounds:
+  - name: Die
+    clip: {fileID: 8300000, guid: 7b1aef448171be8458df30abc41471ba, type: 3}
+  - name: Collect
+    clip: {fileID: 8300000, guid: 6095ae5a5ee1ef54da7c0032e8c33bcc, type: 3}
+  - name: WallRun
+    clip: {fileID: 8300000, guid: 8de96821a8735954e9803707c1eefd7b, type: 3}
+  - name: Gravity
+    clip: {fileID: 8300000, guid: 6715cfad1ffeda24a92de0340995924e, type: 3}
+  - name: Bounce
+    clip: {fileID: 8300000, guid: 986f448f947dc5445b8755038b29baf4, type: 3}
+  - name: Reverse
+    clip: {fileID: 8300000, guid: 757ec70ab12287b4bb0674ab67f39a45, type: 3}
+  clipBGM: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}

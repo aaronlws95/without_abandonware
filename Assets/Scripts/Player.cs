@@ -21,18 +21,17 @@ public class Player : MonoBehaviour
     // Constants
     int WALL_LAYER = 6;
     int WAYPOINTS_LAYER = 7;
-    float PLAYER_SIZE = 1f;
 
     [Header("General")]
     Grid grid;
     public Sprite[] sprites;
-    public float minSpeed = 10f;
-    public float maxSpeed = 15f;
     public MoveState moveState;
     public PlayerState playerState;
 
     [Header("Wall Run")]
-    public float wallRunSpeed = 10f;
+    public float minWallRunSpeed = 10f;
+    public float maxWallRunSpeed = 15f;    
+    public float curWallRunSpeed = 10f;
     public float wallRunRayCastLength = 0.01f;
     public float wallRunRayCastGroundLength = 0.6f;
     public float waypointDistThreshold = 0.7f;
@@ -45,8 +44,10 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     public float gravitySpeed = 10f;
     public float gravityRayCastLength = 1.0f;
+    public float gravityMaxSpeed = 15f;
     public float gravityFallingRayCastLength = 0.5f;
     public float gravitySideWallRayCastLength = 0.5f;
+    public float gravityGroundOffset = 0.5f;
     float activeGravityRayCastLength;
     public bool isReverse = false;
     int gravitySign = 1;
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sr;
     BoxCollider2D col;
+    SoundManager sm;
 
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E };
 
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
         playerState = PlayerState.ACTIVE;
         ChangeMoveState(moveState);
         grid = GameObject.Find("Grid").GetComponent<Grid>();
+        sm = SoundManager.instance;
     }
 
     void Update()
@@ -95,6 +98,7 @@ public class Player : MonoBehaviour
         switch (moveState)
         {
             case (MoveState.WALLRUN):
+                sm.PlaySound("Reverse");
                 isClockwise = !isClockwise;
                 curWaypoints.SetClockwise(isClockwise);
                 Vector3 tmp = curWaypointPos;
@@ -102,9 +106,14 @@ public class Player : MonoBehaviour
                 nextWaypointPos = tmp;
                 break;
             case (MoveState.GRAVITY):
+                sm.PlaySound("Reverse");
                 isLanded = false;
                 gravitySign *= -1;
                 break;
+            case (MoveState.BOUNCE):
+                rb.velocity = -rb.velocity;
+                break;
+
         }
     }
 
@@ -137,16 +146,19 @@ public class Player : MonoBehaviour
         switch (_state)
         {
             case (MoveState.WALLRUN):
+                sm.PlaySound("WallRun");
                 isClockwise = false;
                 startWallRun = false;
                 break;
             case (MoveState.GRAVITY):
+                sm.PlaySound("Gravity");
                 isFalling = false;
                 isLanded = false;
                 gravitySign = 1;
                 activeGravityRayCastLength = gravityRayCastLength;
                 break;
             case (MoveState.BOUNCE):
+                sm.PlaySound("Bounce");
                 break;
         }
     }
@@ -231,8 +243,8 @@ public class Player : MonoBehaviour
             transform.position = grid.GetCellCenterWorld(cellPosition);
 
             // Transfer speed from previous state
-            wallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minSpeed);
-            wallRunSpeed = Mathf.Min(wallRunSpeed, maxSpeed);
+            curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minWallRunSpeed);
+            curWallRunSpeed = Mathf.Min(curWallRunSpeed, maxWallRunSpeed);
 
             startWallRun = true;
         }
@@ -249,7 +261,7 @@ public class Player : MonoBehaviour
             }
 
             Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;
-            rb.velocity = dir * wallRunSpeed;
+            rb.velocity = dir * curWallRunSpeed;
         }
     }
 
@@ -286,7 +298,7 @@ public class Player : MonoBehaviour
             {
                 activeGravityRayCastLength = gravityRayCastLength;
                 rb.velocity = Vector2.zero;
-                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * PLAYER_SIZE / 2, transform.position.z);
+                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * gravityGroundOffset, transform.position.z);
                 // Vector3Int cellPosition = grid.WorldToCell(transform.position);
                 // transform.position = grid.GetCellCenterWorld(cellPosition);
                 isLanded = true;
@@ -307,7 +319,11 @@ public class Player : MonoBehaviour
         }
         if (!isLanded && isFalling)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime);
+            float gravityVelocity = rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime;
+            float sign = -Mathf.Sign(gravityVelocity);
+            gravityVelocity = Mathf.Min(gravityVelocity, gravityMaxSpeed);
+
+            rb.velocity = new Vector2(rb.velocity.x, sign*gravityVelocity);
         }
     }
 

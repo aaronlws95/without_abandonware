@@ -8,9 +8,6 @@ public class Sound
 {
     public string name;
     public AudioClip clip;
-
-    [Range(0f, 1f)]
-
     private AudioSource source; 
 
     public void SetSource(AudioSource _source)
@@ -24,13 +21,6 @@ public class Sound
         source.volume = volume; 
         source.Play();
     }
-
-    public void PlayPan(float volume, float xRatio)
-    {
-        source.volume = volume; 
-        source.panStereo = xRatio;
-        source.Play();
-    }
 }
 
 public class SoundManager : MonoBehaviour
@@ -38,20 +28,17 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
 
     [Range(0f, 1f)]
-    public float volumeSFX = 0.7f;
+    public static float volumeSFX = 1.0f;
 
     [Range(0f, 1f)]
-    public float volumeBGM = 0.7f;
+    public static float volumeBGM = 1.0f;
 
     [SerializeField] private Sound[] sounds;
     private Dictionary<string, Sound> soundsDict = new Dictionary<string, Sound>();
-    [SerializeField] private Sound[] collisionSounds;
 
     public AudioClip clipBGM;
 
-    public Tilemap wall;
-    private float wallEdgesXMin;
-    private float wallEdgesXMax;
+    AudioSource bgmAS;
 
     void Awake()
     {
@@ -74,36 +61,23 @@ public class SoundManager : MonoBehaviour
             sounds[i].SetSource(_go.AddComponent<AudioSource>());
             soundsDict[sounds[i].name] = sounds[i];
         }
-        for (int i = 0; i<collisionSounds.Length; i++)
-        {
-            GameObject _go = new GameObject("Sound_Collide_" + i);
-            _go.transform.SetParent(this.transform);
-            collisionSounds[i].name = "Collide_" + i;
-            collisionSounds[i].SetSource(_go.AddComponent<AudioSource>());
-        }
-        
+
         GameObject _BGMgo = new GameObject("BGM");
         _BGMgo.transform.SetParent(this.transform);
-        _BGMgo.AddComponent<AudioSource>();
-        AudioSource BGMas = _BGMgo.GetComponent<AudioSource>();
-        BGMas.clip = clipBGM;
-        BGMas.loop = true;
-        BGMas.Play();
+        bgmAS = _BGMgo.AddComponent<AudioSource>();
+        bgmAS.clip = clipBGM;
+        bgmAS.loop = true;
+        bgmAS.volume = volumeBGM;
+        bgmAS.Play();
+    }
 
-        wallEdgesXMin = wall.origin.x;
-        wallEdgesXMax = wall.origin.x + wall.size.x;
+    void Update()
+    {
+        bgmAS.volume = volumeBGM;
     }
 
     public void PlaySound(string _name)
     {
         soundsDict[_name].Play(volumeSFX);
     }
-
-    public void PlayCollision(float xPos)
-    {
-        int randomIndex = Random.Range(0, collisionSounds.Length);
-        float xRatio = 2 * ((xPos - wallEdgesXMin) / (wallEdgesXMax - wallEdgesXMin)) - 1;
-        collisionSounds[randomIndex].PlayPan(volumeSFX, xRatio);
-    }
-
 }
