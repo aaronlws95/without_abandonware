@@ -157,7 +157,7 @@ MonoBehaviour:
   curWallRunSpeed: 10
   wallRunRayCastLength: 0.01
   wallRunRayCastGroundLength: 0.6
-  waypointDistThreshold: 0.5
+  waypointDistThreshold: 0.2
   isClockwise: 0
   gravitySpeed: 10
   gravityRayCastLength: 1
