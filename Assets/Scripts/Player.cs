@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public PlayerState playerState;
 
     [Header("Wall Run")]
+    public float defaultWallRunSpeed = 10f;
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;    
     public float curWallRunSpeed = 10f;
@@ -242,9 +243,16 @@ public class Player : MonoBehaviour
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
             transform.position = grid.GetCellCenterWorld(cellPosition);
 
-            // Transfer speed from previous state
-            curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minWallRunSpeed);
-            curWallRunSpeed = Mathf.Min(curWallRunSpeed, maxWallRunSpeed);
+            if(rb.velocity.magnitude < 0.1f)
+            {
+                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), defaultWallRunSpeed);
+            }
+            else
+            {
+                // Transfer speed from previous state
+                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minWallRunSpeed);
+                curWallRunSpeed = Mathf.Min(curWallRunSpeed, maxWallRunSpeed);
+            }
 
             startWallRun = true;
         }
