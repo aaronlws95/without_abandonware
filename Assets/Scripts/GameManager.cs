@@ -44,8 +44,12 @@ public class GameManager : MonoBehaviour
 
         player = GameObject.Find("Player").GetComponent<Player>();
 
-        collectibles = GameObject.FindGameObjectsWithTag("Collectible");
-        collectibleCount = collectibles.Length;
+        collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
+    }
+
+    public void RemoveCollectible()
+    {
+        collectibleCount -= 1;
     }
 
     void Update()
