@@ -10900,7 +10900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: waypointDistThreshold
-      value: 0.8
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: gravitySideWallRayCastLength

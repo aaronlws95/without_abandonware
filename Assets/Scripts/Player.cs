@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     public Sprite[] sprites;
     public MoveState moveState;
     public PlayerState playerState;
+    public float stateChangeCooldown = 0f;
+    float stateChangeCount = 0f;
 
     [Header("Wall Run")]
     public float defaultWallRunSpeed = 10f;
@@ -85,13 +87,24 @@ public class Player : MonoBehaviour
             ReverseMoveState();
         }
 
-        for (int i = 0; i < keyCodes.Length; ++i)
+
+        if (stateChangeCount < stateChangeCooldown)
         {
-            if (Input.GetKeyDown(keyCodes[i]))
+            stateChangeCount += Time.deltaTime;
+        }
+        else 
+        {
+            for (int i = 0; i < keyCodes.Length; ++i)
             {
-                ChangeMoveState((MoveState)i);
+                if (Input.GetKey(keyCodes[i]))
+                {
+                    ChangeMoveState((MoveState)i);
+                    stateChangeCount = 0f;
+                    break;
+                }
             }
         }
+
     }
 
     void ReverseMoveState()
