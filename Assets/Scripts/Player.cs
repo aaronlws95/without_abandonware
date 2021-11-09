@@ -166,6 +166,7 @@ public class Player : MonoBehaviour
     {
         // Check if the center is within the waypoint collider
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
+        // RaycastHit2D hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
 
         // Check if any part is touching a wall
         RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastGroundLength, 1 << WALL_LAYER);
@@ -239,15 +240,16 @@ public class Player : MonoBehaviour
         // While running 
         if (startWallRun)
         {
-            if (Vector2.Distance(transform.position, nextWaypointPos) < waypointDistThreshold)
+            float dist = Vector2.Distance(transform.position, nextWaypointPos);
+            if (dist < waypointDistThreshold)
             {
                 curWaypointPos = nextWaypointPos;
                 nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
                 transform.position = curWaypointPos;
             }
+
             Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;
             rb.velocity = dir * wallRunSpeed;
-
         }
     }
 
@@ -285,6 +287,8 @@ public class Player : MonoBehaviour
                 activeGravityRayCastLength = gravityRayCastLength;
                 rb.velocity = Vector2.zero;
                 transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * PLAYER_SIZE / 2, transform.position.z);
+                // Vector3Int cellPosition = grid.WorldToCell(transform.position);
+                // transform.position = grid.GetCellCenterWorld(cellPosition);
                 isLanded = true;
                 isFalling = false;
             }

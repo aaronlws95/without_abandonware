@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {
+    int WAYPOINT_LAYER = 7;
     public GameObject[] waypoints;
     int currentIndex = 0;
     bool clockwise = false;
     Grid grid;
-
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class Waypoints : MonoBehaviour
             Vector3 curWaypointPosition = waypoints[i].transform.position;
             Vector3 nextWaypointPosition = waypoints[nextIndex].transform.position;
             GameObject waypointCollider = new GameObject("Collider");
-            waypointCollider.layer = 7;
+            waypointCollider.layer = WAYPOINT_LAYER;
             waypointCollider.transform.parent = transform;
             WaypointCollider wpcol = waypointCollider.AddComponent<WaypointCollider>();
             wpcol.index = i;
@@ -45,6 +45,7 @@ public class Waypoints : MonoBehaviour
             float width = Mathf.Abs(dir.x);
             float height = Mathf.Abs(dir.y);
 
+            // Rotate for diagonals
             if (width > 0.01f && height > 0.01f)
             {
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -52,6 +53,7 @@ public class Waypoints : MonoBehaviour
                 waypointCollider.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             }
 
+            // Set thickness of collider
             if (width > height)
             {
                 height = 1;

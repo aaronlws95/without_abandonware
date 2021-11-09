@@ -10811,7 +10811,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 436532858720484149, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: m_Name
-      value: w
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1364121146354055235, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: grid
