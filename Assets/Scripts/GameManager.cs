@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     bool restartLevel = false;
     SoundManager sm;
     Player player;
+    GameObject[] collectibles;
+    int collectibleCount;
 
     void Awake()
     {
@@ -41,13 +43,15 @@ public class GameManager : MonoBehaviour
         }
 
         player = GameObject.Find("Player").GetComponent<Player>();
+
+        collectibles = GameObject.FindGameObjectsWithTag("Collectible");
+        collectibleCount = collectibles.Length;
     }
 
     void Update()
     {
         if ((player.playerState == Player.PlayerState.DEAD || Input.GetKeyDown(KeyCode.X)) && !restartLevel)
         {
-            restartLevel = true;
             StartCoroutine(RestartLevel());
         }
 
@@ -56,10 +60,16 @@ public class GameManager : MonoBehaviour
             optionsMenuActive = !optionsMenuActive;
             optionsMenu.SetActive(optionsMenuActive);
         }
+
+        if (collectibleCount == 0)
+        {
+            player.playerState = Player.PlayerState.DEAD;
+        }
     }
 
     IEnumerator RestartLevel()
     {
+        restartLevel = true;
         sm.PlaySound("Die");
         yield return new WaitForSeconds(1.0f);
         restartLevel = false;
