@@ -178,8 +178,8 @@ public class Player : MonoBehaviour
     void UpdateWallRun()
     {
         // Check if the center is within the waypoint collider
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
-        // RaycastHit2D hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
+        RaycastHit2D hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
 
         // Check if any part is touching a wall
         RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastGroundLength, 1 << WALL_LAYER);
@@ -268,7 +268,7 @@ public class Player : MonoBehaviour
                 transform.position = curWaypointPos;
             }
 
-            Vector2 dir = (nextWaypointPos - curWaypointPos).normalized;
+            Vector2 dir = (nextWaypointPos - transform.position).normalized;
             rb.velocity = dir * curWallRunSpeed;
         }
     }
