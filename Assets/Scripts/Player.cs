@@ -226,7 +226,7 @@ public class Player : MonoBehaviour
     void UpdateWallRun()
     {
         // Check if the center is within the waypoint collider
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
+        RaycastHit2D hitWaypointCenter = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, 1 << WAYPOINTS_LAYER);
         RaycastHit2D hitWaypoint = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
         RaycastHit2D hitWall = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WALL_LAYER);
 
@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
         RaycastHit2D wallRunHitDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WALL_LAYER);  
 
         // If not running then latch on
-        if (hitWaypoint && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
+        if ((hitWaypoint || hitWaypointCenter) && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
         {
             // isClockwise = false as default
             if (rb.velocity.magnitude > velocityThreshold)
@@ -274,9 +274,18 @@ public class Player : MonoBehaviour
                 }
             }
 
+            WaypointCollider wpcol;
+            if (hitWaypointCenter)
+            {
+                wpcol = hitWaypointCenter.transform.gameObject.GetComponent<WaypointCollider>();
+                curWaypoints = hitWaypointCenter.transform.parent.GetComponent<Waypoints>();
+            }
+            else 
+            {
+                wpcol = hitWaypoint.transform.gameObject.GetComponent<WaypointCollider>();
+                curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();                
+            }
 
-            WaypointCollider wpcol = hitWaypoint.transform.gameObject.GetComponent<WaypointCollider>();
-            curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
 
             if (isClockwise)
             {
@@ -291,9 +300,17 @@ public class Player : MonoBehaviour
 
             nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
 
-            // Snap to grid
-            Vector3Int cellPosition = grid.WorldToCell(transform.position);
-            transform.position = grid.GetCellCenterWorld(cellPosition);
+            float dist = Vector2.Distance(transform.position, curWaypointPos);
+            Debug.Log(dist);
+            if (dist < 0.4f)
+            {
+                transform.position = curWaypointPos;
+            }
+            else
+            {
+                Vector3Int cellPosition = grid.WorldToCell(transform.position);
+                transform.position = grid.GetCellCenterWorld(cellPosition);
+            }
 
             if (rb.velocity.magnitude < 0.1f)
             {
@@ -319,7 +336,7 @@ public class Player : MonoBehaviour
                 nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
                 transform.position = curWaypointPos;
             }
-
+            
             Vector2 dir = (nextWaypointPos - transform.position).normalized;
             rb.velocity = dir * curWallRunSpeed;
         }
