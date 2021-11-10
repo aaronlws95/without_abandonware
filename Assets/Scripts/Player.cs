@@ -369,10 +369,10 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
         if (moveState == MoveState.WALLRUN)
         {
-            Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.up * wallRunRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.down * gravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left * gravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right * gravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.up * gravityRayCastLength);
         }
         else if (moveState == MoveState.GRAVITY)
         {
