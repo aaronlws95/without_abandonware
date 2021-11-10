@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public float stateChangeCooldown = 0f;
     public float reverseCooldown = 0f;
     public float wallCheckRayCastLength = 0.5f;
+    public float velocityThreshold = 0.1f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
 
@@ -50,7 +51,6 @@ public class Player : MonoBehaviour
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
     public float gravityRayCastLength = 0.6f;
-    public float gravityVelocityThreshold = 0.1f;
     public float gravityDownSlopeRayCastLength = 1.0f;
     public float gravityCannotStopRayCastLength = 1.0f;
     public bool isReverse = false;
@@ -239,38 +239,47 @@ public class Player : MonoBehaviour
         // If not running then latch on
         if (hitWaypoint && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
         {
+            Debug.Log(rb.velocity);
             // isClockwise = false as default
-            if (wallRunHitUp)
+            if (rb.velocity.magnitude > velocityThreshold)
             {
-                if (rb.velocity.x > 0.1f || wallRunHitLeft)
+                if (wallRunHitUp)
                 {
-                    isClockwise = true;
+                    if (rb.velocity.x > velocityThreshold || wallRunHitLeft)
+                    {
+                        Debug.Log("1");
+                        isClockwise = true;
+                    }
+                }
+
+                else if (wallRunHitDown)
+                {
+                    if (rb.velocity.x < -velocityThreshold || wallRunHitRight)
+                    {
+                        Debug.Log("2");
+                        isClockwise = true;
+                    }
+                }
+
+                else if (wallRunHitLeft)
+                {
+                    if (rb.velocity.y > velocityThreshold || wallRunHitDown)
+                    {
+                        Debug.Log("3");
+                        isClockwise = true;
+                    }
+                }
+
+                else if (wallRunHitRight)
+                {
+                    if (rb.velocity.y < -velocityThreshold || wallRunHitUp)
+                    {
+                        Debug.Log("4");
+                        isClockwise = true;
+                    }
                 }
             }
 
-            else if (wallRunHitDown)
-            {
-                if (rb.velocity.x < -0.1f || wallRunHitRight)
-                {
-                    isClockwise = true;
-                }
-            }
-
-            else if (wallRunHitLeft)
-            {
-                if (rb.velocity.y > 0.1f || wallRunHitDown)
-                {
-                    isClockwise = true;
-                }
-            }
-
-            else if (wallRunHitRight)
-            {
-                if (rb.velocity.y < -0.1f || wallRunHitUp)
-                {
-                    isClockwise = true;
-                }
-            }
 
             WaypointCollider wpcol = hitWaypoint.transform.gameObject.GetComponent<WaypointCollider>();
             curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
@@ -336,7 +345,7 @@ public class Player : MonoBehaviour
         RaycastHit2D gravityHitDown = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
 
         // Handle hitting walls other than the "ground"
-        if ((hitLeft && rb.velocity.x < -gravityVelocityThreshold) || (hitRight && rb.velocity.x > gravityVelocityThreshold))
+        if ((hitLeft && rb.velocity.x < -velocityThreshold) || (hitRight && rb.velocity.x > velocityThreshold))
         {
             if (gravityHitDown)
             {
@@ -351,7 +360,7 @@ public class Player : MonoBehaviour
 
         if ((hitUp && gravitySign == 1) || (hitDown && gravitySign == -1))
         {
-            if ((rb.velocity.y > gravityVelocityThreshold && gravitySign == -1) || (rb.velocity.y < -gravityVelocityThreshold && gravitySign == 1))
+            if ((rb.velocity.y > velocityThreshold && gravitySign == -1) || (rb.velocity.y < -velocityThreshold && gravitySign == 1))
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
             }
@@ -373,7 +382,7 @@ public class Player : MonoBehaviour
             canStop = true;
         }
         // Deal with moving down slopes
-        else if ((gravitySign == 1 && rb.velocity.y < -gravityVelocityThreshold) || (gravitySign == -1 && rb.velocity.y > gravityVelocityThreshold))
+        else if ((gravitySign == 1 && rb.velocity.y < -velocityThreshold) || (gravitySign == -1 && rb.velocity.y > velocityThreshold))
         {
             RaycastHit2D gravityHitDownSlope = Physics2D.Raycast(transform.position, rb.velocity.normalized, gravityDownSlopeRayCastLength, 1 << WALL_LAYER);
             if (gravityHitDownSlope)
