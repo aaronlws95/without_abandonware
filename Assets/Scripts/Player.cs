@@ -50,8 +50,13 @@ public class Player : MonoBehaviour
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
     public float gravityRayCastLength = 0.6f;
+    public float gravityVelocityThreshold = 0.1f;
+    public float gravityDownSlopeRayCastLength = 1.0f;
+    public float gravityCannotStopRayCastLength = 1.0f;
     public bool isReverse = false;
     int gravitySign = 1; // down
+    bool canStop = false;
+    float activeGravityRayCastLength;
 
     [Header("Bounce")]
     public float bounceRayCastLength = 0.5f;
@@ -199,6 +204,8 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 sm.PlaySound("Gravity");
                 gravitySign = 1;
+                canStop = false;
+                activeGravityRayCastLength = gravityRayCastLength;
                 break;
             case (MoveState.BOUNCE):
                 sm.PlaySound("Bounce");
@@ -318,30 +325,61 @@ public class Player : MonoBehaviour
     ////////// GRAVITY //////////
     void UpdateGravity()
     {
-        // Handle hitting walls other than the "ground"
-        if (hitLeft || hitRight)
+        if (!canStop)
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            activeGravityRayCastLength = gravityCannotStopRayCastLength;
         }
+        else 
+        {
+            activeGravityRayCastLength = gravityRayCastLength;
+        }
+        RaycastHit2D gravityHitDown = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
+
+        // Handle hitting walls other than the "ground"
+        if ((hitLeft && rb.velocity.x < -gravityVelocityThreshold) || (hitRight && rb.velocity.x > gravityVelocityThreshold))
+        {
+            if (gravityHitDown)
+            {
+                canStop = true;
+                rb.velocity = Vector2.zero;
+            }
+            else
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }            
+        }
+
         if ((hitUp && gravitySign == 1) || (hitDown && gravitySign == -1))
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            if ((rb.velocity.y > gravityVelocityThreshold && gravitySign == -1) || (rb.velocity.y < -gravityVelocityThreshold && gravitySign == 1))
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
         }
 
         // Landed
-        RaycastHit2D gravityHitDown = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, gravityRayCastLength, 1 << WALL_LAYER);
-        if (gravityHitDown)
+        if (gravityHitDown && canStop)
         {
             rb.velocity = Vector2.zero;
         }
         // Falling
-        else
+        else if (!gravityHitDown)
         {
             float gravityVelocity = rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime;
             float sign = Mathf.Sign(gravityVelocity);
             gravityVelocity = Mathf.Min(Mathf.Abs(gravityVelocity), gravityMaxSpeed);
 
             rb.velocity = new Vector2(rb.velocity.x, sign * gravityVelocity);
+            canStop = true;
+        }
+        // Deal with moving down slopes
+        else if ((gravitySign == 1 && rb.velocity.y < -gravityVelocityThreshold) || (gravitySign == -1 && rb.velocity.y > gravityVelocityThreshold))
+        {
+            RaycastHit2D gravityHitDownSlope = Physics2D.Raycast(transform.position, rb.velocity.normalized, gravityDownSlopeRayCastLength, 1 << WALL_LAYER);
+            if (gravityHitDownSlope)
+            {
+                canStop = true;
+            }
         }
     }
 
@@ -376,8 +414,8 @@ public class Player : MonoBehaviour
         }
         else if (moveState == MoveState.GRAVITY)
         {
-            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * gravityRayCastLength);
-
+            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + rb.velocity.normalized * gravityDownSlopeRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {

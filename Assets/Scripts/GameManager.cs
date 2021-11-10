@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     static PlayerData playerData;
     static bool playerDataLoaded = false;
     int currentLevel = 0;
+    static bool properStart = false;
+
     void Awake()
     {
         if (instance != null)
@@ -48,6 +50,10 @@ public class GameManager : MonoBehaviour
         {
             player = GameObject.Find("Player").GetComponent<Player>();
             collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
+        }
+        else if (sceneName == "StartMenu")
+        {   
+            properStart = true;
         }
 
         playerData = new PlayerData(0);
@@ -109,7 +115,14 @@ public class GameManager : MonoBehaviour
 
             if (collectibleCount == 0)
             {
-                CompleteLevel();
+                if (properStart)
+                {
+                    CompleteLevel();
+                }
+                else 
+                {
+                    StartCoroutine(RestartLevel());
+                }
             }
         }
     }

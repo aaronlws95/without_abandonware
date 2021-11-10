@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    string selectedLevel = "";
     Dropdown dropdown;
     GameManager gm;
 
