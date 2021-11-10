@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Settings: MonoBehaviour
+public class OptionsScreen: MonoBehaviour
 {
-    public void ExitGame()
+    public void GoToStartMenu()
     {
-        Application.Quit();
+         SceneManager.LoadScene("StartMenu");
     }
 
     public void SetVolumeSFX(float volume)

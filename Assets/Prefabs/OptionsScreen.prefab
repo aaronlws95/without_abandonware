@@ -747,7 +747,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Exit
+  m_Text: Menu
 --- !u!1 &6885625320644450781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 6885625320916386578}
   - component: {fileID: 6885625320916386577}
   m_Layer: 5
-  m_Name: OptionsMenu
+  m_Name: OptionsScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1462,7 +1462,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6885625320916386577}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: ExitGame
+        m_MethodName: GoToStartMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

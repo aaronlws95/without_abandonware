@@ -14,7 +14,10 @@ public class GameManager : MonoBehaviour
     Player player;
     GameObject[] collectibles;
     int collectibleCount;
-
+    string sceneName;
+    static PlayerData playerData;
+    static bool playerDataLoaded = false;
+    int currentLevel = 0;
     void Awake()
     {
         if (instance != null)
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         sm = SoundManager.instance;
+        sceneName = SceneManager.GetActiveScene().name;
+
         if (!optionsMenuCreated)
         {
             optionsMenuCreated = true;
@@ -42,10 +47,48 @@ public class GameManager : MonoBehaviour
             optionsMenu = GameObject.Find("OptionsMenu");
         }
 
-        player = GameObject.Find("Player").GetComponent<Player>();
+        if (sceneName != "StartMenu")
+        {
+            player = GameObject.Find("Player").GetComponent<Player>();
+            collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
+        }
 
-        collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
+        playerData = new PlayerData(0);
+        if (!playerDataLoaded)
+        {
+            LoadPlayerData();
+        }
     }
+
+    public int GetPlayerLevel()
+    {
+        return playerData.level;
+    }
+
+    public void SetPlayerLevel(int _level)
+    {
+        playerData.level = _level;
+    }
+
+    public void SavePlayerData()
+    {
+        SaveSystem.SavePlayer(playerData);        
+    }
+
+    public void SetCurrentLevel(int _level)
+    {
+        currentLevel = _level;
+    }
+
+    void LoadPlayerData()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+        if(data != null)
+        {
+            playerData = data;
+        }
+        playerDataLoaded = true;
+    }        
 
     public void RemoveCollectible()
     {
@@ -54,27 +97,45 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if ((player.playerState == Player.PlayerState.DEAD || Input.GetKeyDown(KeyCode.X)) && !restartLevel)
+        if (sceneName != "StartMenu")
         {
-            StartCoroutine(RestartLevel());
-        }
+            if ((player.playerState == Player.PlayerState.DEAD || Input.GetKeyDown(KeyCode.X)) && !restartLevel)
+            {
+                sm.PlaySound("Die");
+                StartCoroutine(RestartLevel());
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            optionsMenuActive = !optionsMenuActive;
-            optionsMenu.SetActive(optionsMenuActive);
-        }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ToggleOptionsMenu();
+            }
 
-        if (collectibleCount == 0)
-        {
-            player.playerState = Player.PlayerState.DEAD;
+            if (collectibleCount == 0)
+            {
+                CompleteLevel();
+            }
         }
+    }
+
+    public void CompleteLevel()
+    {
+        if(currentLevel >= playerData.level)
+        {
+            playerData.level += 1;
+            SavePlayerData();
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void ToggleOptionsMenu()
+    {
+        optionsMenuActive = !optionsMenuActive;
+        optionsMenu.SetActive(optionsMenuActive);
     }
 
     IEnumerator RestartLevel()
     {
         restartLevel = true;
-        sm.PlaySound("Die");
         yield return new WaitForSeconds(1.0f);
         restartLevel = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
