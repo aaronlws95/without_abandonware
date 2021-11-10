@@ -151,19 +151,17 @@ MonoBehaviour:
   - {fileID: -6781412095145881161, guid: 0b99f9c841682c640aaae35e5361d40f, type: 3}
   moveState: 0
   playerState: 0
+  stateChangeCooldown: 0
+  reverseCooldown: 0
+  wallCheckRayCastLength: 0.5
   defaultWallRunSpeed: 10
   minWallRunSpeed: 10
   maxWallRunSpeed: 15
   curWallRunSpeed: 10
-  wallRunRayCastLength: 0.01
-  wallRunRayCastGroundLength: 0.6
+  wallRunRayCastLength: 0.6
   waypointDistThreshold: 0.2
   isClockwise: 0
   gravitySpeed: 10
-  gravityRayCastLength: 1
   gravityMaxSpeed: 15
-  gravityFallingRayCastLength: 0.5
-  gravitySideWallRayCastLength: 0.5
-  gravityGroundOffset: 0.5
   isReverse: 0
   bounceRayCastLength: 0.5

@@ -10892,11 +10892,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3810301211883766378, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.47
+      value: 14.414
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: gravityRayCastLength
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: wallRunRayCastLength
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: waypointDistThreshold

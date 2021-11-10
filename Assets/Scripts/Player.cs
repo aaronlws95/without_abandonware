@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public PlayerState playerState;
     public float stateChangeCooldown = 0f;
     public float reverseCooldown = 0f;
+    public float wallCheckRayCastLength = 0.5f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
 
@@ -37,9 +38,8 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
-    public float wallRunRayCastLength = 0.01f;
-    public float wallRunRayCastGroundLength = 0.6f;
-    public float waypointDistThreshold = 0.7f;
+    public float wallRunRayCastLength = 0.6f;
+    public float waypointDistThreshold = 0.2f;
     public bool isClockwise = false;
     bool startWallRun = false;
     Waypoints curWaypoints;
@@ -48,16 +48,9 @@ public class Player : MonoBehaviour
 
     [Header("Gravity")]
     public float gravitySpeed = 10f;
-    public float gravityRayCastLength = 1.0f;
     public float gravityMaxSpeed = 15f;
-    public float gravityFallingRayCastLength = 0.5f;
-    public float gravitySideWallRayCastLength = 0.5f;
-    public float gravityGroundOffset = 0.5f;
-    float activeGravityRayCastLength;
     public bool isReverse = false;
-    int gravitySign = 1;
-    bool isLanded = false;
-    bool isFalling = false;
+    int gravitySign = 1; // down
 
     [Header("Bounce")]
     public float bounceRayCastLength = 0.5f;
@@ -69,6 +62,11 @@ public class Player : MonoBehaviour
     SoundManager sm;
 
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Q, KeyCode.W, KeyCode.E };
+
+    RaycastHit2D hitLeft;
+    RaycastHit2D hitRight;
+    RaycastHit2D hitUp;
+    RaycastHit2D hitDown;
 
     void Start()
     {
@@ -130,7 +128,6 @@ public class Player : MonoBehaviour
                 break;
             case (MoveState.GRAVITY):
                 sm.PlaySound("Reverse");
-                isLanded = false;
                 gravitySign *= -1;
                 break;
             case (MoveState.BOUNCE):
@@ -142,6 +139,31 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckRayCastLength, 1 << WALL_LAYER);
+        hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckRayCastLength, 1 << WALL_LAYER);
+        hitUp = Physics2D.Raycast(transform.position, Vector2.up, wallCheckRayCastLength, 1 << WALL_LAYER);
+        hitDown = Physics2D.Raycast(transform.position, Vector2.down, wallCheckRayCastLength, 1 << WALL_LAYER);  
+
+        if (hitLeft)
+        {
+            transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
+        }
+
+        if (hitRight)
+        {
+            transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
+        }
+
+        if (hitDown)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
+        }
+
+        if (hitUp)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
+        }
+
         switch (moveState)
         {
             case (MoveState.WALLRUN):
@@ -175,10 +197,7 @@ public class Player : MonoBehaviour
                 break;
             case (MoveState.GRAVITY):
                 sm.PlaySound("Gravity");
-                isFalling = false;
-                isLanded = false;
                 gravitySign = 1;
-                activeGravityRayCastLength = gravityRayCastLength;
                 break;
             case (MoveState.BOUNCE):
                 sm.PlaySound("Bounce");
@@ -201,52 +220,52 @@ public class Player : MonoBehaviour
     {
         // Check if the center is within the waypoint collider
         // RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WAYPOINTS_LAYER);
-        RaycastHit2D hit = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
+        RaycastHit2D hitWaypoint = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WAYPOINTS_LAYER);
+        RaycastHit2D hitWall = Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0f, Vector2.down, 0f, 1 << WALL_LAYER);
 
-        // Check if any part is touching a wall
-        RaycastHit2D checkUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastGroundLength, 1 << WALL_LAYER);
-        RaycastHit2D checkDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastGroundLength, 1 << WALL_LAYER);
-        RaycastHit2D checkLeft = Physics2D.Raycast(transform.position, Vector2.left, wallRunRayCastGroundLength, 1 << WALL_LAYER);
-        RaycastHit2D checkRight = Physics2D.Raycast(transform.position, Vector2.right, wallRunRayCastGroundLength, 1 << WALL_LAYER);
+        RaycastHit2D wallRunHitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallRunRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D wallRunHitRight = Physics2D.Raycast(transform.position, Vector2.right, wallRunRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D wallRunHitUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastLength, 1 << WALL_LAYER);
+        RaycastHit2D wallRunHitDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WALL_LAYER);  
 
         // If not running then latch on
-        if (hit && !startWallRun && (checkUp || checkDown || checkLeft || checkRight))
+        if (hitWaypoint && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
         {
             // isClockwise = false as default
-            if (checkUp)
+            if (wallRunHitUp)
             {
-                if (rb.velocity.x > 0.1f)
+                if (rb.velocity.x > 0.1f || wallRunHitLeft)
                 {
                     isClockwise = true;
                 }
             }
 
-            else if (checkDown)
+            else if (wallRunHitDown)
             {
-                if (rb.velocity.x < -0.1f)
+                if (rb.velocity.x < -0.1f || wallRunHitRight)
                 {
                     isClockwise = true;
                 }
             }
 
-            else if (checkLeft)
+            else if (wallRunHitLeft)
             {
-                if (rb.velocity.y > 0.1f)
+                if (rb.velocity.y > 0.1f || wallRunHitDown)
                 {
                     isClockwise = true;
                 }
             }
 
-            else if (checkRight)
+            else if (wallRunHitRight)
             {
-                if (rb.velocity.y < -0.1f)
+                if (rb.velocity.y < -0.1f || wallRunHitUp)
                 {
                     isClockwise = true;
                 }
             }
 
-            WaypointCollider wpcol = hit.transform.gameObject.GetComponent<WaypointCollider>();
-            curWaypoints = hit.transform.parent.GetComponent<Waypoints>();
+            WaypointCollider wpcol = hitWaypoint.transform.gameObject.GetComponent<WaypointCollider>();
+            curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
 
             if (isClockwise)
             {
@@ -298,56 +317,23 @@ public class Player : MonoBehaviour
     ////////// GRAVITY //////////
     void UpdateGravity()
     {
-        // Set the falling ray cast length to be lower
-        // Needs to be longer to catch slopes but shorter so it doesn't detect the ground too fast
-        if (isFalling)
-        {
-            activeGravityRayCastLength = gravityFallingRayCastLength;
-        }
-
         // Handle hitting walls other than the "ground"
-        RaycastHit2D hitLeftWall = Physics2D.Raycast(transform.position, Vector2.left, gravitySideWallRayCastLength, 1 << WALL_LAYER);
-        RaycastHit2D hitRightWall = Physics2D.Raycast(transform.position, Vector2.right, gravitySideWallRayCastLength, 1 << WALL_LAYER);
-        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, gravitySign * Vector2.up, gravitySideWallRayCastLength, 1 << WALL_LAYER);
-        if (hitLeftWall || hitRightWall)
+        if (hitLeft || hitRight)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-        if (hitUp)
+        if ((hitUp && gravitySign == 1) || (hitDown && gravitySign == -1))
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
         }
 
-        RaycastHit2D hitGround = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, activeGravityRayCastLength, 1 << WALL_LAYER);
-
-        if (hitGround)
+        // Landed
+        if ((hitDown && gravitySign == 1) || (hitUp && gravitySign == -1))
         {
-            // Wait until it is falling before grounding
-            // This allows the player to get a jump off instead of getting stuck
-            if (isFalling)
-            {
-                activeGravityRayCastLength = gravityRayCastLength;
-                rb.velocity = Vector2.zero;
-                transform.position = new Vector3(hitGround.point.x, hitGround.point.y + gravitySign * gravityGroundOffset, transform.position.z);
-                // Vector3Int cellPosition = grid.WorldToCell(transform.position);
-                // transform.position = grid.GetCellCenterWorld(cellPosition);
-                isLanded = true;
-                isFalling = false;
-            }
-            else
-            {
-                // Deal with moving down slopes
-                if ((gravitySign == 1 && rb.velocity.y < -0.1f) || (gravitySign == -1 && rb.velocity.y > 0.1f))
-                {
-                    isFalling = true;
-                }
-            }
+            rb.velocity = Vector2.zero;
         }
+        // Falling
         else
-        {
-            isFalling = true;
-        }
-        if (!isLanded && isFalling)
         {
             float gravityVelocity = rb.velocity.y - gravitySign * gravitySpeed * Time.fixedDeltaTime;
             float sign = Mathf.Sign(gravityVelocity);
@@ -372,23 +358,19 @@ public class Player : MonoBehaviour
     {
         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
 
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * wallCheckRayCastLength);
+        Gizmos.DrawLine(pos, pos + Vector2.left * wallCheckRayCastLength);
+        Gizmos.DrawLine(pos, pos + Vector2.right * wallCheckRayCastLength);
+        Gizmos.DrawLine(pos, pos + gravitySign * Vector2.up * wallCheckRayCastLength);
+
         if (moveState == MoveState.WALLRUN)
         {
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.red;
             Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastLength);
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastGroundLength);
-            Gizmos.DrawLine(pos, pos + Vector2.up * wallRunRayCastGroundLength);
-        }
-        else if (moveState == MoveState.GRAVITY)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.left * activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + Vector2.right * activeGravityRayCastLength);
-            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.up * activeGravityRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastLength);
+            Gizmos.DrawLine(pos, pos + Vector2.up * wallRunRayCastLength);
         }
         else if (moveState == MoveState.BOUNCE)
         {
