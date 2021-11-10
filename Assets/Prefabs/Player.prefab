@@ -158,8 +158,8 @@ MonoBehaviour:
   minWallRunSpeed: 10
   maxWallRunSpeed: 15
   curWallRunSpeed: 10
-  wallRunRayCastLength: 0.6
-  waypointDistThreshold: 0.2
+  wallRunRayCastLength: 0.55
+  waypointDistThreshold: 0.15
   isClockwise: 0
   gravitySpeed: 10
   gravityMaxSpeed: 15
