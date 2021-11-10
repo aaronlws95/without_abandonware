@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public float stateChangeCooldown = 0f;
     public float reverseCooldown = 0f;
     float wallCheckRayCastLength = 0.5f;
-    public float velocityThreshold = 0.1f;
+    float velocityThreshold = 0.1f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
 
