@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
-    public float wallRunRayCastLength = 0.6f;
+    public float wallRunRayCastLength = 0.55f;
     public float waypointDistThreshold = 0.2f;
     public bool isClockwise = false;
     bool startWallRun = false;
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
+    public float gravityRayCastLength = 0.6f;
     public bool isReverse = false;
     int gravitySign = 1; // down
 
@@ -328,7 +329,8 @@ public class Player : MonoBehaviour
         }
 
         // Landed
-        if ((hitDown && gravitySign == 1) || (hitUp && gravitySign == -1))
+        RaycastHit2D gravityHitDown = Physics2D.Raycast(transform.position, gravitySign * Vector2.down, gravityRayCastLength, 1 << WALL_LAYER);
+        if (gravityHitDown)
         {
             rb.velocity = Vector2.zero;
         }
@@ -371,6 +373,11 @@ public class Player : MonoBehaviour
             Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.up * wallRunRayCastLength);
+        }
+        else if (moveState == MoveState.GRAVITY)
+        {
+            Gizmos.color = Color.red;
+
         }
         else if (moveState == MoveState.BOUNCE)
         {
