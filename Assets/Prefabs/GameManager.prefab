@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionsMenu: {fileID: 6885625320916386576, guid: 220cd87bee140b943a654ca0b19a39ca, type: 3}
-  player: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
 --- !u!114 &5986786269976188595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,11 +57,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac6e6a9b39c0484799bc09afafb3de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSFX: 1
-  volumeBGM: 1
   sounds:
   - name: Die
-    clip: {fileID: 8300000, guid: 7b1aef448171be8458df30abc41471ba, type: 3}
+    clip: {fileID: 8300000, guid: f075b86c12fa6cf4b95e882144bba39e, type: 3}
   - name: Collect
     clip: {fileID: 8300000, guid: 6095ae5a5ee1ef54da7c0032e8c33bcc, type: 3}
   - name: WallRun
