@@ -344,7 +344,6 @@ public class Player : MonoBehaviour
             if (gravityHitDown)
             {
                 canStop = true;
-                rb.velocity = Vector2.zero;
             }
             else
             {
@@ -354,7 +353,7 @@ public class Player : MonoBehaviour
 
         if ((hitUp && gravitySign == 1) || (hitDown && gravitySign == -1))
         {
-            if ((rb.velocity.y > velocityThreshold && gravitySign == -1) || (rb.velocity.y < -velocityThreshold && gravitySign == 1))
+            if ((rb.velocity.y > velocityThreshold && gravitySign == 1) || (rb.velocity.y < -velocityThreshold && gravitySign == -1))
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
             }
