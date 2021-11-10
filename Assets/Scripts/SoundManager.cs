@@ -9,6 +9,8 @@ public class Sound
     public string name;
     public AudioClip clip;
     private AudioSource source; 
+    [Range(0f, 1f)]
+    public float volume = 1.0f;
 
     public void SetSource(AudioSource _source)
     {   
@@ -16,9 +18,9 @@ public class Sound
         source.clip = clip;
     }
 
-    public void Play(float volume)
+    public void Play(float _volume)
     {
-        source.volume = volume; 
+        source.volume = _volume*volume; 
         source.Play();
     }
 }
