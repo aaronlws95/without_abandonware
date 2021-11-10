@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject optionsMenu;
+    static GameObject _optionsMenu;
     static bool optionsMenuActive = false;
     static bool optionsMenuCreated = false;
     bool restartLevel = false;
@@ -38,13 +39,9 @@ public class GameManager : MonoBehaviour
         if (!optionsMenuCreated)
         {
             optionsMenuCreated = true;
-            optionsMenu = Instantiate(optionsMenu);
-            optionsMenu.name = "OptionsMenu";
-            DontDestroyOnLoad(optionsMenu);
-        }
-        else
-        {
-            optionsMenu = GameObject.Find("OptionsMenu");
+            _optionsMenu = Instantiate(optionsMenu);
+            _optionsMenu.name = "OptionsMenu";
+            DontDestroyOnLoad(_optionsMenu);
         }
 
         if (sceneName != "StartMenu")
@@ -130,7 +127,7 @@ public class GameManager : MonoBehaviour
     public void ToggleOptionsMenu()
     {
         optionsMenuActive = !optionsMenuActive;
-        optionsMenu.SetActive(optionsMenuActive);
+        _optionsMenu.SetActive(optionsMenuActive);
     }
 
     IEnumerator RestartLevel()

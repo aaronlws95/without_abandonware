@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class OptionsScreen: MonoBehaviour
 {
+    GameManager gm;
+
+    void Start()
+    {
+        gm = GameManager.instance;
+    }
+
     public void GoToStartMenu()
     {
-         SceneManager.LoadScene("StartMenu");
+        gm.ToggleOptionsMenu();
+        SceneManager.LoadScene("StartMenu");
     }
 
     public void SetVolumeSFX(float volume)
