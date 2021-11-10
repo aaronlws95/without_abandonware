@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     public PlayerState playerState;
     public float stateChangeCooldown = 0f;
     public float reverseCooldown = 0f;
-    public float wallCheckRayCastLength = 0.5f;
+    float wallCheckRayCastLength = 0.5f;
     public float velocityThreshold = 0.1f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
-    public float waypointDistThreshold = 0.2f;
+    float waypointDistThreshold = 0.2f;
     float wallRunRayCastLength = 0.6f;
     bool isClockwise = false;
     bool startWallRun = false;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     public float gravityMaxSpeed = 15f;
     float gravityRayCastLength = 0.6f;
     float gravityDownSlopeRayCastLength = 1.0f;
-    float gravityCannotStopRayCastLength = 1.0f;
+    float gravityCannotStopRayCastLength = 1.2f;
     int gravitySign = 1; // down
     bool canStop = false;
     float activeGravityRayCastLength;
