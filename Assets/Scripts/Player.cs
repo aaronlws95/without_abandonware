@@ -300,17 +300,9 @@ public class Player : MonoBehaviour
 
             nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
 
-            float dist = Vector2.Distance(transform.position, curWaypointPos);
-            Debug.Log(dist);
-            if (dist < 0.4f)
-            {
-                transform.position = curWaypointPos;
-            }
-            else
-            {
-                Vector3Int cellPosition = grid.WorldToCell(transform.position);
-                transform.position = grid.GetCellCenterWorld(cellPosition);
-            }
+            Vector3Int cellPosition = grid.WorldToCell(transform.position);
+            transform.position = grid.GetCellCenterWorld(cellPosition);
+        
 
             if (rb.velocity.magnitude < 0.1f)
             {
