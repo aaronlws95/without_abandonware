@@ -39,9 +39,9 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
-    public float wallRunRayCastLength = 0.6f;
     public float waypointDistThreshold = 0.2f;
-    public bool isClockwise = false;
+    float wallRunRayCastLength = 0.6f;
+    bool isClockwise = false;
     bool startWallRun = false;
     Waypoints curWaypoints;
     Vector3 curWaypointPos;
@@ -50,10 +50,9 @@ public class Player : MonoBehaviour
     [Header("Gravity")]
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
-    public float gravityRayCastLength = 0.6f;
-    public float gravityDownSlopeRayCastLength = 1.0f;
-    public float gravityCannotStopRayCastLength = 1.0f;
-    public bool isReverse = false;
+    float gravityRayCastLength = 0.6f;
+    float gravityDownSlopeRayCastLength = 1.0f;
+    float gravityCannotStopRayCastLength = 1.0f;
     int gravitySign = 1; // down
     bool canStop = false;
     float activeGravityRayCastLength;
@@ -239,7 +238,6 @@ public class Player : MonoBehaviour
         // If not running then latch on
         if (hitWaypoint && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
         {
-            Debug.Log(rb.velocity);
             // isClockwise = false as default
             if (rb.velocity.magnitude > velocityThreshold)
             {
@@ -247,7 +245,6 @@ public class Player : MonoBehaviour
                 {
                     if (rb.velocity.x > velocityThreshold || wallRunHitLeft)
                     {
-                        Debug.Log("1");
                         isClockwise = true;
                     }
                 }
@@ -256,7 +253,6 @@ public class Player : MonoBehaviour
                 {
                     if (rb.velocity.x < -velocityThreshold || wallRunHitRight)
                     {
-                        Debug.Log("2");
                         isClockwise = true;
                     }
                 }
@@ -265,7 +261,6 @@ public class Player : MonoBehaviour
                 {
                     if (rb.velocity.y > velocityThreshold || wallRunHitDown)
                     {
-                        Debug.Log("3");
                         isClockwise = true;
                     }
                 }
@@ -274,7 +269,6 @@ public class Player : MonoBehaviour
                 {
                     if (rb.velocity.y < -velocityThreshold || wallRunHitUp)
                     {
-                        Debug.Log("4");
                         isClockwise = true;
                     }
                 }

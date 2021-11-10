@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     string sceneName;
     static PlayerData playerData;
     static bool playerDataLoaded = false;
-    int currentLevel = 0;
+    static int currentLevel = 0;
     static bool properStart = false;
 
     void Awake()
@@ -51,14 +51,15 @@ public class GameManager : MonoBehaviour
             player = GameObject.Find("Player").GetComponent<Player>();
             collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
         }
-        else if (sceneName == "StartMenu")
+        else 
         {   
             properStart = true;
         }
 
-        playerData = new PlayerData(0);
+
         if (!playerDataLoaded)
         {
+            playerData = new PlayerData(0);
             LoadPlayerData();
         }
     }
@@ -66,11 +67,6 @@ public class GameManager : MonoBehaviour
     public int GetPlayerLevel()
     {
         return playerData.level;
-    }
-
-    public void SetPlayerLevel(int _level)
-    {
-        playerData.level = _level;
     }
 
     public void SavePlayerData()

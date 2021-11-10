@@ -40,6 +40,7 @@ public class LevelSelect : MonoBehaviour
 
     public void PlayLevel()
     {
+        gm.SetCurrentLevel(dropdown.value);
         SceneManager.LoadScene(dropdown.options[dropdown.value].text);
     }
 }
