@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
-    public float wallRunRayCastLength = 0.55f;
+    public float wallRunRayCastLength = 0.6f;
     public float waypointDistThreshold = 0.2f;
     public bool isClockwise = false;
     bool startWallRun = false;
@@ -361,14 +361,14 @@ public class Player : MonoBehaviour
         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * wallCheckRayCastLength);
+        Gizmos.DrawLine(pos, pos + Vector2.down * wallCheckRayCastLength);
         Gizmos.DrawLine(pos, pos + Vector2.left * wallCheckRayCastLength);
         Gizmos.DrawLine(pos, pos + Vector2.right * wallCheckRayCastLength);
-        Gizmos.DrawLine(pos, pos + gravitySign * Vector2.up * wallCheckRayCastLength);
+        Gizmos.DrawLine(pos, pos + Vector2.up * wallCheckRayCastLength);
 
+        Gizmos.color = Color.red;
         if (moveState == MoveState.WALLRUN)
         {
-            Gizmos.color = Color.red;
             Gizmos.DrawLine(pos, pos + Vector2.down * wallRunRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.left * wallRunRayCastLength);
             Gizmos.DrawLine(pos, pos + Vector2.right * wallRunRayCastLength);
@@ -376,12 +376,11 @@ public class Player : MonoBehaviour
         }
         else if (moveState == MoveState.GRAVITY)
         {
-            Gizmos.color = Color.red;
+            Gizmos.DrawLine(pos, pos + gravitySign * Vector2.down * gravityRayCastLength);
 
         }
         else if (moveState == MoveState.BOUNCE)
         {
-            Gizmos.color = Color.red;
             Gizmos.DrawLine(pos, pos + rb.velocity.normalized * bounceRayCastLength);
         }
 

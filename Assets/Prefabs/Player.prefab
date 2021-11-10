@@ -163,5 +163,6 @@ MonoBehaviour:
   isClockwise: 0
   gravitySpeed: 10
   gravityMaxSpeed: 15
+  gravityRayCastLength: 0.55
   isReverse: 0
   bounceRayCastLength: 0.5
