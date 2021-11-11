@@ -391,7 +391,7 @@ public class Player : MonoBehaviour
         // Landed
         if (gravityHitDown && canStop)
         {
-            rb.velocity = Vector2.zero;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
         }
         // Falling
         else if (!gravityHitDown)
