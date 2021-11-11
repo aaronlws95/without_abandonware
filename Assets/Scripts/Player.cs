@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
     [Header("General")]
     Grid grid;
-    public ParticleSystem particleSystem;
+    public ParticleSystem ps;
     public Sprite[] sprites;
     public MoveState moveState;
     public PlayerState playerState;
@@ -136,7 +136,7 @@ public class Player : MonoBehaviour
         {
             case (MoveState.WALLRUN):
                 sm.PlaySound("Reverse");
-                particleSystem.Play();
+                ps.Play();
                 isClockwise = !isClockwise;
                 curWaypoints.SetClockwise(isClockwise);
                 Vector3 tmp = curWaypointPos;
@@ -165,26 +165,26 @@ public class Player : MonoBehaviour
             if (hitLeft)
             {
                 transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
-                particleSystem.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+                ps.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
 
             }
 
             if (hitRight)
             {
                 transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
-                particleSystem.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+                ps.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
             }
 
             if (hitDown)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
-                particleSystem.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+                ps.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
             }
 
             if (hitUp)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
-                particleSystem.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                ps.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             }
 
             switch (moveState)
@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
         {
             case (MoveState.WALLRUN):
                 sm.PlaySound("WallRun");
-                particleSystem.Play();
+                ps.Play();
                 isClockwise = false;
                 startWallRun = false;
                 break;
