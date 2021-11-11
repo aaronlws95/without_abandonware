@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public enum PlayerState
     {
+        INIT,
         ACTIVE,
         DEAD
     }
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         col = GetComponent<BoxCollider2D>();
-        playerState = PlayerState.ACTIVE;
+        playerState = PlayerState.INIT;
         ChangeMoveState(moveState);
         grid = GameObject.Find("Grid").GetComponent<Grid>();
         sm = SoundManager.instance;
@@ -86,37 +87,46 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Reverse
-        if (reverseCount < reverseCooldown)
+        if (playerState == PlayerState.INIT)
         {
-            reverseCount += Time.deltaTime;
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
+            if (Input.anyKey)
             {
-                ReverseMoveState();
-                reverseCount = 0f;
+                playerState = PlayerState.ACTIVE;
             }
         }
-
-        if (stateChangeCount < stateChangeCooldown)
+        else if (playerState == PlayerState.ACTIVE)
         {
-            stateChangeCount += Time.deltaTime;
-        }
-        else
-        {
-            for (int i = 0; i < keyCodes.Length; ++i)
+            // Reverse
+            if (reverseCount < reverseCooldown)
             {
-                if (Input.GetKey(keyCodes[i]))
+                reverseCount += Time.deltaTime;
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
                 {
-                    ChangeMoveState((MoveState)i);
-                    stateChangeCount = 0f;
-                    break;
+                    ReverseMoveState();
+                    reverseCount = 0f;
+                }
+            }
+
+            if (stateChangeCount < stateChangeCooldown)
+            {
+                stateChangeCount += Time.deltaTime;
+            }
+            else
+            {
+                for (int i = 0; i < keyCodes.Length; ++i)
+                {
+                    if (Input.GetKey(keyCodes[i]))
+                    {
+                        ChangeMoveState((MoveState)i);
+                        stateChangeCount = 0f;
+                        break;
+                    }
                 }
             }
         }
-
     }
 
     void ReverseMoveState()
@@ -138,48 +148,50 @@ public class Player : MonoBehaviour
             case (MoveState.BOUNCE):
                 rb.velocity = -rb.velocity;
                 break;
-
         }
     }
 
     void FixedUpdate()
     {
-        hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckRayCastLength, 1 << WALL_LAYER);
-        hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckRayCastLength, 1 << WALL_LAYER);
-        hitUp = Physics2D.Raycast(transform.position, Vector2.up, wallCheckRayCastLength, 1 << WALL_LAYER);
-        hitDown = Physics2D.Raycast(transform.position, Vector2.down, wallCheckRayCastLength, 1 << WALL_LAYER);  
-
-        if (hitLeft)
+        if (playerState == PlayerState.ACTIVE)
         {
-            transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
-        }
+            hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckRayCastLength, 1 << WALL_LAYER);
+            hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckRayCastLength, 1 << WALL_LAYER);
+            hitUp = Physics2D.Raycast(transform.position, Vector2.up, wallCheckRayCastLength, 1 << WALL_LAYER);
+            hitDown = Physics2D.Raycast(transform.position, Vector2.down, wallCheckRayCastLength, 1 << WALL_LAYER);  
 
-        if (hitRight)
-        {
-            transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
-        }
+            if (hitLeft)
+            {
+                transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
+            }
 
-        if (hitDown)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
-        }
+            if (hitRight)
+            {
+                transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
+            }
 
-        if (hitUp)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
-        }
+            if (hitDown)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
+            }
 
-        switch (moveState)
-        {
-            case (MoveState.WALLRUN):
-                UpdateWallRun();
-                break;
-            case (MoveState.GRAVITY):
-                UpdateGravity();
-                break;
-            case (MoveState.BOUNCE):
-                UpdateBounce();
-                break;
+            if (hitUp)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
+            }
+
+            switch (moveState)
+            {
+                case (MoveState.WALLRUN):
+                    UpdateWallRun();
+                    break;
+                case (MoveState.GRAVITY):
+                    UpdateGravity();
+                    break;
+                case (MoveState.BOUNCE):
+                    UpdateBounce();
+                    break;
+            }
         }
     }
 
