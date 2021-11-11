@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
     {
         if (playerState == PlayerState.INIT)
         {
-            if (Input.anyKey)
+            if (Input.anyKey && !Input.GetKey(KeyCode.Escape))
             {
                 playerState = PlayerState.ACTIVE;
             }

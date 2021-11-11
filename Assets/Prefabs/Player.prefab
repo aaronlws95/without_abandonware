@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d64472e6170954099da2858e5d1954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 5496214628883588806, guid: d9c45a1477992904e97ba4f37a6b3b23, type: 3}
+  ps: {fileID: 1218765712037780079}
   sprites:
   - {fileID: 6757282713640645180, guid: 0b99f9c841682c640aaae35e5361d40f, type: 3}
   - {fileID: 4334783836991956000, guid: 0b99f9c841682c640aaae35e5361d40f, type: 3}
@@ -222,5 +222,10 @@ PrefabInstance:
 --- !u!4 &1218765712037780073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5496214628883588800, guid: d9c45a1477992904e97ba4f37a6b3b23, type: 3}
+  m_PrefabInstance: {fileID: 6678722663404895401}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1218765712037780079 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5496214628883588806, guid: d9c45a1477992904e97ba4f37a6b3b23, type: 3}
   m_PrefabInstance: {fileID: 6678722663404895401}
   m_PrefabAsset: {fileID: 0}

@@ -137,6 +137,14 @@ public class GameManager : MonoBehaviour
     {
         optionsMenuActive = !optionsMenuActive;
         _optionsMenu.SetActive(optionsMenuActive);
+        if (optionsMenuActive)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 
     IEnumerator RestartLevel()
