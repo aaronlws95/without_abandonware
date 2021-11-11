@@ -11204,6 +11204,18 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 424933727}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: gravitySpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: minWallRunSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: defaultWallRunSpeed
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
 --- !u!1001 &8203184684887555679
