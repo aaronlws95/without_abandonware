@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     public float minWallRunSpeed = 10f;
     public float maxWallRunSpeed = 15f;
     public float curWallRunSpeed = 10f;
+    public float wallRunVelocityDampening = 1f;
     float waypointDistThreshold = 0.2f;
     float wallRunRayCastLength = 0.6f;
     bool isClockwise = false;
@@ -331,7 +332,7 @@ public class Player : MonoBehaviour
             else
             {
                 // Transfer speed from previous state
-                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude), minWallRunSpeed);
+                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude)*wallRunVelocityDampening, minWallRunSpeed);
                 curWallRunSpeed = Mathf.Min(curWallRunSpeed, maxWallRunSpeed);
             }
 
