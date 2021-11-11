@@ -10945,8 +10945,8 @@ Tilemap:
   - first: {x: -7, y: -7, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -14784,15 +14784,15 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 389
+  - m_RefCount: 390
     m_Data: {fileID: 11400000, guid: 19910420a0384fe4a88307a49646f564, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: de98d0490cb370848b2b2a01fc2069bc, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 389
+  - m_RefCount: 390
     m_Data: {fileID: 21300000, guid: c543eb8b28d542241a12bdfbabb37324, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 32c5343f7ed9eac4da7195ac69b692ec, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 390
     m_Data:
@@ -19955,8 +19955,16 @@ PrefabInstance:
       value: 4.56
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: gravityMaxSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: maxWallRunSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: minWallRunSpeed
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: defaultWallRunSpeed
@@ -19965,6 +19973,10 @@ PrefabInstance:
     - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: wallCheckRayCastLength
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537864896813576889, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: wallRunVelocityDampening
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8147605745149861077, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: m_Name
