@@ -10,14 +10,14 @@ public class StartScreen : MonoBehaviour
     
     public void OpenStartScreen()
     {
-        optionsScreen.SetActive(false);
+        optionsScreen.GetComponent<OptionsScreen>().Deactivate();
         playScreen.SetActive(false);
         startScreen.SetActive(true);
     }
 
     public void OpenOptionsScreen()
     {
-        optionsScreen.SetActive(true);
+        optionsScreen.GetComponent<OptionsScreen>().Activate();
         startScreen.SetActive(false);
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -62,6 +63,11 @@ public class GameManager : MonoBehaviour
             playerData = new PlayerData(0);
             LoadPlayerData();
         }
+
+        if (FindObjectOfType<EventSystem>() == null)
+        {
+            GameObject eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+        }        
     }
 
     public int GetPlayerLevel()
@@ -136,7 +142,14 @@ public class GameManager : MonoBehaviour
     public void ToggleOptionsMenu()
     {
         optionsMenuActive = !optionsMenuActive;
-        _optionsMenu.SetActive(optionsMenuActive);
+        if (optionsMenuActive)
+        {
+            _optionsMenu.GetComponent<OptionsScreen>().Activate();
+        }
+        else 
+        {
+            _optionsMenu.GetComponent<OptionsScreen>().Deactivate();
+        }
         if (optionsMenuActive)
         {
             Time.timeScale = 0;
