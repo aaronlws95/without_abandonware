@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: Glitch Wall
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
+  - {fileID: -7043046308392119838, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
+  - {fileID: -7315954219082648449, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
+  - {fileID: -4788957983020198016, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
+  - {fileID: 949473858868938986, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
+  - {fileID: 7056826136318282590, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
+  - {fileID: 6625066573346894483, guid: cd53a60b7b99936488383e053a4abde9, type: 3}
+  - {fileID: -4344174004695582290, guid: cd53a60b7b99936488383e053a4abde9, type: 3}
   - {fileID: 5413323189196452361, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
   - {fileID: 133382920697162407, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
   - {fileID: 4352977332589216175, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
