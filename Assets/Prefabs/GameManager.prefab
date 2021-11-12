@@ -86,4 +86,4 @@ MonoBehaviour:
   - name: Win
     clip: {fileID: 8300000, guid: 98af86c17be5a724da002763d0735211, type: 3}
     volume: 1
-  clipBGM: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+  clipBGM: {fileID: 0}
