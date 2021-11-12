@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     {
         INIT,
         ACTIVE,
-        DEAD
+        DEAD,
+        WIN,
     }
 
     // Constants
@@ -235,10 +236,18 @@ public class Player : MonoBehaviour
 
     public void ChangePlayerState(PlayerState _state)
     {
+        if (playerState == _state)
+        {
+            return;
+        }
+
+        playerState = _state;
         switch (_state)
         {
             case (PlayerState.DEAD):
-                playerState = _state;
+                rb.bodyType = RigidbodyType2D.Static;
+                break;
+            case (PlayerState.WIN):
                 rb.bodyType = RigidbodyType2D.Static;
                 break;
         }
@@ -393,6 +402,10 @@ public class Player : MonoBehaviour
         if (gravityHitDown && canStop)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
+            if ((hitLeft && rb.velocity.x < -velocityThreshold) || (hitRight && rb.velocity.x > velocityThreshold))
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
         }
         // Falling
         else if (!gravityHitDown)
