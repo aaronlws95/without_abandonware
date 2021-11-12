@@ -26,7 +26,9 @@ public class Player : MonoBehaviour
 
     [Header("General")]
     Grid grid;
-    public ParticleSystem ps;
+    public ParticleSystem wallRunPS;
+    public ParticleSystem gravityPS;
+    public ParticleSystem bouncePS;
     public Sprite[] sprites;
     public MoveState moveState;
     public PlayerState playerState;
@@ -138,7 +140,7 @@ public class Player : MonoBehaviour
         switch (moveState)
         {
             case (MoveState.WALLRUN):
-                ps.Play();
+                wallRunPS.Play();
                 isClockwise = !isClockwise;
                 curWaypoints.SetClockwise(isClockwise);
                 Vector3 tmp = curWaypointPos;
@@ -166,26 +168,26 @@ public class Player : MonoBehaviour
             if (hitLeft)
             {
                 transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
-                ps.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+                wallRunPS.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
 
             }
 
             if (hitRight)
             {
                 transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
-                ps.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+                wallRunPS.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
             }
 
             if (hitDown)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
-                ps.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+                wallRunPS.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
             }
 
             if (hitUp)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
-                ps.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                wallRunPS.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             }
 
             switch (moveState)
@@ -217,12 +219,13 @@ public class Player : MonoBehaviour
         {
             case (MoveState.WALLRUN):
                 sm.PlaySound("WallRun");
-                ps.Play();
+                wallRunPS.Play();
                 isClockwise = false;
                 startWallRun = false;
                 break;
             case (MoveState.GRAVITY):
                 sm.PlaySound("Gravity");
+                gravityPS.Play();
                 gravitySign = 1;
                 canStop = false;
                 activeGravityRayCastLength = gravityRayCastLength;
@@ -385,7 +388,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.velocity = new Vector2(0, rb.velocity.y);           
             }            
         }
 
@@ -405,6 +408,11 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
+            if (rb.velocity.magnitude < velocityThreshold)
+            {
+                sm.PlaySound("GravityStop");
+            }
+            canStop = false;
         }
         // Falling
         else if (!gravityHitDown)
@@ -425,6 +433,13 @@ public class Player : MonoBehaviour
                 canStop = true;
             }
         }
+
+        if (rb.velocity.magnitude > velocityThreshold)
+        {
+            Vector2 velocityDir = rb.velocity.normalized;
+            gravityPS.transform.position = new Vector3(transform.position.x - velocityDir.x*0.5f, transform.position.y - velocityDir.y*0.5f, transform.position.z);
+            gravityPS.Play();       
+        }
     }
 
     ////////// BOUNCE //////////
@@ -435,6 +450,9 @@ public class Player : MonoBehaviour
         {
             Vector2 reflectDir = Vector2.Reflect(rb.velocity.normalized, hit.normal).normalized;
             rb.velocity = reflectDir * rb.velocity.magnitude;
+            bouncePS.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
+            bouncePS.Play();
+            sm.PlaySound("BounceCollide");
         }
     }
 

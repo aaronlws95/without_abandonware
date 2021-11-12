@@ -29,11 +29,12 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    [Range(0f, 1f)]
     public static float volumeSFX = 1.0f;
 
-    [Range(0f, 1f)]
     public static float volumeBGM = 1.0f;
+
+    [Range(0f, 1f)]
+    public float baseVolumeBGM = 1.0f;
 
     [SerializeField] private Sound[] sounds;
     private Dictionary<string, Sound> soundsDict = new Dictionary<string, Sound>();
@@ -79,7 +80,7 @@ public class SoundManager : MonoBehaviour
         {
             bgmAS.clip = clipBGM;
             bgmAS.loop = true;
-            bgmAS.volume = volumeBGM;
+            bgmAS.volume = baseVolumeBGM*volumeBGM;
             bgmAS.Play();
             sceneName = curSceneName;
         }
@@ -87,7 +88,7 @@ public class SoundManager : MonoBehaviour
 
     void Update()
     {
-        bgmAS.volume = volumeBGM;
+        bgmAS.volume = baseVolumeBGM*volumeBGM;
     }
 
     public void PlaySound(string _name)
