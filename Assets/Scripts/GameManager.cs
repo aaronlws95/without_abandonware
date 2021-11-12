@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     // Restart level
     bool restartLevel = false;
+    bool completedLevel = false;
 
     // Sound
     SoundManager sm;
@@ -168,12 +169,14 @@ public class GameManager : MonoBehaviour
             }
 
             // Win condition
-            if (collectibleCount == 0)
+            if (collectibleCount == 0 && !completedLevel)
             {
+                completedLevel = true;
+                sm.PlaySound("Win");
                 player.ChangePlayerState(Player.PlayerState.WIN);
                 if (properStart)
                 {
-                    CompleteLevel();
+                    StartCoroutine(CompleteLevel());
                 }
                 else 
                 {
@@ -183,7 +186,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CompleteLevel()
+    IEnumerator CompleteLevel()
     {
         if(currentLevel == playerData.level)
         {
@@ -201,6 +204,7 @@ public class GameManager : MonoBehaviour
         }
         SavePlayerData();
         currentLevel++;
+        yield return new WaitForSeconds(2.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

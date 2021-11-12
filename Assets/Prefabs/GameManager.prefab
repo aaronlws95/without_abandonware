@@ -77,4 +77,13 @@ MonoBehaviour:
   - name: Reverse
     clip: {fileID: 8300000, guid: 5b60dd93a030d0f49974e6f8b314e6f8, type: 3}
     volume: 0.687
+  - name: BounceCollide
+    clip: {fileID: 8300000, guid: 0718b9a41d5bf7d439b3f6693010deda, type: 3}
+    volume: 1
+  - name: GravityStop
+    clip: {fileID: 8300000, guid: df81099d8dafd6a4d84d41f341cae56c, type: 3}
+    volume: 1
+  - name: Win
+    clip: {fileID: 8300000, guid: 98af86c17be5a724da002763d0735211, type: 3}
+    volume: 1
   clipBGM: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}

@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     Grid grid;
     public ParticleSystem wallRunPS;
     public ParticleSystem gravityPS;
+    public ParticleSystem bouncePS;
     public Sprite[] sprites;
     public MoveState moveState;
     public PlayerState playerState;
@@ -387,7 +388,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.velocity = new Vector2(0, rb.velocity.y);           
             }            
         }
 
@@ -407,6 +408,11 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
+            if (rb.velocity.magnitude < velocityThreshold)
+            {
+                sm.PlaySound("GravityStop");
+            }
+            canStop = false;
         }
         // Falling
         else if (!gravityHitDown)
@@ -444,6 +450,9 @@ public class Player : MonoBehaviour
         {
             Vector2 reflectDir = Vector2.Reflect(rb.velocity.normalized, hit.normal).normalized;
             rb.velocity = reflectDir * rb.velocity.magnitude;
+            bouncePS.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
+            bouncePS.Play();
+            sm.PlaySound("BounceCollide");
         }
     }
 
