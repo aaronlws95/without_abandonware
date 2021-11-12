@@ -4774,7 +4774,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1375199424}
         m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
         m_MethodName: SetVolumeBGM
         m_Mode: 0
@@ -5030,7 +5030,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1375199424}
         m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
         m_MethodName: SetVolumeSFX
         m_Mode: 0
