@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         // Load player data
         if (!playerDataLoaded)
         {
-            playerData = new PlayerData(0);
+            playerData = new PlayerData(0, new List<float>{0f});
             LoadPlayerData();
         }
 
@@ -96,10 +96,22 @@ public class GameManager : MonoBehaviour
         _inGameDisplay = inGameDisplay.GetComponent<InGameDisplay>();
     }
 
+    public void ClearData()
+    {
+        playerData = new PlayerData(0, new List<float>{0f});       
+        SavePlayerData();
+    }
+
     public int GetPlayerLevel()
     {
         return playerData.level;
     }
+
+    public float GetPlayerBestTime(int idx)
+    {
+        return playerData.bestTimes[idx];
+    }
+
 
     public void SavePlayerData()
     {
@@ -173,11 +185,21 @@ public class GameManager : MonoBehaviour
 
     public void CompleteLevel()
     {
-        if(currentLevel >= playerData.level)
+        if(currentLevel == playerData.level)
         {
             playerData.level += 1;
-            SavePlayerData();
+            playerData.bestTimes[currentLevel] = timer;
+            playerData.bestTimes.Add(0);
         }
+        
+        if (currentLevel <= playerData.level)
+        {
+            if (timer < playerData.bestTimes[currentLevel])
+            {
+                playerData.bestTimes[currentLevel] = timer;
+            }
+        }
+        SavePlayerData();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

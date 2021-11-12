@@ -6,9 +6,11 @@ using UnityEngine;
 public class PlayerData
 {
     public int level;
+    public List<float> bestTimes;
 
-    public PlayerData(int _level)
+    public PlayerData(int _level, List<float> _bestTimes)
     {
         level = _level;
+        bestTimes = _bestTimes;
     }
 }
