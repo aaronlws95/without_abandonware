@@ -2561,59 +2561,74 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 225676232350278692, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278692, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: optionsMenu
       value: 
-      objectReference: {fileID: 6885625320916386576, guid: 220cd87bee140b943a654ca0b19a39ca, type: 3}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      objectReference: {fileID: 6885625320916386576, guid: 220cd87bee140b943a654ca0b19a39ca,
+        type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5951042
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.06316169
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: -7.290157
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278693, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 225676232350278695, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 225676232350278695, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf,
+        type: 3}
       propertyPath: clipBGM
       value: 
       objectReference: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
@@ -4551,7 +4566,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1375199424}
         m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
         m_MethodName: SetVolumeBGM
         m_Mode: 0
@@ -4807,7 +4822,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1375199424}
         m_TargetAssemblyTypeName: OptionsScreen, Assembly-CSharp
         m_MethodName: SetVolumeSFX
         m_Mode: 0

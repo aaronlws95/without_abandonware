@@ -134,10 +134,10 @@ public class Player : MonoBehaviour
 
     void ReverseMoveState()
     {
+        sm.PlaySound("Reverse");
         switch (moveState)
         {
             case (MoveState.WALLRUN):
-                sm.PlaySound("Reverse");
                 ps.Play();
                 isClockwise = !isClockwise;
                 curWaypoints.SetClockwise(isClockwise);
@@ -146,7 +146,6 @@ public class Player : MonoBehaviour
                 nextWaypointPos = tmp;
                 break;
             case (MoveState.GRAVITY):
-                sm.PlaySound("Reverse");
                 gravitySign *= -1;
                 break;
             case (MoveState.BOUNCE):
