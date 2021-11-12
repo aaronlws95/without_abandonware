@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -32,21 +33,17 @@ public class LevelSelect : MonoBehaviour
                     float time = gm.GetPlayerBestTime(counter);
                     if (time == 0)
                     {
-                        displayName = name + " - --:--";
+                        displayName = name + " - --:--:---";
                     }
                     else 
                     {
-                        float minutes = Mathf.Floor(time / 60);
-                        int seconds = Mathf.RoundToInt(time%60);
-                        string minStr = minutes.ToString();
-                        string secStr = seconds.ToString();
-                        if(minutes < 10) {
-                            minStr = "0" + minStr;
-                        }
-                        if(seconds < 10) {
-                            secStr = "0" + secStr;
-                        }                         
-                        displayName = name + " - " +  minStr + ":" + secStr;   
+                        int intTime = (int)time;
+                        int minutes = intTime / 60;
+                        int seconds = intTime % 60;
+                        float fraction = time * 1000;
+                        fraction = (fraction % 1000);
+
+                        displayName = name + " - " + String.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, fraction);
                     }
                     optionDataList.Add(new Dropdown.OptionData(displayName));
                     sceneNames.Add(name);

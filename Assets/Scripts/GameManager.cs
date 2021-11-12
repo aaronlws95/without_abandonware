@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
             playerData.bestTimes.Add(0);
         }
         
-        if (currentLevel <= playerData.level)
+        if (currentLevel < playerData.level - 1)
         {
             if (timer < playerData.bestTimes[currentLevel])
             {
@@ -200,6 +200,7 @@ public class GameManager : MonoBehaviour
             }
         }
         SavePlayerData();
+        currentLevel++;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
