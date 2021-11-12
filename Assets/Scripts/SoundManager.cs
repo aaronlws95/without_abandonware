@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Sound 
@@ -40,7 +40,10 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip clipBGM;
 
-    AudioSource bgmAS;
+    static GameObject _BGMgo;
+    static AudioSource bgmAS;
+
+    static string sceneName = "";
 
     void Awake()
     {
@@ -64,13 +67,22 @@ public class SoundManager : MonoBehaviour
             soundsDict[sounds[i].name] = sounds[i];
         }
 
-        GameObject _BGMgo = new GameObject("BGM");
-        _BGMgo.transform.SetParent(this.transform);
-        bgmAS = _BGMgo.AddComponent<AudioSource>();
-        bgmAS.clip = clipBGM;
-        bgmAS.loop = true;
-        bgmAS.volume = volumeBGM;
-        bgmAS.Play();
+        if (GameObject.Find("BGM") == null)
+        {
+            _BGMgo = new GameObject("BGM");
+            bgmAS = _BGMgo.AddComponent<AudioSource>();
+            DontDestroyOnLoad(_BGMgo);
+        }
+
+        string curSceneName = SceneManager.GetActiveScene().name;
+        if (sceneName != curSceneName)
+        {
+            bgmAS.clip = clipBGM;
+            bgmAS.loop = true;
+            bgmAS.volume = volumeBGM;
+            bgmAS.Play();
+            sceneName = curSceneName;
+        }
     }
 
     void Update()
