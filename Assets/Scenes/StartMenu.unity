@@ -2631,7 +2631,7 @@ PrefabInstance:
         type: 3}
       propertyPath: clipBGM
       value: 
-      objectReference: {fileID: 8300000, guid: 98ada8d3bf5faeb4f96a42ff307c5472, type: 3}
+      objectReference: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
 --- !u!1 &1375199422
