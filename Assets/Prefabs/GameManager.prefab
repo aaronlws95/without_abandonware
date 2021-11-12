@@ -77,4 +77,4 @@ MonoBehaviour:
   - name: Reverse
     clip: {fileID: 8300000, guid: 757ec70ab12287b4bb0674ab67f39a45, type: 3}
     volume: 1
-  clipBGM: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}
+  clipBGM: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
