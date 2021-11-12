@@ -155,11 +155,12 @@ MonoBehaviour:
   playerState: 0
   stateChangeCooldown: 0
   reverseCooldown: 0
-  defaultWallRunSpeed: 7
-  minWallRunSpeed: 6
-  maxWallRunSpeed: 15
-  curWallRunSpeed: 10
-  gravitySpeed: 7
+  defaultWallRunSpeed: 8
+  minWallRunSpeed: 8
+  maxWallRunSpeed: 8
+  curWallRunSpeed: 8
+  wallRunVelocityDampening: 1
+  gravitySpeed: 8
   gravityMaxSpeed: 15
   bounceRayCastLength: 0.5
 --- !u!1001 &6678722663404895401

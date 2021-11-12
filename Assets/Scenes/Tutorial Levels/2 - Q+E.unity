@@ -2757,7 +2757,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: snapToGridY
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5578586018975492810, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_RootOrder
@@ -2805,11 +2805,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.54
+      value: -0.49
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.03
+      value: -0.52
       objectReference: {fileID: 0}
     - target: {fileID: 8412555139578228910, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_Name
@@ -2968,7 +2968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapToGridX: 1
-  snapToGridY: 0
+  snapToGridY: 1
 --- !u!4 &831772844
 Transform:
   m_ObjectHideFlags: 0
@@ -2977,7 +2977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831772842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: -4.54, z: 0}
+  m_LocalPosition: {x: -4.48, y: -4.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 630934862}
