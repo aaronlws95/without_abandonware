@@ -6,21 +6,42 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton
     public static GameManager instance;
+
+    // Options
     public GameObject optionsMenu;
     static GameObject _optionsMenu;
-    static bool optionsMenuActive = false;
+    static OptionsScreen optionsScreen;
     static bool optionsMenuCreated = false;
+
+    // In game display
+    public GameObject inGameDisplay;
+    InGameDisplay _inGameDisplay;
+    public static bool showStats = false;
+    
+    // Timer
+    float timer = 0;
+
+
+    // Restart level
     bool restartLevel = false;
+
+    // Sound
     SoundManager sm;
+
+    // Player
     Player player;
-    GameObject[] collectibles;
-    int collectibleCount;
-    string sceneName;
-    static PlayerData playerData;
     static bool playerDataLoaded = false;
     static int currentLevel = 0;
-    static bool properStart = false;
+    static PlayerData playerData;
+
+    // Collectibles for winning
+    GameObject[] collectibles;
+    int collectibleCount;
+
+    string sceneName; // Handle StartMenu
+    static bool properStart = false; // Only save level if played through start menu (for debugging)
 
     void Awake()
     {
@@ -43,6 +64,7 @@ public class GameManager : MonoBehaviour
         {
             optionsMenuCreated = true;
             _optionsMenu = Instantiate(optionsMenu);
+            optionsScreen = _optionsMenu.GetComponent<OptionsScreen>();
             _optionsMenu.name = "OptionsMenu";
             DontDestroyOnLoad(_optionsMenu);
         }
@@ -57,17 +79,21 @@ public class GameManager : MonoBehaviour
             properStart = true;
         }
 
-
+        // Load player data
         if (!playerDataLoaded)
         {
             playerData = new PlayerData(0);
             LoadPlayerData();
         }
 
+        // Make sure there is an event system for the UI
         if (FindObjectOfType<EventSystem>() == null)
         {
             GameObject eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
         }        
+
+        inGameDisplay = Instantiate(inGameDisplay);
+        _inGameDisplay = inGameDisplay.GetComponent<InGameDisplay>();
     }
 
     public int GetPlayerLevel()
@@ -104,6 +130,20 @@ public class GameManager : MonoBehaviour
     {
         if (sceneName != "StartMenu")
         {
+            if (player.playerState == Player.PlayerState.ACTIVE)
+            {
+                _inGameDisplay.SetActive(true);
+                _inGameDisplay.ShowStats(showStats);
+
+                timer += Time.deltaTime;
+                _inGameDisplay.UpdateTimer(timer);
+                if (showStats)
+                {
+                    Vector2 curVelocity = player.GetVelocity();
+                    _inGameDisplay.UpdateStatsText(curVelocity.magnitude, curVelocity.x, curVelocity.y);
+                }
+            }
+
             if ((player.playerState == Player.PlayerState.DEAD || Input.GetKeyDown(KeyCode.X)) && !restartLevel)
             {
                 sm.PlaySound("Die");
@@ -115,8 +155,10 @@ public class GameManager : MonoBehaviour
                 ToggleOptionsMenu();
             }
 
+            // Win condition
             if (collectibleCount == 0)
             {
+                player.ChangePlayerState(Player.PlayerState.WIN);
                 if (properStart)
                 {
                     CompleteLevel();
@@ -141,21 +183,14 @@ public class GameManager : MonoBehaviour
 
     public void ToggleOptionsMenu()
     {
-        optionsMenuActive = !optionsMenuActive;
-        if (optionsMenuActive)
+        if (!optionsScreen.IsActive())
         {
-            _optionsMenu.GetComponent<OptionsScreen>().Activate();
+            Time.timeScale = 0;
+            optionsScreen.Activate();
         }
         else 
         {
-            _optionsMenu.GetComponent<OptionsScreen>().Deactivate();
-        }
-        if (optionsMenuActive)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
+            optionsScreen.Deactivate();
             Time.timeScale = 1;
         }
     }

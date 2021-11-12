@@ -468,4 +468,9 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public Vector2 GetVelocity()
+    {
+        return rb.velocity;
+    }
 }

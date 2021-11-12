@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionsMenu: {fileID: 6885625320916386576, guid: 220cd87bee140b943a654ca0b19a39ca, type: 3}
+  inGameDisplay: {fileID: 2247458898109380052, guid: a774067ae0449244f8df49b587f4ee05, type: 3}
 --- !u!114 &5986786269976188595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,14 +61,20 @@ MonoBehaviour:
   sounds:
   - name: Die
     clip: {fileID: 8300000, guid: f075b86c12fa6cf4b95e882144bba39e, type: 3}
+    volume: 1
   - name: Collect
     clip: {fileID: 8300000, guid: 6095ae5a5ee1ef54da7c0032e8c33bcc, type: 3}
+    volume: 1
   - name: WallRun
     clip: {fileID: 8300000, guid: 8de96821a8735954e9803707c1eefd7b, type: 3}
+    volume: 1
   - name: Gravity
     clip: {fileID: 8300000, guid: 6715cfad1ffeda24a92de0340995924e, type: 3}
+    volume: 1
   - name: Bounce
     clip: {fileID: 8300000, guid: 986f448f947dc5445b8755038b29baf4, type: 3}
+    volume: 1
   - name: Reverse
     clip: {fileID: 8300000, guid: 757ec70ab12287b4bb0674ab67f39a45, type: 3}
+    volume: 1
   clipBGM: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}
