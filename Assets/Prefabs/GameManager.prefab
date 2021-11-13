@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac6e6a9b39c0484799bc09afafb3de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseVolumeBGM: 0.802
+  baseVolumeBGM: 0.7
   sounds:
   - name: Die
     clip: {fileID: 8300000, guid: f075b86c12fa6cf4b95e882144bba39e, type: 3}
