@@ -69,6 +69,11 @@ public class Waypoints : MonoBehaviour
         }
     }
 
+    public int getCurrentIndex()
+    {
+        return currentIndex;
+    }
+
     public void SetCurrentPath(int index, bool isClockwise)
     {
         currentIndex = index;
@@ -126,6 +131,8 @@ public class Waypoints : MonoBehaviour
                 currentIndex = waypoints.Length - 1;
             }
         }
+
+        Debug.Log(currentIndex);
         return waypoints[currentIndex].transform.position;
     }
 }

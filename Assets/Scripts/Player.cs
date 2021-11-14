@@ -79,6 +79,8 @@ public class Player : MonoBehaviour
     RaycastHit2D hitUp;
     RaycastHit2D hitDown;
 
+    bool isReversing = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -110,7 +112,7 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
                 {
-                    ReverseMoveState();
+                    isReversing = true;
                     reverseCount = 0f;
                 }
             }
@@ -142,9 +144,9 @@ public class Player : MonoBehaviour
             case (MoveState.WALLRUN):
                 wallRunPS.Play();
                 isClockwise = !isClockwise;
-                curWaypoints.SetClockwise(isClockwise);
                 Vector3 tmp = curWaypointPos;
                 curWaypointPos = nextWaypointPos;
+                curWaypoints.SetCurrentPath(curWaypoints.GetNextIndex(curWaypoints.getCurrentIndex(), isClockwise), isClockwise);
                 nextWaypointPos = tmp;
                 break;
             case (MoveState.GRAVITY):
@@ -200,6 +202,12 @@ public class Player : MonoBehaviour
                     transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
                 }
                 wallRunPS.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            }
+
+            if (isReversing)
+            {
+                ReverseMoveState();
+                isReversing = false;
             }
 
             switch (moveState)
@@ -460,6 +468,7 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rb.velocity.normalized, bounceRayCastLength, 1 << WALL_LAYER);
         if (hit)
         {
+            Debug.Log("BOUNCE");
             Vector2 reflectDir = Vector2.Reflect(rb.velocity.normalized, hit.normal).normalized;
             rb.velocity = reflectDir * rb.velocity.magnitude;
             bouncePS.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
