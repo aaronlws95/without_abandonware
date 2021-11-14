@@ -163,30 +163,42 @@ public class Player : MonoBehaviour
             hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckRayCastLength, 1 << WALL_LAYER);
             hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckRayCastLength, 1 << WALL_LAYER);
             hitUp = Physics2D.Raycast(transform.position, Vector2.up, wallCheckRayCastLength, 1 << WALL_LAYER);
-            hitDown = Physics2D.Raycast(transform.position, Vector2.down, wallCheckRayCastLength, 1 << WALL_LAYER);  
+            hitDown = Physics2D.Raycast(transform.position, Vector2.down, wallCheckRayCastLength, 1 << WALL_LAYER);
 
             if (hitLeft)
             {
-                transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
+                if (moveState != MoveState.BOUNCE)
+                {
+                    transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
+                }
                 wallRunPS.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
 
             }
 
             if (hitRight)
             {
-                transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
+                if (moveState != MoveState.BOUNCE)
+                {
+                    transform.position = new Vector3(transform.position.x - Time.fixedDeltaTime, transform.position.y, transform.position.z);
+                }
                 wallRunPS.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
             }
 
             if (hitDown)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
+                if (moveState != MoveState.BOUNCE)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y + Time.fixedDeltaTime, transform.position.z);
+                }
                 wallRunPS.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
             }
 
             if (hitUp)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
+                if (moveState != MoveState.BOUNCE)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y - Time.fixedDeltaTime, transform.position.z);
+                }
                 wallRunPS.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             }
 
@@ -265,7 +277,7 @@ public class Player : MonoBehaviour
         RaycastHit2D wallRunHitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallRunRayCastLength, 1 << WALL_LAYER);
         RaycastHit2D wallRunHitRight = Physics2D.Raycast(transform.position, Vector2.right, wallRunRayCastLength, 1 << WALL_LAYER);
         RaycastHit2D wallRunHitUp = Physics2D.Raycast(transform.position, Vector2.up, wallRunRayCastLength, 1 << WALL_LAYER);
-        RaycastHit2D wallRunHitDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WALL_LAYER);  
+        RaycastHit2D wallRunHitDown = Physics2D.Raycast(transform.position, Vector2.down, wallRunRayCastLength, 1 << WALL_LAYER);
 
         // If not running then latch on
         if ((hitWaypoint || hitWaypointCenter) && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
@@ -312,10 +324,10 @@ public class Player : MonoBehaviour
                 wpcol = hitWaypointCenter.transform.gameObject.GetComponent<WaypointCollider>();
                 curWaypoints = hitWaypointCenter.transform.parent.GetComponent<Waypoints>();
             }
-            else 
+            else
             {
                 wpcol = hitWaypoint.transform.gameObject.GetComponent<WaypointCollider>();
-                curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();                
+                curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
             }
 
 
@@ -334,7 +346,7 @@ public class Player : MonoBehaviour
 
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
             transform.position = grid.GetCellCenterWorld(cellPosition);
-        
+
 
             if (rb.velocity.magnitude < 0.1f)
             {
@@ -343,7 +355,7 @@ public class Player : MonoBehaviour
             else
             {
                 // Transfer speed from previous state
-                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude)*wallRunVelocityDampening, minWallRunSpeed);
+                curWallRunSpeed = Mathf.Max(Mathf.Abs(rb.velocity.magnitude) * wallRunVelocityDampening, minWallRunSpeed);
                 curWallRunSpeed = Mathf.Min(curWallRunSpeed, maxWallRunSpeed);
             }
 
@@ -360,7 +372,7 @@ public class Player : MonoBehaviour
                 nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
                 transform.position = curWaypointPos;
             }
-            
+
             Vector2 dir = (nextWaypointPos - transform.position).normalized;
             rb.velocity = dir * curWallRunSpeed;
         }
@@ -373,7 +385,7 @@ public class Player : MonoBehaviour
         {
             activeGravityRayCastLength = gravityCannotStopRayCastLength;
         }
-        else 
+        else
         {
             activeGravityRayCastLength = gravityRayCastLength;
         }
@@ -388,8 +400,8 @@ public class Player : MonoBehaviour
             }
             else
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);           
-            }            
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
         }
 
         if ((hitUp && gravitySign == 1) || (hitDown && gravitySign == -1))
@@ -437,8 +449,8 @@ public class Player : MonoBehaviour
         if (rb.velocity.magnitude > velocityThreshold)
         {
             Vector2 velocityDir = rb.velocity.normalized;
-            gravityPS.transform.position = new Vector3(transform.position.x - velocityDir.x*0.5f, transform.position.y - velocityDir.y*0.5f, transform.position.z);
-            gravityPS.Play();       
+            gravityPS.transform.position = new Vector3(transform.position.x - velocityDir.x * 0.5f, transform.position.y - velocityDir.y * 0.5f, transform.position.z);
+            gravityPS.Play();
         }
     }
 
