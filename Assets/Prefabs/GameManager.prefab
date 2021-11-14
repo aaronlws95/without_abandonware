@@ -58,29 +58,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac6e6a9b39c0484799bc09afafb3de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseVolumeBGM: 0.6
+  baseVolumeBGM: 0.4
   sounds:
   - name: Die
     clip: {fileID: 8300000, guid: 28928aa225dcb2641a8b5c73f5ce2895, type: 3}
-    volume: 0.565
+    volume: 0.445
   - name: Collect
     clip: {fileID: 8300000, guid: 7763a1608b46b124283f788a85ec8089, type: 3}
-    volume: 0.554
+    volume: 0.5
   - name: WallRun
     clip: {fileID: 8300000, guid: bf122c0c5c7d08d46981c6192d994d24, type: 3}
-    volume: 0.5
+    volume: 0.387
   - name: Gravity
-    clip: {fileID: 8300000, guid: 356d5d5d19d3b6c42a5eb84d2ad82f85, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: 6f4e9dd778c04bd4bbebc97558f743c2, type: 3}
+    volume: 0.4
   - name: Bounce
-    clip: {fileID: 8300000, guid: db4087c235de9594b84b06d71f3f8f28, type: 3}
-    volume: 0.617
+    clip: {fileID: 8300000, guid: c47865b7096097f4294a8d1bd3b65fb7, type: 3}
+    volume: 0.346
   - name: Reverse
-    clip: {fileID: 8300000, guid: 9fba200f005121046876fb1fb7f13a45, type: 3}
-    volume: 0.5
+    clip: {fileID: 8300000, guid: 9fb159963ca15db44bf4bef6b53296f9, type: 3}
+    volume: 0.611
   - name: BounceCollide
     clip: {fileID: 8300000, guid: e753b12eb2f6ab54badc2b69fe1318eb, type: 3}
-    volume: 0.526
+    volume: 0.374
   - name: GravityStop
     clip: {fileID: 8300000, guid: df81099d8dafd6a4d84d41f341cae56c, type: 3}
     volume: 1
