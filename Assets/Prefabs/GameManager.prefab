@@ -74,12 +74,12 @@ MonoBehaviour:
     volume: 0.5
   - name: Bounce
     clip: {fileID: 8300000, guid: 64f2c769b17a35c498f9bcdd65fe3a23, type: 3}
-    volume: 0.5
+    volume: 0.4
   - name: Reverse
-    clip: {fileID: 8300000, guid: 5b60dd93a030d0f49974e6f8b314e6f8, type: 3}
+    clip: {fileID: 8300000, guid: 9fba200f005121046876fb1fb7f13a45, type: 3}
     volume: 0.5
   - name: BounceCollide
-    clip: {fileID: 8300000, guid: 0718b9a41d5bf7d439b3f6693010deda, type: 3}
+    clip: {fileID: 8300000, guid: d48acc4cf9e181e439dbddefb4b6581b, type: 3}
     volume: 0.889
   - name: GravityStop
     clip: {fileID: 8300000, guid: df81099d8dafd6a4d84d41f341cae56c, type: 3}
