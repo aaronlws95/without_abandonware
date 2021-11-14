@@ -3217,6 +3217,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
+      propertyPath: snapToGridX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
+      propertyPath: snapToGridY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5578586018975492810, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -3263,11 +3271,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.04
+      value: 7.994
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.83
+      value: 0.552
       objectReference: {fileID: 0}
     - target: {fileID: 8412555139578228910, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_Name
@@ -3598,7 +3606,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: snapToGridX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5578586018975492810, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_RootOrder
@@ -3646,7 +3654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.18
+      value: -4.002
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4206,7 +4214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapToGridX: 1
+  snapToGridX: 0
   snapToGridY: 1
 --- !u!4 &1193534136
 Transform:
@@ -4216,7 +4224,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193534134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.99, y: 0.82, z: 0}
+  m_LocalPosition: {x: -3.99, y: 0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 54185241}
@@ -4455,7 +4463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapToGridX: 1
+  snapToGridX: 0
   snapToGridY: 1
 --- !u!4 &1331361478
 Transform:
@@ -4465,7 +4473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331361476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.860001, y: -2.29, z: 0}
+  m_LocalPosition: {x: 10.99, y: -2.439, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 314131802}
@@ -4602,7 +4610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapToGridX: 1
+  snapToGridX: 0
   snapToGridY: 1
 --- !u!4 &1445757502
 Transform:
@@ -4612,57 +4620,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445757500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3100004, y: -2.3, z: 0}
+  m_LocalPosition: {x: 5.003, y: -2.467, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 314131802}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1463534477
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1463534478}
-  - component: {fileID: 1463534479}
-  m_Layer: 0
-  m_Name: Waypoint (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1463534478
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463534477}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.99, y: 0.37, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 54185241}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1463534479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463534477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  snapToGridX: 1
-  snapToGridY: 1
 --- !u!1 &1510130152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4692,8 +4655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapToGridX: 1
-  snapToGridY: 1
+  snapToGridX: 0
+  snapToGridY: 0
 --- !u!4 &1510130154
 Transform:
   m_ObjectHideFlags: 0
@@ -4702,7 +4665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510130152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.36, y: 2.99, z: 0}
+  m_LocalPosition: {x: -6.213, y: 2.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 54185241}

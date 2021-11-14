@@ -8827,11 +8827,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3872885071729366353, guid: cb837a894d49ac146b62e9628d19f3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.41
+      value: 7.44
       objectReference: {fileID: 0}
     - target: {fileID: 3872885071729366353, guid: cb837a894d49ac146b62e9628d19f3cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.64
+      value: -2.01
       objectReference: {fileID: 0}
     - target: {fileID: 3872885071729366353, guid: cb837a894d49ac146b62e9628d19f3cd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16078,7 +16078,7 @@ Tilemap:
       - {fileID: 7628996587293072152, guid: cd53a60b7b99936488383e053a4abde9, type: 3}
       - {fileID: 6625066573346894483, guid: cd53a60b7b99936488383e053a4abde9, type: 3}
       - {fileID: 7628996587293072152, guid: cd53a60b7b99936488383e053a4abde9, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 6, y: 6, z: 0}
