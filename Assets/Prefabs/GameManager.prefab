@@ -70,7 +70,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: bf122c0c5c7d08d46981c6192d994d24, type: 3}
     volume: 0.387
   - name: Gravity
-    clip: {fileID: 8300000, guid: 6f4e9dd778c04bd4bbebc97558f743c2, type: 3}
+    clip: {fileID: 8300000, guid: 5b60dd93a030d0f49974e6f8b314e6f8, type: 3}
     volume: 0.4
   - name: Bounce
     clip: {fileID: 8300000, guid: c47865b7096097f4294a8d1bd3b65fb7, type: 3}
