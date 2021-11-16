@@ -1185,6 +1185,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2193950420556277666, guid: c861ac5d6d654ce4991c18f77ddc975c, type: 3}
+      propertyPath: m_Text
+      value: 'Q: Wall Run
+
+        W: Gravity
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 2193950420994301814, guid: c861ac5d6d654ce4991c18f77ddc975c, type: 3}
       propertyPath: m_Name
       value: ControlInstructions
@@ -7745,7 +7753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3872885071729366353, guid: cb837a894d49ac146b62e9628d19f3cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.39
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 3872885071729366353, guid: cb837a894d49ac146b62e9628d19f3cd, type: 3}
       propertyPath: m_LocalPosition.y

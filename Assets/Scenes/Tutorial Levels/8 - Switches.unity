@@ -3006,6 +3006,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2193950420556277666, guid: c861ac5d6d654ce4991c18f77ddc975c, type: 3}
+      propertyPath: m_Text
+      value: 'Q: Wall Run
+
+        E: Bounce
+
+        R: Reverse'
+      objectReference: {fileID: 0}
     - target: {fileID: 2193950420994301814, guid: c861ac5d6d654ce4991c18f77ddc975c, type: 3}
       propertyPath: m_Name
       value: ControlInstructions
