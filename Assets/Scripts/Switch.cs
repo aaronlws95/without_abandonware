@@ -49,7 +49,7 @@ public class Switch : MonoBehaviour
                 go.SetActive(false);
             }            
         }
-    
+
         if (oneTimeActivate)
         {
             Destroy(transform.gameObject);
@@ -61,7 +61,10 @@ public class Switch : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             isOn = !isOn;
-            oneTimeActivate = true;
+            if (oneTime)
+            {
+                oneTimeActivate = true;
+            }
         }
     }
 }
