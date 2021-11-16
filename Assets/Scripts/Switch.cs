@@ -49,7 +49,7 @@ public class Switch : MonoBehaviour
                 go.SetActive(false);
             }            
         }
-
+    
         if (oneTimeActivate)
         {
             Destroy(transform.gameObject);

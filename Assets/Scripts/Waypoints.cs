@@ -132,7 +132,6 @@ public class Waypoints : MonoBehaviour
             }
         }
 
-        Debug.Log(currentIndex);
         return waypoints[currentIndex].transform.position;
     }
 }
