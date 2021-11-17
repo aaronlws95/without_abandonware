@@ -10629,6 +10629,14 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 424933727}
+    - target: {fileID: 2612890547289331734, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612890547289331734, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 3810301211883766378, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
       propertyPath: m_RootOrder
       value: 1
