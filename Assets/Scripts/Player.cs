@@ -81,6 +81,8 @@ public class Player : MonoBehaviour
 
     bool isReversing = false;
 
+    public GameObject arrow;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -94,6 +96,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(rb.velocity.normalized.y, rb.velocity.normalized.x) * Mathf.Rad2Deg - 90f));
+
         if (playerState == PlayerState.INIT)
         {
             if (Input.anyKey && !Input.GetKey(KeyCode.Escape))
@@ -138,10 +142,10 @@ public class Player : MonoBehaviour
 
     void ReverseMoveState()
     {
-        sm.PlaySound("Reverse");
         switch (moveState)
         {
             case (MoveState.WALLRUN):
+                sm.PlaySound("Reverse");
                 wallRunPS.Play();
                 isClockwise = !isClockwise;
                 Vector3 tmp = curWaypointPos;
@@ -149,10 +153,11 @@ public class Player : MonoBehaviour
                 curWaypoints.SetCurrentPath(curWaypoints.GetNextIndex(curWaypoints.getCurrentIndex(), isClockwise), isClockwise);
                 nextWaypointPos = tmp;
                 break;
-            case (MoveState.GRAVITY):
-                gravitySign *= -1;
-                break;
+            // case (MoveState.GRAVITY):
+            //     gravitySign *= -1;
+            //     break;
             case (MoveState.BOUNCE):
+                sm.PlaySound("Reverse");
                 rb.velocity = -rb.velocity;
                 break;
         }
@@ -468,7 +473,6 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rb.velocity.normalized, bounceRayCastLength, 1 << WALL_LAYER);
         if (hit)
         {
-            Debug.Log("BOUNCE");
             Vector2 reflectDir = Vector2.Reflect(rb.velocity.normalized, hit.normal).normalized;
             rb.velocity = reflectDir * rb.velocity.magnitude;
             bouncePS.transform.position = new Vector3(hit.point.x, hit.point.y, transform.position.z);
