@@ -11,11 +11,21 @@ public class InGameDisplay : MonoBehaviour
     Stats statsText;
     public Text timer;
 
+    GameObject nextButton;
+    GameObject prevButton;
     void Start()
     {
         stats = transform.Find("Stats").gameObject;
         timerObj = transform.Find("Timer").gameObject;
+        nextButton = transform.Find("Next").gameObject;
+        prevButton = transform.Find("Prev").gameObject;
         statsText = stats.GetComponent<Stats>();
+    }
+
+    public void SetButtons(bool value)
+    {
+        nextButton.SetActive(value);
+        prevButton.SetActive(value);
     }
 
     public void SetActive(bool value)
