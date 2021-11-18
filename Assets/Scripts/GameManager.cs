@@ -143,6 +143,8 @@ public class GameManager : MonoBehaviour
     {
         if (sceneName != "StartMenu")
         {
+            _inGameDisplay.SetButtons(true);
+
             if (player.playerState == Player.PlayerState.ACTIVE)
             {
                 _inGameDisplay.SetActive(true);
@@ -207,6 +209,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void PrevLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
 
     public void ToggleOptionsMenu()
     {
