@@ -81,6 +81,7 @@ public class Player : MonoBehaviour
 
     bool isReversing = false;
 
+    bool isReverseCooldown = false;
     public GameObject arrow;
 
     void Start()
@@ -98,6 +99,11 @@ public class Player : MonoBehaviour
     {
         arrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(rb.velocity.normalized.y, rb.velocity.normalized.x) * Mathf.Rad2Deg - 90f));
 
+         if (Input.GetKey(KeyCode.Y))
+        {
+            isReverseCooldown = !isReverseCooldown;
+        }
+
         if (playerState == PlayerState.INIT)
         {
             if (Input.anyKey && !Input.GetKey(KeyCode.Escape))
@@ -108,7 +114,7 @@ public class Player : MonoBehaviour
         else if (playerState == PlayerState.ACTIVE)
         {
             // Reverse
-            if (reverseCount < reverseCooldown && moveState == MoveState.BOUNCE)
+            if (reverseCount < reverseCooldown && moveState == MoveState.BOUNCE && isReverseCooldown)
             {
                 reverseCount += Time.deltaTime;
             }
