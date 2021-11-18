@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
         else if (playerState == PlayerState.ACTIVE)
         {
             // Reverse
-            if (reverseCount < reverseCooldown)
+            if (reverseCount < reverseCooldown && moveState == MoveState.BOUNCE)
             {
                 reverseCount += Time.deltaTime;
             }
