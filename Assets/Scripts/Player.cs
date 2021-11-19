@@ -81,8 +81,10 @@ public class Player : MonoBehaviour
 
     bool isReversing = false;
 
-    bool isReverseCooldown = false;
+    public bool isReverseCooldown = false;
     public GameObject arrow;
+
+    bool startReverse = false;
 
     void Start()
     {
@@ -114,7 +116,7 @@ public class Player : MonoBehaviour
         else if (playerState == PlayerState.ACTIVE)
         {
             // Reverse
-            if (reverseCount < reverseCooldown && moveState == MoveState.BOUNCE && isReverseCooldown)
+            if (reverseCount < reverseCooldown && moveState == MoveState.BOUNCE && isReverseCooldown && startReverse)
             {
                 reverseCount += Time.deltaTime;
             }
@@ -124,6 +126,11 @@ public class Player : MonoBehaviour
                 {
                     isReversing = true;
                     reverseCount = 0f;
+                    startReverse = true;
+                }
+                else 
+                {
+                    startReverse = false;
                 }
             }
 
