@@ -49,10 +49,6 @@ public class MultiSwitchSwitch : MonoBehaviour
                     oneTimeActivate = true;
                 }
             }
-            else if (timing && isOn != timingDefaultState)
-            {
-                timingCount = 0;
-            }
         }
     }
 }
