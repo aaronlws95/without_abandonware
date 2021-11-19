@@ -8,13 +8,7 @@ public class MultiSwitchHandler : MonoBehaviour
     public Sprite toggleOffSprite;
     public GameObject[] objects;
     public GameObject[] switches;
-    public bool oneTime = false;
-    public bool timing = false;
-    public bool timingDefaultState = false; 
-    public float timingLength = 5f;
-    float timingCount = 0f;
     public bool isOn;
-    bool oneTimeActivate = false;
 
     void Start()
     {   
@@ -29,15 +23,18 @@ public class MultiSwitchHandler : MonoBehaviour
 
         foreach (GameObject x in switches)
         {
-            MultiSwitchSwitch curSwitch = x.GetComponent<MultiSwitchSwitch>();
-            if (curSwitch.triggered)
+            if (x != null)
             {
-                isOn = curSwitch.isOn;
-                curSwitch.triggered = false;
-            }
-            else 
-            {
-                curSwitch.isOn = isOn;
+                MultiSwitchSwitch curSwitch = x.GetComponent<MultiSwitchSwitch>();
+                if (curSwitch.triggered)
+                {
+                    isOn = curSwitch.isOn;
+                    curSwitch.triggered = false;
+                }
+                else 
+                {
+                    curSwitch.isOn = isOn;
+                }
             }
         }
 
@@ -45,8 +42,11 @@ public class MultiSwitchHandler : MonoBehaviour
         {
             foreach (GameObject x in switches)
             {
-                SpriteRenderer sr = x.GetComponent<SpriteRenderer>();
-                sr.sprite = toggleOnSprite;
+                if (x != null)
+                {
+                    SpriteRenderer sr = x.GetComponent<SpriteRenderer>();
+                    sr.sprite = toggleOnSprite;
+                }
             }
             foreach (GameObject go in objects)
             {
@@ -57,8 +57,11 @@ public class MultiSwitchHandler : MonoBehaviour
         {
             foreach (GameObject x in switches)
             {
-                SpriteRenderer sr = x.GetComponent<SpriteRenderer>();
-                sr.sprite = toggleOffSprite;
+                if (x!=null)
+                {
+                    SpriteRenderer sr = x.GetComponent<SpriteRenderer>();
+                    sr.sprite = toggleOffSprite;
+                }
             }
             foreach (GameObject go in objects)
             {

@@ -8,7 +8,7 @@ public class MultiSwitchSwitch : MonoBehaviour
     public bool timing = false;
     public bool timingDefaultState = false; 
     public float timingLength = 5f;
-    float timingCount = 0f;
+    public float timingCount = 0f;
     public bool isOn;
     bool oneTimeActivate = false;
     public bool triggered;
@@ -22,10 +22,11 @@ public class MultiSwitchSwitch : MonoBehaviour
         if(timing && isOn != timingDefaultState)
         {
             timingCount += Time.deltaTime;
-            if (timingCount > timingLength)
+            if (timingCount > timingLength) 
             {   
                 timingCount = 0;
                 isOn = !isOn;
+                triggered = true;
             }
         }
 
@@ -39,11 +40,14 @@ public class MultiSwitchSwitch : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            triggered = true;
-            isOn = !isOn;
-            if (oneTime)
+            if (timing && isOn == timingDefaultState || !timing)
             {
-                oneTimeActivate = true;
+                triggered = true;
+                isOn = !isOn;
+                if (oneTime)
+                {
+                    oneTimeActivate = true;
+                }
             }
         }
     }
