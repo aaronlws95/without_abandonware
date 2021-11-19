@@ -48,15 +48,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial Levels/6 - E+ R.unity
     guid: 9c909551676261d4cae50587d82f8fcf
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/7 - W + E + R.unity
-    guid: ed3a0be743ca2ae4da2c38f769167541
-  - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 8.unity
-    guid: ae467bebfd00b1a4790cf3893d5f2e03
+    guid: 9d789b86ce3d362489a1b3190169333d
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 9.unity
+    guid: 197cc77110c67964f8bd5048822d8466
   - enabled: 1
     path: Assets/Scenes/Tutorial Levels/8 - Switches.unity
     guid: ee38e26181d7170408d7d5349ab60806
   - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 10.unity
-    guid: 2263eb617c42ff9498fbd7068d24343e
+    guid: f1e1b6803d69e844fa9c22f5f943fb55
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 11.unity
+    guid: 27ff8ece83390554693f59254b0e1dc2
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 13.unity
+    guid: d687d0e38d005c247abae4ca7dd057b4
   m_configObjects: {}
