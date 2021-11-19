@@ -49,6 +49,7 @@ MonoBehaviour:
   timing: 0
   timingDefaultState: 0
   timingLength: 5
+  timingCount: 0
   isOn: 0
   triggered: 0
 --- !u!212 &1945806172250704436
