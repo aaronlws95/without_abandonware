@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.6700001
+      value: -2.1999998
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -303,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.329
+      value: -0.84
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -393,8 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619dd651908048d46870706b5762f70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snapToGridX: 1
-  snapToGridY: 1
+  snapToGridX: 0
+  snapToGridY: 0
 --- !u!4 &137868483
 Transform:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137868481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.045, y: 2.54, z: 0}
+  m_LocalPosition: {x: 0, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 598279528}
@@ -3170,6 +3170,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Triangle
       objectReference: {fileID: 0}
+    - target: {fileID: 2763410110682256250, guid: cbdbb91692fb7664a81cb8a1af73840e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbdbb91692fb7664a81cb8a1af73840e, type: 3}
 --- !u!4 &592596061 stripped
@@ -3270,7 +3274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.36
+      value: 2.91
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3813,6 +3817,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Disem wall 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2763410110682256250, guid: 145d9b1b2811832488b54e262cfaa962, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145d9b1b2811832488b54e262cfaa962, type: 3}
 --- !u!4 &1310647963 stripped
@@ -3837,7 +3845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.67
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4205,6 +4213,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
+      propertyPath: snapToGridX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010348646258860921, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
+      propertyPath: snapToGridY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5578586018975492810, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -4251,7 +4267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7604597670360293927, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9950001
+      value: -2.75
       objectReference: {fileID: 0}
     - target: {fileID: 8412555139578228910, guid: f69ff4540caffd349a56eb4871d04b0d, type: 3}
       propertyPath: m_Name
@@ -4345,6 +4361,10 @@ PrefabInstance:
     - target: {fileID: 2763410110682256250, guid: 145d9b1b2811832488b54e262cfaa962, type: 3}
       propertyPath: m_Name
       value: Disem wall 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763410110682256250, guid: 145d9b1b2811832488b54e262cfaa962, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145d9b1b2811832488b54e262cfaa962, type: 3}
@@ -9926,7 +9946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.05
+      value: -5.53
       objectReference: {fileID: 0}
     - target: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
       propertyPath: m_LocalPosition.z

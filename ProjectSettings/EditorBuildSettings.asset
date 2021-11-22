@@ -63,6 +63,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Rough Levels/Level 11.unity
     guid: 27ff8ece83390554693f59254b0e1dc2
   - enabled: 1
+    path: Assets/Scenes/Tutorial Levels/9 - Advanced Triangle.unity
+    guid: 71b6c0c87293b9a499d3ed6fd609632d
+  - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 12.unity
     guid: d687d0e38d005c247abae4ca7dd057b4
   - enabled: 1
