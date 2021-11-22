@@ -45,7 +45,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Rough Levels/Level 7.unity
     guid: 20c28a93d03babf4f974b85c52d74eb8
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 8.unity
+    path: Assets/Scenes/Rough Levels/Level 8T.unity
     guid: 9d789b86ce3d362489a1b3190169333d
   - enabled: 1
     path: Assets/Scenes/Tutorial Levels/6 - E+ R.unity
