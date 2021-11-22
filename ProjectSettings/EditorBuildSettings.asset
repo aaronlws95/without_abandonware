@@ -21,11 +21,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Rough Levels/Level 1T.unity
     guid: eeaf8ede8b6ab484686535ed8c215196
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 2T.unity
-    guid: fac1db3b6f391ad47a0f7e86b746d8c3
+    path: Assets/Scenes/Rough Levels/Level 1.unity
+    guid: 02e298668bd2e6d4bbb9be6e9e981828
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 3 Tiletest.unity
+    path: Assets/Scenes/Rough Levels/Level 2.unity
+    guid: c45180a9f698dce448e71c264623257a
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 3T.unity
     guid: 04fb8ce33f89b0d45940eef571fb6f34
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 3.unity
+    guid: 97d653e977936a74cbac83963ac56732
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 4T.unity
+    guid: e1f91de172d858a48a70ea0d3147ddee
   - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 4.unity
     guid: 248cbaa8226874d4397c4afedcb64656
@@ -39,8 +48,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial Levels/5 - E + W + Q.unity
     guid: e6fc4e05f107c944a8a2d56d1c125c02
   - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 6T.unity
+    guid: 42e15118ec9e80a48af86884e66e1042
+  - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 6.unity
     guid: e417ca4f6f915264a8d23071e7d87bfd
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 7T.unity
+    guid: ce2b3cb7e12b3024dbf9b3dc72e1b7f1
   - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 7.unity
     guid: 20c28a93d03babf4f974b85c52d74eb8
@@ -48,11 +63,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Rough Levels/Level 8T.unity
     guid: 9d789b86ce3d362489a1b3190169333d
   - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 8.unity
+    guid: 7e597210fcdb8c749b9cdb002569615e
+  - enabled: 1
     path: Assets/Scenes/Tutorial Levels/6 - E+ R.unity
     guid: 9c909551676261d4cae50587d82f8fcf
   - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 9 (FIXED).unity
     guid: 197cc77110c67964f8bd5048822d8466
+  - enabled: 1
+    path: Assets/Scenes/Tutorial Levels/9 - Advanced Triangle.unity
+    guid: 71b6c0c87293b9a499d3ed6fd609632d
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 10.unity
+    guid: 1c0cdff11e02f8044bec611271e4550e
   - enabled: 1
     path: Assets/Scenes/Tutorial Levels/8 - Switches.unity
     guid: ee38e26181d7170408d7d5349ab60806
@@ -60,15 +84,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Rough Levels/Level 11.unity
     guid: f1e1b6803d69e844fa9c22f5f943fb55
   - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 12T.unity
+    guid: b4144f24094869b439973e8c8d623a69
+  - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 12.unity
     guid: 27ff8ece83390554693f59254b0e1dc2
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/9 - Advanced Triangle.unity
-    guid: 71b6c0c87293b9a499d3ed6fd609632d
-  - enabled: 1
     path: Assets/Scenes/Rough Levels/Level 14.unity
-    guid: d687d0e38d005c247abae4ca7dd057b4
+    guid: b65abca436311a44dbfcbf2f6e285029
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/S3.unity
-    guid: 52b08fee009fe2b4a820a65c0b9f437b
+    path: Assets/Scenes/Rough Levels/Level 15 Tiled.unity
+    guid: 21711a710e475be44b6b89ca8becb108
+  - enabled: 1
+    path: Assets/Scenes/Rough Levels/Level 15.unity
+    guid: 6b6f834d0caf3be4bbfe42556a87243d
   m_configObjects: {}
