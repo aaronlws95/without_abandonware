@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     float velocityThreshold = 0.1f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
+    public bool reverseDisabled = false;
 
     [Header("Wall Run")]
     public float defaultWallRunSpeed = 10f;
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R) && !reverseDisabled)
                 {
                     isReversing = true;
                     reverseCount = 0f;
