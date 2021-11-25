@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Pipe Tapered
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 3405490444739649969, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: -1417060328713301595, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: -6265513237588520170, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: 6784535585250307942, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: -731357945434117214, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: 6228582550320754489, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: -6003803291747387039, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  - {fileID: -485278577549589382, guid: 3f5ba9d790eaa9a47bb6387fb32eb76f, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
