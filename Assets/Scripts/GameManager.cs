@@ -95,6 +95,12 @@ public class GameManager : MonoBehaviour
 
         inGameDisplay = Instantiate(inGameDisplay);
         _inGameDisplay = inGameDisplay.GetComponent<InGameDisplay>();
+
+        if (currentLevel >= SoundManager.nextLevelBGM)
+        {
+            sm.playBGM(SoundManager.curBGMidx);
+            sm.nextBGM();
+        }        
     }
 
     public void ClearData()
