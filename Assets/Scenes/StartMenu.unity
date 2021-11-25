@@ -2701,12 +2701,40 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
       propertyPath: sounds.Array.data[4].clip
       value: 
       objectReference: {fileID: 8300000, guid: 64f2c769b17a35c498f9bcdd65fe3a23, type: 3}
     - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
       propertyPath: sounds.Array.data[4].volume
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[0].startLevel
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[1].startLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986786269976188595, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}
+      propertyPath: bgmClips.Array.data[2].startLevel
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db73358161bb8674a8904cfed9dd13cf, type: 3}

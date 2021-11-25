@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     float velocityThreshold = 0.1f;
     float stateChangeCount = 0f;
     float reverseCount = 0f;
+    public bool reverseDisabled = false;
 
     [Header("Wall Run")]
     public float defaultWallRunSpeed = 10f;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
     Vector3 nextWaypointPos;
 
     [Header("Gravity")]
+    public bool gravityDisabled = false;
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
     float gravityRayCastLength = 0.6f;
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
     float activeGravityRayCastLength;
 
     [Header("Bounce")]
+    public bool bounceDisabled = false;
     public float bounceRayCastLength = 0.5f;
 
     // Components
@@ -122,7 +125,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R))
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R) && !reverseDisabled)
                 {
                     isReversing = true;
                     reverseCount = 0f;
@@ -250,26 +253,36 @@ public class Player : MonoBehaviour
             return;
         }
 
-        moveState = _state;
-        sr.sprite = sprites[(int)moveState];
 
         switch (_state)
         {
             case (MoveState.WALLRUN):
+                moveState = _state;
+                sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
                 wallRunPS.Play();
                 isClockwise = false;
                 startWallRun = false;
                 break;
             case (MoveState.GRAVITY):
-                sm.PlaySound("Gravity");
-                gravityPS.Play();
-                gravitySign = 1;
-                canStop = false;
-                activeGravityRayCastLength = gravityRayCastLength;
+                if (!gravityDisabled)
+                {
+                    moveState = _state;
+                    sr.sprite = sprites[(int)moveState];                       
+                    sm.PlaySound("Gravity");
+                    gravityPS.Play();
+                    gravitySign = 1;
+                    canStop = false;
+                    activeGravityRayCastLength = gravityRayCastLength;
+                }
                 break;
             case (MoveState.BOUNCE):
-                sm.PlaySound("Bounce");
+                if (!bounceDisabled)
+                {
+                    moveState = _state;
+                    sr.sprite = sprites[(int)moveState];               
+                    sm.PlaySound("Bounce");
+                }
                 break;
         }
     }

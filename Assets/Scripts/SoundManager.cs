@@ -25,6 +25,14 @@ public class Sound
     }
 }
 
+
+[System.Serializable]
+public class BGM
+{
+    public AudioClip clip;
+    public int startLevel;
+}
+
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
@@ -39,10 +47,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Sound[] sounds;
     private Dictionary<string, Sound> soundsDict = new Dictionary<string, Sound>();
 
-    public AudioClip clipBGM;
+    public List<BGM> bgmClips;
 
     static GameObject _BGMgo;
     static AudioSource bgmAS;
+    public static int curBGMidx = 0;
+    public static int nextLevelBGM;
 
     static string sceneName = "";
 
@@ -74,16 +84,28 @@ public class SoundManager : MonoBehaviour
             bgmAS = _BGMgo.AddComponent<AudioSource>();
             DontDestroyOnLoad(_BGMgo);
         }
+    }
 
-        string curSceneName = SceneManager.GetActiveScene().name;
-        if (sceneName != curSceneName)
+    public void nextBGM()
+    {
+        int nextBGMidx = curBGMidx + 1;
+        if (nextBGMidx < bgmClips.Count)
         {
-            bgmAS.clip = clipBGM;
-            bgmAS.loop = true;
-            bgmAS.volume = baseVolumeBGM*volumeBGM;
-            bgmAS.Play();
-            sceneName = curSceneName;
+            nextLevelBGM = bgmClips[nextBGMidx].startLevel;
+            curBGMidx += 1;
+        } 
+        else 
+        {
+            nextLevelBGM = 1000; // hack
         }
+    }
+
+    public void playBGM(int idx)
+    {
+        bgmAS.clip = bgmClips[idx].clip;
+        bgmAS.loop = true;
+        bgmAS.volume = baseVolumeBGM*volumeBGM;
+        bgmAS.Play();
     }
 
     void Update()

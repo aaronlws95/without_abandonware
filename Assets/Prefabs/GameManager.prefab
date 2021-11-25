@@ -87,4 +87,10 @@ MonoBehaviour:
   - name: Win
     clip: {fileID: 8300000, guid: 8d4489e974c782749b5e3471cadc35c7, type: 3}
     volume: 0.2
-  clipBGM: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+  bgmClips:
+  - clip: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
+    startLevel: -1
+  - clip: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+    startLevel: 0
+  - clip: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
+    startLevel: 1
