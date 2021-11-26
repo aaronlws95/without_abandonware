@@ -74,9 +74,17 @@ public class GameManager : MonoBehaviour
         {
             player = GameObject.Find("Player").GetComponent<Player>();
             collectibleCount = GameObject.FindGameObjectsWithTag("Collectible").Length;
+            if (currentLevel >= SoundManager.nextLevelBGM)
+            {
+                sm.playBGM(SoundManager.curBGMidx);
+                sm.nextBGM();
+            }                 
         }
         else 
         {   
+            SoundManager.curBGMidx = 0;
+            sm.playBGM(SoundManager.curBGMidx);
+            sm.nextBGM();            
             properStart = true;
         }
 
@@ -94,13 +102,7 @@ public class GameManager : MonoBehaviour
         }        
 
         inGameDisplay = Instantiate(inGameDisplay);
-        _inGameDisplay = inGameDisplay.GetComponent<InGameDisplay>();
-
-        if (currentLevel >= SoundManager.nextLevelBGM)
-        {
-            sm.playBGM(SoundManager.curBGMidx);
-            sm.nextBGM();
-        }        
+        _inGameDisplay = inGameDisplay.GetComponent<InGameDisplay>();   
     }
 
     public void ClearData()
