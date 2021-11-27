@@ -95,4 +95,4 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
     startLevel: 1
   - clip: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
-    startLevel: 1
+    startLevel: 2
