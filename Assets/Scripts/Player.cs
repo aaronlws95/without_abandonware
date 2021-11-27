@@ -248,6 +248,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetWallRun()
+    {
+        ChangeMoveState(MoveState.WALLRUN);
+    }
+
+    public void SetBounce()
+    {
+        ChangeMoveState(MoveState.BOUNCE);
+    }
+
+    public void SetReverse()
+    {
+        ReverseMoveState();
+    }
+
     void ChangeMoveState(MoveState _state)
     {
         if (moveState == _state)
