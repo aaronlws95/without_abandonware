@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     public bool gravityDisabled = false;
     public float gravitySpeed = 10f;
     public float gravityMaxSpeed = 15f;
-    float gravityRayCastLength = 0.6f;
+    float gravityRayCastLength = 0.53f;
     float gravityDownSlopeRayCastLength = 1.0f;
     float gravityCannotStopRayCastLength = 1.2f;
     int gravitySign = 1; // down
@@ -322,40 +322,40 @@ public class Player : MonoBehaviour
         if ((hitWaypoint || hitWaypointCenter) && !startWallRun && (hitWall || (wallRunHitLeft || wallRunHitRight || wallRunHitUp || wallRunHitDown)))
         {
             // isClockwise = false as default
-            if (rb.velocity.magnitude > velocityThreshold)
-            {
-                if (wallRunHitUp)
-                {
-                    if (rb.velocity.x > velocityThreshold || wallRunHitLeft)
-                    {
-                        isClockwise = true;
-                    }
-                }
+            // if (rb.velocity.magnitude > velocityThreshold)
+            // {
+            //     if (wallRunHitUp)
+            //     {
+            //         if (rb.velocity.x > velocityThreshold || wallRunHitLeft)
+            //         {
+            //             isClockwise = true;
+            //         }
+            //     }
 
-                else if (wallRunHitDown)
-                {
-                    if (rb.velocity.x < -velocityThreshold || wallRunHitRight)
-                    {
-                        isClockwise = true;
-                    }
-                }
+            //     else if (wallRunHitDown)
+            //     {
+            //         if (rb.velocity.x < -velocityThreshold || wallRunHitRight)
+            //         {
+            //             isClockwise = true;
+            //         }
+            //     }
 
-                else if (wallRunHitLeft)
-                {
-                    if (rb.velocity.y > velocityThreshold || wallRunHitDown)
-                    {
-                        isClockwise = true;
-                    }
-                }
+            //     else if (wallRunHitLeft)
+            //     {
+            //         if (rb.velocity.y > velocityThreshold || wallRunHitDown)
+            //         {
+            //             isClockwise = true;
+            //         }
+            //     }
 
-                else if (wallRunHitRight)
-                {
-                    if (rb.velocity.y < -velocityThreshold || wallRunHitUp)
-                    {
-                        isClockwise = true;
-                    }
-                }
-            }
+            //     else if (wallRunHitRight)
+            //     {
+            //         if (rb.velocity.y < -velocityThreshold || wallRunHitUp)
+            //         {
+            //             isClockwise = true;
+            //         }
+            //     }
+            // }
 
             WaypointCollider wpcol;
             if (hitWaypointCenter)
@@ -369,8 +369,42 @@ public class Player : MonoBehaviour
                 curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
             }
 
-            Vector3 dirNext = (wpcol.nextWaypointPos - wpcol.curWaypointPos).normalized;
-            Vector3 dirPrev = (wpcol.prevWaypointPos - wpcol.curWaypointPos).normalized;
+            // get nearest waypoint index
+
+            int nearestWaypointIndex = wpcol.index;
+
+            var curDist = Vector2.Distance(transform.position, wpcol.curWaypointPos);
+            var nextDist = Vector2.Distance(transform.position, wpcol.nextWaypointPos);
+            var prevDist = Vector2.Distance(transform.position, wpcol.prevWaypointPos);
+
+            RaycastHit2D curHit = Physics2D.Raycast(transform.position, wpcol.curWaypointPos - transform.position, curDist, 1 << WALL_LAYER);
+            RaycastHit2D nextHit = Physics2D.Raycast(transform.position, wpcol.nextWaypointPos - transform.position, nextDist, 1 << WALL_LAYER);
+            RaycastHit2D prevHit = Physics2D.Raycast(transform.position, wpcol.prevWaypointPos - transform.position, prevDist, 1 << WALL_LAYER);
+
+            if (curDist < nextDist && curDist < prevDist && !curHit)
+            {
+                nearestWaypointIndex = wpcol.index;
+            }
+            else if (nextDist < curDist && nextDist < prevDist && !nextHit)
+            {
+                nearestWaypointIndex = wpcol.nextIndex;
+            }
+            else if (prevDist < curDist && prevDist < nextDist && !prevHit)
+            {
+                nearestWaypointIndex = wpcol.prevIndex;
+            }
+
+            // Debug.Log(nearestWaypointIndex);
+
+            int nextIndex = curWaypoints.GetNextIndex(nearestWaypointIndex, false);
+            int prevIndex = curWaypoints.GetNextIndex(nearestWaypointIndex, true);
+
+            var thisNextWaypointPos = curWaypoints.GetWaypointPositionAt(nextIndex);
+            var prevWaypointPos = curWaypoints.GetWaypointPositionAt(prevIndex);
+            var curCurWaypointPos = curWaypoints.GetWaypointPositionAt(nearestWaypointIndex);
+
+            Vector3 dirNext = (thisNextWaypointPos - curCurWaypointPos).normalized;
+            Vector3 dirPrev = (prevWaypointPos - curCurWaypointPos).normalized;
 
             if (Vector2.Dot(dirNext, rb.velocity.normalized) > Vector2.Dot(dirPrev, rb.velocity.normalized)) 
             {
@@ -381,22 +415,53 @@ public class Player : MonoBehaviour
                 isClockwise = true;
             }
 
-            if (isClockwise)
+            // Debug.Log(isClockwise);
+
+            // near enough to current waypoint
+            if(Vector2.Distance(transform.position, curCurWaypointPos) < waypointDistThreshold)
             {
-                curWaypoints.SetCurrentPath(wpcol.nextIndex, isClockwise);
-                curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.nextIndex);
+                curWaypoints.SetCurrentPath(nearestWaypointIndex, isClockwise);
+                curWaypointPos = curWaypoints.GetWaypointPositionAt(nearestWaypointIndex);
             }
             else
             {
-                curWaypoints.SetCurrentPath(wpcol.index, isClockwise);
-                curWaypointPos = curWaypoints.GetWaypointPositionAt(wpcol.index);
+                if (isClockwise)
+                {
+                    RaycastHit2D checkHitPlayer = Physics2D.Raycast(curCurWaypointPos, prevWaypointPos - curCurWaypointPos, Vector2.Distance(curCurWaypointPos, prevWaypointPos), 1 << 8);
+                    RaycastHit2D checkHitWall = Physics2D.Raycast(curCurWaypointPos, prevWaypointPos - curCurWaypointPos, Vector2.Distance(curCurWaypointPos, prevWaypointPos), 1 << 6);
+                    int setIndex = 0;
+                    if (checkHitPlayer && !checkHitWall)
+                    {
+                        setIndex = nearestWaypointIndex;
+                    }
+                    else 
+                    {
+                        setIndex = nextIndex;
+                    }
+                    curWaypoints.SetCurrentPath(setIndex, isClockwise);
+                    curWaypointPos = curWaypoints.GetWaypointPositionAt(setIndex);
+                }
+                else
+                {
+                    RaycastHit2D checkHitPlayer = Physics2D.Raycast(curCurWaypointPos, thisNextWaypointPos - curCurWaypointPos, Vector2.Distance(curCurWaypointPos, thisNextWaypointPos), 1 << 8);
+                    RaycastHit2D checkHitWall = Physics2D.Raycast(curCurWaypointPos, thisNextWaypointPos - curCurWaypointPos, Vector2.Distance(curCurWaypointPos, thisNextWaypointPos), 1 << 6);
+                    int setIndex = 0;
+                    if (checkHitPlayer && !checkHitWall)
+                    {
+                        setIndex = nearestWaypointIndex;
+                    }
+                    else 
+                    {
+                        setIndex = prevIndex;
+                    }
+                    curWaypoints.SetCurrentPath(setIndex, isClockwise);
+                    curWaypointPos = curWaypoints.GetWaypointPositionAt(setIndex);
+                }                
             }
-
             nextWaypointPos = curWaypoints.GenerateNextWaypointPosition();
 
             Vector3Int cellPosition = grid.WorldToCell(transform.position);
             transform.position = grid.GetCellCenterWorld(cellPosition);
-
 
             if (rb.velocity.magnitude < 0.1f)
             {
@@ -423,6 +488,7 @@ public class Player : MonoBehaviour
                 transform.position = curWaypointPos;
             }
 
+            // Debug.Log(nextWaypointPos);
             Vector2 dir = (nextWaypointPos - transform.position).normalized;
             rb.velocity = dir * curWallRunSpeed;
         }
