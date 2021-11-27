@@ -15,10 +15,13 @@ public class Switch : MonoBehaviour
     public bool isOn;
     bool oneTimeActivate = false;
     SpriteRenderer sr;
+    SoundManager sm;
+    public bool enableSound = false;
 
     void Start()
     {   
         sr = GetComponent<SpriteRenderer>();
+        sm = SoundManager.instance;
     }
 
     void Update()
@@ -26,6 +29,10 @@ public class Switch : MonoBehaviour
         if(timing && isOn != timingDefaultState)
         {
             timingCount += Time.deltaTime;
+            if (enableSound)
+            {
+                sm.PlaySound("SwitchTiming");
+            }
             if (timingCount > timingLength)
             {   
                 timingCount = 0;
@@ -53,6 +60,10 @@ public class Switch : MonoBehaviour
         if (oneTimeActivate)
         {
             Destroy(transform.gameObject);
+            if (enableSound)
+            {
+                sm.PlaySound("SwitchDestroy");
+            }
         }        
     }
 
@@ -61,6 +72,18 @@ public class Switch : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             isOn = !isOn;
+            if (enableSound)
+            {
+                if(isOn)
+                {
+                    sm.PlaySound("SwitchOn");
+                }
+                else 
+                {
+                    sm.PlaySound("SwitchOff");
+                }
+            }
+
             if (oneTime)
             {
                 oneTimeActivate = true;

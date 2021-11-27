@@ -54,8 +54,6 @@ public class SoundManager : MonoBehaviour
     public static int curBGMidx = 0;
     public static int nextLevelBGM;
 
-    static string sceneName = "";
-
     void Awake()
     {
         if (instance != null)
@@ -115,6 +113,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(string _name)
     {
-        soundsDict[_name].Play(volumeSFX);
+        if (soundsDict.ContainsKey(_name))
+        {
+            soundsDict[_name].Play(volumeSFX);
+        }
     }
 }
