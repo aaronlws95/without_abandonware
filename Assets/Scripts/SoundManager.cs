@@ -54,8 +54,6 @@ public class SoundManager : MonoBehaviour
     public static int curBGMidx = 0;
     public static int nextLevelBGM;
 
-    static string sceneName = "";
-
     void Awake()
     {
         if (instance != null)
