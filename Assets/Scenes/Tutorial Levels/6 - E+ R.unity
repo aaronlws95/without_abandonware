@@ -2869,9 +2869,9 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Q: Wall Run
 
-        E: Bounce
+        E: Launch/Bounce
 
-        R: Reverse'
+        R/Space: Reverse'
       objectReference: {fileID: 0}
     - target: {fileID: 2193950420994301814, guid: c861ac5d6d654ce4991c18f77ddc975c, type: 3}
       propertyPath: m_Name
