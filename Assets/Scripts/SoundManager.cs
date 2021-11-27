@@ -115,6 +115,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(string _name)
     {
-        soundsDict[_name].Play(volumeSFX);
+        if (soundsDict.ContainsKey(_name))
+        {
+            soundsDict[_name].Play(volumeSFX);
+        }
     }
 }
