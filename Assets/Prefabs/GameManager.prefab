@@ -87,6 +87,15 @@ MonoBehaviour:
   - name: Win
     clip: {fileID: 8300000, guid: 8d4489e974c782749b5e3471cadc35c7, type: 3}
     volume: 0.2
+  - name: SwitchOn
+    clip: {fileID: 8300000, guid: 7a191f4fef11f5642a44716521e37f14, type: 3}
+    volume: 0.3
+  - name: SwitchOff
+    clip: {fileID: 8300000, guid: 7a191f4fef11f5642a44716521e37f14, type: 3}
+    volume: 0.3
+  - name: SwitchTiming
+    clip: {fileID: 8300000, guid: 8f60eb66d195bd64f8fdf9cea7c7158b, type: 3}
+    volume: 0.3
   bgmClips:
   - clip: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
     startLevel: -1
