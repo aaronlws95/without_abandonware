@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -302, y: -160}
-  m_SizeDelta: {x: 167.9373, y: 57.3394}
+  m_AnchoredPosition: {x: -302, y: -194.2777}
+  m_SizeDelta: {x: 167.9373, y: 125.8948}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2193950420556277665
 CanvasRenderer:
@@ -80,11 +80,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Q: Wall Run
 
-    W: Gravity
+    E  Launch/Bounce
 
-    E: Bounce
-
-    R: Reverse'
+    R/Space : Reverse'
 --- !u!1 &2193950420994301814
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +111,7 @@ RectTransform:
   m_GameObject: {fileID: 2193950420994301814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2193950420556277667}
   m_Father: {fileID: 0}

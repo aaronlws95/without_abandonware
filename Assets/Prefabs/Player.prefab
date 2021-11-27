@@ -167,7 +167,7 @@ MonoBehaviour:
   maxWallRunSpeed: 8
   curWallRunSpeed: 8
   wallRunVelocityDampening: 1
-  gravityDisabled: 0
+  gravityDisabled: 1
   gravitySpeed: 8
   gravityMaxSpeed: 15
   bounceDisabled: 0
