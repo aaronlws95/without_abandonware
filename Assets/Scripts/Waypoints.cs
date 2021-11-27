@@ -31,14 +31,20 @@ public class Waypoints : MonoBehaviour
         for (int i = 0; i<waypoints.Length; i++)
         {
             int nextIndex = GetNextIndex(i, false);
+            int prevIndex = GetNextIndex(i, true);
             Vector3 curWaypointPosition = waypoints[i].transform.position;
             Vector3 nextWaypointPosition = waypoints[nextIndex].transform.position;
+            Vector3 prevWaypointPosition = waypoints[prevIndex].transform.position;
             GameObject waypointCollider = new GameObject("Collider");
             waypointCollider.layer = WAYPOINT_LAYER;
             waypointCollider.transform.parent = transform;
             WaypointCollider wpcol = waypointCollider.AddComponent<WaypointCollider>();
             wpcol.index = i;
             wpcol.nextIndex = nextIndex;
+            wpcol.prevIndex = prevIndex;
+            wpcol.curWaypointPos = curWaypointPosition;
+            wpcol.prevWaypointPos = prevWaypointPosition;
+            wpcol.nextWaypointPos = nextWaypointPosition;
             BoxCollider2D col = waypointCollider.AddComponent<BoxCollider2D>();
             Vector3 dir = nextWaypointPosition - curWaypointPosition;
             waypointCollider.transform.position = (curWaypointPosition + nextWaypointPosition) / 2;

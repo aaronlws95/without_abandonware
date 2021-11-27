@@ -369,6 +369,17 @@ public class Player : MonoBehaviour
                 curWaypoints = hitWaypoint.transform.parent.GetComponent<Waypoints>();
             }
 
+            Vector3 dirNext = (wpcol.nextWaypointPos - wpcol.curWaypointPos).normalized;
+            Vector3 dirPrev = (wpcol.prevWaypointPos - wpcol.curWaypointPos).normalized;
+
+            if (Vector2.Dot(dirNext, rb.velocity.normalized) > Vector2.Dot(dirPrev, rb.velocity.normalized)) 
+            {
+                isClockwise = false;
+            }
+            else 
+            {
+                isClockwise = true;
+            }
 
             if (isClockwise)
             {
