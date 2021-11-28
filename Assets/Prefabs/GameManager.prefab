@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac6e6a9b39c0484799bc09afafb3de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseVolumeBGM: 0.4
+  baseVolumeBGM: 0.5
   sounds:
   - name: Die
     clip: {fileID: 8300000, guid: 28928aa225dcb2641a8b5c73f5ce2895, type: 3}
@@ -97,13 +97,35 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8f60eb66d195bd64f8fdf9cea7c7158b, type: 3}
     volume: 0.3
   bgmClips:
-  - clip: {fileID: 8300000, guid: 7b7a3bd6acd472843ad82d2c30d6437a, type: 3}
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: -1
-  - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
-    startLevel: 0
   - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
-    startLevel: 1
-  - clip: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
     startLevel: 2
-  - clip: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
-    startLevel: 2
+  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+    startLevel: 4
+  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
+    startLevel: 5
+  - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
+    startLevel: 6
+  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+    startLevel: 7
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
+    startLevel: 9
+  - clip: {fileID: 8300000, guid: 3435a8f79222c4e488c71c228ba6c58c, type: 3}
+    startLevel: 10
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
+    startLevel: 11
+  - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
+    startLevel: 12
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
+    startLevel: 13
+  - clip: {fileID: 8300000, guid: 3435a8f79222c4e488c71c228ba6c58c, type: 3}
+    startLevel: 14
+  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+    startLevel: 15
+  - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
+    startLevel: 16
+  - clip: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+    startLevel: 17
+  - clip: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}
+    startLevel: 18
