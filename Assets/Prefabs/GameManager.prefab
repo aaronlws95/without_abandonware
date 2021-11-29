@@ -99,6 +99,7 @@ MonoBehaviour:
   bgmClips:
   - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: -1
+<<<<<<< HEAD
   - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
     startLevel: 2
   - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
@@ -129,3 +130,9 @@ MonoBehaviour:
     startLevel: 17
   - clip: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}
     startLevel: 18
+=======
+  - clip: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+    startLevel: 0
+  - clip: {fileID: 8300000, guid: 88d8b1d72e2ba224792df11e88e50ccb, type: 3}
+    startLevel: 1
+>>>>>>> parent of 4497eb5 (update bgm manager)
