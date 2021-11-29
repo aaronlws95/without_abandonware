@@ -89,14 +89,11 @@ public class Player : MonoBehaviour
 
     bool startReverse = false;
 
-    Animator anim;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         col = GetComponent<BoxCollider2D>();
-        anim = GetComponent<Animator>();
         playerState = PlayerState.INIT;
         ChangeMoveState(moveState);
         grid = GameObject.Find("Grid").GetComponent<Grid>();
@@ -198,6 +195,7 @@ public class Player : MonoBehaviour
                     transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
                 }
                 wallRunPS.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+
             }
 
             if (hitRight)
@@ -270,11 +268,10 @@ public class Player : MonoBehaviour
             return;
         }
 
+
         switch (_state)
         {
             case (MoveState.WALLRUN):
-                anim.SetBool("wallrun", true);
-                anim.SetBool("bounce", false);            
                 moveState = _state;
                 sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
@@ -297,8 +294,6 @@ public class Player : MonoBehaviour
             case (MoveState.BOUNCE):
                 if (!bounceDisabled)
                 {
-                    anim.SetBool("wallrun", false);
-                    anim.SetBool("bounce", true);
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];               
                     sm.PlaySound("Bounce");
@@ -318,7 +313,6 @@ public class Player : MonoBehaviour
         switch (_state)
         {
             case (PlayerState.DEAD):
-                anim.SetTrigger("dead");
                 rb.bodyType = RigidbodyType2D.Static;
                 break;
             case (PlayerState.WIN):

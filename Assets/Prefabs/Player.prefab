@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1731062656988461288}
   - component: {fileID: 193134846716464361}
   - component: {fileID: 5537864896813576889}
-  - component: {fileID: 4273937259172882726}
+  - component: {fileID: 410721314625556687}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -174,7 +174,7 @@ MonoBehaviour:
   bounceRayCastLength: 0.5
   isReverseCooldown: 0
   arrow: {fileID: 3745663691112982203}
---- !u!95 &4273937259172882726
+--- !u!95 &410721314625556687
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ Animator:
   m_GameObject: {fileID: 436532858720484149}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 97cfd24bc6b98654e81a4a5e31a1f415, type: 2}
+  m_Controller: {fileID: 9100000, guid: e6f6ff055faabb34d9bc52dbe0a6ead6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
