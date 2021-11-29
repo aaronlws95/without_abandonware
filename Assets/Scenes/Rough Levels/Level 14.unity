@@ -10247,11 +10247,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!1 &1784356221 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 436532858720484149, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
-  m_PrefabInstance: {fileID: 1602439359151983446}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1785436508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5188620970696747245, guid: 5757a98d58edf884cb11e2a9513c31bf, type: 3}
@@ -10864,6 +10859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ea206fcab96b1647875801e168764a8, type: 3}
+<<<<<<< HEAD
 --- !u!1001 &5934483736098008298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10969,6 +10965,8 @@ PrefabInstance:
       objectReference: {fileID: 1027765154}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ec018d901f1c0447b43df8421ab4e5c, type: 3}
+=======
+>>>>>>> parent of bc4f6c0 (Merge branch 'master' of https://github.com/aaronlws95/gameoff2021_2)
 --- !u!1001 &6209865277926836058
 PrefabInstance:
   m_ObjectHideFlags: 0
