@@ -12,11 +12,9 @@ public class MultiSwitchSwitch : MonoBehaviour
     public bool isOn;
     bool oneTimeActivate = false;
     public bool triggered;
-    SoundManager sm;
-    public bool enableSound = false;
+
     void Start()
     {   
-        sm = SoundManager.instance;
     }
 
     void Update()
@@ -24,12 +22,8 @@ public class MultiSwitchSwitch : MonoBehaviour
         if(timing && isOn != timingDefaultState)
         {
             timingCount += Time.deltaTime;
-            if (enableSound)
-            {
-                sm.PlaySound("SwitchTiming");
-            }
             if (timingCount > timingLength) 
-            {
+            {   
                 timingCount = 0;
                 isOn = !isOn;
                 triggered = true;
@@ -39,10 +33,6 @@ public class MultiSwitchSwitch : MonoBehaviour
         if (oneTimeActivate)
         {
             Destroy(transform.gameObject);
-            if (enableSound)
-            {
-                sm.PlaySound("SwitchDestroy");
-            }            
         }        
     }
 
@@ -54,18 +44,6 @@ public class MultiSwitchSwitch : MonoBehaviour
             {
                 triggered = true;
                 isOn = !isOn;
-                if (enableSound)
-                {
-                    if(isOn)
-                    {
-                        sm.PlaySound("SwitchOn");
-                    }
-                    else 
-                    {
-                        sm.PlaySound("SwitchOff");
-                    }
-                }                
-
                 if (oneTime)
                 {
                     oneTimeActivate = true;
