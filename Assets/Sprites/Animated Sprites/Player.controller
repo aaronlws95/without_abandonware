@@ -132,7 +132,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4321516923019506754}
-    m_Position: {x: 285, y: 236, z: 0}
+    m_Position: {x: 220, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7554803153949256574}
     m_Position: {x: 400, y: 160, z: 0}
@@ -158,7 +158,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player Wall Run
-  m_Speed: 1
+  m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9144348044755185847}
@@ -171,7 +171,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 410bc130ea207cb4180f9d41a1428bea, type: 2}
+  m_Motion: {fileID: 7400000, guid: 41af8216b7d75984abba58c9c8f87baa, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -211,7 +211,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player Bounce Launch
-  m_Speed: 1
+  m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6579836715790667188}
@@ -224,7 +224,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 35853761a1f362647beebe984001e32f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8a601ebed1a4a464f98e654b29c26562, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
