@@ -1,55 +1,49 @@
 fileFormatVersion: 2
-guid: 98252beb9f666124399993e1050ea41c
+guid: 98c28d55f5c1bb745879f0ab6b1152f5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7104590803346011396
-    second: Animation Gravity G_0
+      213: 1517367640507846591
+    second: Animation Death G_0
   - first:
-      213: -2411102205049004086
-    second: Animation Gravity G_1
+      213: 310515558558332478
+    second: Animation Death G_1
   - first:
-      213: -1586612318610242353
-    second: Animation Gravity G_2
+      213: -2054840825501276567
+    second: Animation Death G_2
   - first:
-      213: 5898352643293810994
-    second: Animation Gravity G_3
+      213: 4834000944297309137
+    second: Animation Death G_3
   - first:
-      213: 3118588212557646707
-    second: Animation Gravity G_4
+      213: -965112388971194078
+    second: Animation Death G_4
   - first:
-      213: -5181812547264332991
-    second: Animation Gravity G_5
+      213: 1945540469177102024
+    second: Animation Death G_5
   - first:
-      213: -520948443245953872
-    second: Animation Gravity G_6
+      213: 6820827284125613289
+    second: Animation Death G_6
   - first:
-      213: -3484376768127149501
-    second: Animation Gravity G_7
+      213: 1509633523863527458
+    second: Animation Death G_7
   - first:
-      213: -8343308186485866753
-    second: Animation Gravity G_8
+      213: -7003232207907540833
+    second: Animation Death G_8
   - first:
-      213: 8071101754716482792
-    second: Animation Gravity G_9
+      213: 1751873167405745621
+    second: Animation Death G_9
   - first:
-      213: -3700969180250512551
-    second: Animation Gravity G_10
+      213: 768383181912231399
+    second: Animation Death G_10
   - first:
-      213: 8520029709453749460
-    second: Animation Gravity G_11
+      213: 1801894240030551773
+    second: Animation Death G_11
   - first:
-      213: 2903462610214037159
-    second: Animation Gravity G_12
+      213: -1279933693885758748
+    second: Animation Death G_12
   - first:
-      213: 6930686644355399752
-    second: Animation Gravity G_13
-  - first:
-      213: 4174720199601866925
-    second: Animation Gravity G_14
-  - first:
-      213: -3098375684080481768
-    second: Animation Gravity G_15
+      213: -2327482874837873733
+    second: Animation Death G_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -151,7 +145,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Animation Gravity G_0
+      name: Animation Death G_0
       rect:
         serializedVersion: 2
         x: 0
@@ -165,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfacd0c5e4c676d90800000000000000
-      internalID: -7104590803346011396
+      spriteID: fbf842664d5ce0510800000000000000
+      internalID: 1517367640507846591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_1
+      name: Animation Death G_1
       rect:
         serializedVersion: 2
         x: 32
@@ -186,14 +180,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acf94eea15b0a8ed0800000000000000
-      internalID: -2411102205049004086
+      spriteID: e36f91d514c2f4400800000000000000
+      internalID: 310515558558332478
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_2
+      name: Animation Death G_2
       rect:
         serializedVersion: 2
         x: 64
@@ -207,14 +201,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc44af0a0883bf9e0800000000000000
-      internalID: -1586612318610242353
+      spriteID: 966a60ef72dbb73e0800000000000000
+      internalID: -2054840825501276567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_3
+      name: Animation Death G_3
       rect:
         serializedVersion: 2
         x: 96
@@ -228,14 +222,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 231938f6a782bd150800000000000000
-      internalID: 5898352643293810994
+      spriteID: 1d37eb84f32d51340800000000000000
+      internalID: 4834000944297309137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_4
+      name: Animation Death G_4
       rect:
         serializedVersion: 2
         x: 128
@@ -249,14 +243,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37b0832d473774b20800000000000000
-      internalID: 3118588212557646707
+      spriteID: 2291b07456b3b92f0800000000000000
+      internalID: -965112388971194078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_5
+      name: Animation Death G_5
       rect:
         serializedVersion: 2
         x: 160
@@ -270,14 +264,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14bb5a351f08618b0800000000000000
-      internalID: -5181812547264332991
+      spriteID: 8cea271bfb2fffa10800000000000000
+      internalID: 1945540469177102024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_6
+      name: Animation Death G_6
       rect:
         serializedVersion: 2
         x: 192
@@ -291,14 +285,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bc3806a62835c8f0800000000000000
-      internalID: -520948443245953872
+      spriteID: 9ec7990d64278ae50800000000000000
+      internalID: 6820827284125613289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_7
+      name: Animation Death G_7
       rect:
         serializedVersion: 2
         x: 224
@@ -312,14 +306,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34a58285ac105afc0800000000000000
-      internalID: -3484376768127149501
+      spriteID: 22028ea01bb43f410800000000000000
+      internalID: 1509633523863527458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_8
+      name: Animation Death G_8
       rect:
         serializedVersion: 2
         x: 256
@@ -333,14 +327,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffeb6ecb86d963c80800000000000000
-      internalID: -8343308186485866753
+      spriteID: f90b81069658fce90800000000000000
+      internalID: -7003232207907540833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_9
+      name: Animation Death G_9
       rect:
         serializedVersion: 2
         x: 288
@@ -354,14 +348,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ec68eb8840520070800000000000000
-      internalID: 8071101754716482792
+      spriteID: 5d502ca2d57ef4810800000000000000
+      internalID: 1751873167405745621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_10
+      name: Animation Death G_10
       rect:
         serializedVersion: 2
         x: 320
@@ -375,14 +369,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 953ef7e932483acc0800000000000000
-      internalID: -3700969180250512551
+      spriteID: 7ed4341de68d9aa00800000000000000
+      internalID: 768383181912231399
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_11
+      name: Animation Death G_11
       rect:
         serializedVersion: 2
         x: 352
@@ -396,14 +390,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dce3c331e93d3670800000000000000
-      internalID: 8520029709453749460
+      spriteID: ddee7d3b34d910910800000000000000
+      internalID: 1801894240030551773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_12
+      name: Animation Death G_12
       rect:
         serializedVersion: 2
         x: 384
@@ -417,14 +411,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a6af6c5cdb2b4820800000000000000
-      internalID: 2903462610214037159
+      spriteID: 4e2c2e73613cc3ee0800000000000000
+      internalID: -1279933693885758748
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animation Gravity G_13
+      name: Animation Death G_13
       rect:
         serializedVersion: 2
         x: 416
@@ -438,8 +432,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 840095e58cebe2060800000000000000
-      internalID: 6930686644355399752
+      spriteID: bbbcb7828ae13bfd0800000000000000
+      internalID: -2327482874837873733
       vertices: []
       indices: 
       edges: []
