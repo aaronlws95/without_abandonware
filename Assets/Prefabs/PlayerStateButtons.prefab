@@ -357,7 +357,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '[R] Reverse'
+  m_Text: '[R] / [ SPACE]
+
+    Reverse'
 --- !u!1 &5934483737227856307
 GameObject:
   m_ObjectHideFlags: 0
