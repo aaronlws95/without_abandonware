@@ -274,7 +274,8 @@ public class Player : MonoBehaviour
         {
             case (MoveState.WALLRUN):
                 anim.SetBool("wallrun", true);
-                anim.SetBool("bounce", false);            
+                anim.SetBool("bounce", false);
+                anim.SetBool("gravity", false);            
                 moveState = _state;
                 sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
@@ -285,6 +286,9 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 if (!gravityDisabled)
                 {
+                    anim.SetBool("wallrun", false);
+                    anim.SetBool("bounce", false);
+                    anim.SetBool("gravity", true);                     
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];                       
                     sm.PlaySound("Gravity");
@@ -299,6 +303,7 @@ public class Player : MonoBehaviour
                 {
                     anim.SetBool("wallrun", false);
                     anim.SetBool("bounce", true);
+                    anim.SetBool("gravity", false);
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];               
                     sm.PlaySound("Bounce");
