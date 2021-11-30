@@ -9,57 +9,57 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: 92c13c762a4929a4e823f369fa6f2fa8
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/1 - E.unity
+    path: Assets/Scenes/Final Levels/1 - E.unity
     guid: 18ad256193bb7f445a226ddb8c3f7e0b
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/2 - Q+E.unity
+    path: Assets/Scenes/Final Levels/2 - Q+E.unity
     guid: 1441a827b98d8034d84107644d008246
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 1TT.unity
+    path: Assets/Scenes/Final Levels/3- Level 1TT.unity
     guid: eeaf8ede8b6ab484686535ed8c215196
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 2T.unity
+    path: Assets/Scenes/Final Levels/4 - Level 2T.unity
     guid: fac1db3b6f391ad47a0f7e86b746d8c3
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 3T.unity
+    path: Assets/Scenes/Final Levels/7 - Level 3T.unity
     guid: 04fb8ce33f89b0d45940eef571fb6f34
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 4T.unity
+    path: Assets/Scenes/Final Levels/8- Level 4T.unity
     guid: e1f91de172d858a48a70ea0d3147ddee
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 6T.unity
+    path: Assets/Scenes/Final Levels/9 - Level 6T.unity
     guid: 42e15118ec9e80a48af86884e66e1042
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 7T.unity
+    path: Assets/Scenes/Final Levels/10 - Level 7T.unity
     guid: ce2b3cb7e12b3024dbf9b3dc72e1b7f1
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 8T.unity
+    path: Assets/Scenes/Final Levels/11 - Level 8T.unity
     guid: 9d789b86ce3d362489a1b3190169333d
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/6 - E+ R.unity
+    path: Assets/Scenes/Final Levels/12 -E+ R.unity
     guid: 9c909551676261d4cae50587d82f8fcf
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 9T.unity
+    path: Assets/Scenes/Final Levels/13 - Level 9T.unity
     guid: 197cc77110c67964f8bd5048822d8466
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/9 - Advanced Triangle.unity
+    path: Assets/Scenes/Final Levels/14 - Advanced Triangle.unity
     guid: 71b6c0c87293b9a499d3ed6fd609632d
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 10T.unity
+    path: Assets/Scenes/Final Levels/15 - Level 10T.unity
     guid: 1c0cdff11e02f8044bec611271e4550e
   - enabled: 1
-    path: Assets/Scenes/Tutorial Levels/8 - Switches.unity
+    path: Assets/Scenes/Final Levels/16 - Switches.unity
     guid: ee38e26181d7170408d7d5349ab60806
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 11 T.unity
+    path: Assets/Scenes/Final Levels/17 - Level 11 T.unity
     guid: 4633a1c7e066ee44a9a6eec5203ffd32
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 12T.unity
+    path: Assets/Scenes/Final Levels/18 - Level 12T.unity
     guid: b4144f24094869b439973e8c8d623a69
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 14.unity
+    path: Assets/Scenes/Final Levels/19 - Level 14.unity
     guid: b65abca436311a44dbfcbf2f6e285029
   - enabled: 1
-    path: Assets/Scenes/Rough Levels/Level 15T.unity
+    path: Assets/Scenes/Final Levels/20 - Level 15T.unity
     guid: 21711a710e475be44b6b89ca8becb108
   m_configObjects: {}
