@@ -64,17 +64,17 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 28928aa225dcb2641a8b5c73f5ce2895, type: 3}
     volume: 0.445
   - name: Collect
-    clip: {fileID: 8300000, guid: 7763a1608b46b124283f788a85ec8089, type: 3}
+    clip: {fileID: 8300000, guid: 8284111681b80e94399d9458cbe17934, type: 3}
     volume: 0.5
   - name: WallRun
     clip: {fileID: 8300000, guid: bf122c0c5c7d08d46981c6192d994d24, type: 3}
     volume: 0.35
   - name: Gravity
-    clip: {fileID: 8300000, guid: 5b60dd93a030d0f49974e6f8b314e6f8, type: 3}
+    clip: {fileID: 8300000, guid: f98edf39344334748bead19f4014fc82, type: 3}
     volume: 0.4
   - name: Bounce
-    clip: {fileID: 8300000, guid: a04b07c756bb07141bb55e15aed83345, type: 3}
-    volume: 0.198
+    clip: {fileID: 8300000, guid: fd6725e73d29f4a4ca932150cc5db0ee, type: 3}
+    volume: 0.319
   - name: Reverse
     clip: {fileID: 8300000, guid: 9fb159963ca15db44bf4bef6b53296f9, type: 3}
     volume: 0.611
