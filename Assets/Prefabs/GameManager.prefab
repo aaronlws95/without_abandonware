@@ -123,9 +123,7 @@ MonoBehaviour:
     startLevel: 18
   - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
     startLevel: 19
-  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
-    startLevel: 20
   - clip: {fileID: 8300000, guid: 224ecf8b1a8fd3140b6e64e0eed4bf52, type: 3}
-    startLevel: 21
+    startLevel: 20
   - clip: {fileID: 0}
-    startLevel: 22
+    startLevel: 21
