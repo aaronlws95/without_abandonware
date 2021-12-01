@@ -89,11 +89,14 @@ public class Player : MonoBehaviour
 
     bool startReverse = false;
 
+    Animator anim;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         col = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
         playerState = PlayerState.INIT;
         ChangeMoveState(moveState);
         grid = GameObject.Find("Grid").GetComponent<Grid>();
@@ -125,7 +128,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R) && !reverseDisabled)
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R)) && !reverseDisabled)
                 {
                     isReversing = true;
                     reverseCount = 0f;
@@ -195,7 +198,6 @@ public class Player : MonoBehaviour
                     transform.position = new Vector3(transform.position.x + Time.fixedDeltaTime, transform.position.y, transform.position.z);
                 }
                 wallRunPS.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
-
             }
 
             if (hitRight)
@@ -246,6 +248,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetWallRun()
+    {
+        ChangeMoveState(MoveState.WALLRUN);
+    }
+
+    public void SetBounce()
+    {
+        ChangeMoveState(MoveState.BOUNCE);
+    }
+
+    public void SetReverse()
+    {
+        ReverseMoveState();
+    }
+
     void ChangeMoveState(MoveState _state)
     {
         if (moveState == _state)
@@ -253,10 +270,12 @@ public class Player : MonoBehaviour
             return;
         }
 
-
         switch (_state)
         {
             case (MoveState.WALLRUN):
+                anim.SetBool("wallrun", true);
+                anim.SetBool("bounce", false);
+                anim.SetBool("gravity", false);            
                 moveState = _state;
                 sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
@@ -267,6 +286,9 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 if (!gravityDisabled)
                 {
+                    anim.SetBool("wallrun", false);
+                    anim.SetBool("bounce", false);
+                    anim.SetBool("gravity", true);                     
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];                       
                     sm.PlaySound("Gravity");
@@ -279,6 +301,9 @@ public class Player : MonoBehaviour
             case (MoveState.BOUNCE):
                 if (!bounceDisabled)
                 {
+                    anim.SetBool("wallrun", false);
+                    anim.SetBool("bounce", true);
+                    anim.SetBool("gravity", false);
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];               
                     sm.PlaySound("Bounce");
@@ -298,6 +323,7 @@ public class Player : MonoBehaviour
         switch (_state)
         {
             case (PlayerState.DEAD):
+                anim.SetTrigger("dead");
                 rb.bodyType = RigidbodyType2D.Static;
                 break;
             case (PlayerState.WIN):
