@@ -64,29 +64,29 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 28928aa225dcb2641a8b5c73f5ce2895, type: 3}
     volume: 0.445
   - name: Collect
-    clip: {fileID: 8300000, guid: 7763a1608b46b124283f788a85ec8089, type: 3}
+    clip: {fileID: 8300000, guid: 8284111681b80e94399d9458cbe17934, type: 3}
     volume: 0.5
   - name: WallRun
     clip: {fileID: 8300000, guid: bf122c0c5c7d08d46981c6192d994d24, type: 3}
-    volume: 0.35
+    volume: 0.307
   - name: Gravity
-    clip: {fileID: 8300000, guid: 5b60dd93a030d0f49974e6f8b314e6f8, type: 3}
+    clip: {fileID: 8300000, guid: f98edf39344334748bead19f4014fc82, type: 3}
     volume: 0.4
   - name: Bounce
-    clip: {fileID: 8300000, guid: a04b07c756bb07141bb55e15aed83345, type: 3}
-    volume: 0.198
+    clip: {fileID: 8300000, guid: fd6725e73d29f4a4ca932150cc5db0ee, type: 3}
+    volume: 0.319
   - name: Reverse
     clip: {fileID: 8300000, guid: 9fb159963ca15db44bf4bef6b53296f9, type: 3}
     volume: 0.611
   - name: BounceCollide
-    clip: {fileID: 8300000, guid: dd4457dc521b1b446b71b5b6668832b1, type: 3}
-    volume: 0.404
+    clip: {fileID: 8300000, guid: 12a992246f4a36847ac8a2c2c3515046, type: 3}
+    volume: 0.473
   - name: GravityStop
     clip: {fileID: 8300000, guid: df81099d8dafd6a4d84d41f341cae56c, type: 3}
     volume: 1
   - name: Win
     clip: {fileID: 8300000, guid: 8d4489e974c782749b5e3471cadc35c7, type: 3}
-    volume: 0.2
+    volume: 0.104
   - name: SwitchOn
     clip: {fileID: 8300000, guid: 7a191f4fef11f5642a44716521e37f14, type: 3}
     volume: 0.3
@@ -97,35 +97,35 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8f60eb66d195bd64f8fdf9cea7c7158b, type: 3}
     volume: 0.3
   bgmClips:
-  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
-    startLevel: -1
-  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
-    startLevel: 2
-  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
-    startLevel: 4
-  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
-    startLevel: 5
   - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
+    startLevel: -2
+  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
+    startLevel: 4
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: 6
   - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
-    startLevel: 7
-  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
-    startLevel: 9
-  - clip: {fileID: 8300000, guid: 3435a8f79222c4e488c71c228ba6c58c, type: 3}
-    startLevel: 10
-  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
-    startLevel: 11
+    startLevel: 8
   - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
-    startLevel: 12
+    startLevel: 10
+  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+    startLevel: 11
   - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: 13
   - clip: {fileID: 8300000, guid: 3435a8f79222c4e488c71c228ba6c58c, type: 3}
     startLevel: 14
-  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: 15
   - clip: {fileID: 8300000, guid: 541f359c55ebada42b0d9677112cacf9, type: 3}
     startLevel: 16
-  - clip: {fileID: 8300000, guid: 7a21965913437ff428c2e2d92cb1ca9a, type: 3}
+  - clip: {fileID: 8300000, guid: 1653c38aa5a6fb449a5b74ed9036b7be, type: 3}
     startLevel: 17
-  - clip: {fileID: 8300000, guid: 9971a24c44ee33c4394d08ec08c58517, type: 3}
+  - clip: {fileID: 8300000, guid: 3435a8f79222c4e488c71c228ba6c58c, type: 3}
     startLevel: 18
+  - clip: {fileID: 8300000, guid: 9586addd16bc7704888fbb1622a733bd, type: 3}
+    startLevel: 19
+  - clip: {fileID: 8300000, guid: 47532d0658c8f0a41848e09a4662c0ab, type: 3}
+    startLevel: 20
+  - clip: {fileID: 8300000, guid: 224ecf8b1a8fd3140b6e64e0eed4bf52, type: 3}
+    startLevel: 21
+  - clip: {fileID: 0}
+    startLevel: 22
