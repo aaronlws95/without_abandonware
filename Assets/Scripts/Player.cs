@@ -432,13 +432,13 @@ public class Player : MonoBehaviour
             Vector3 dirNext = (thisNextWaypointPos - curCurWaypointPos).normalized;
             Vector3 dirPrev = (prevWaypointPos - curCurWaypointPos).normalized;
 
-            if (Vector2.Dot(dirNext, rb.velocity.normalized) > Vector2.Dot(dirPrev, rb.velocity.normalized)) 
+            if (Vector2.Dot(dirNext, rb.velocity.normalized) < Vector2.Dot(dirPrev, rb.velocity.normalized)) 
             {
-                isClockwise = false;
+                isClockwise = true;
             }
             else 
             {
-                isClockwise = true;
+                isClockwise = false;
             }
 
             // Debug.Log(isClockwise);
