@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R) && !reverseDisabled)
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R)) && !reverseDisabled)
                 {
                     isReversing = true;
                     reverseCount = 0f;
