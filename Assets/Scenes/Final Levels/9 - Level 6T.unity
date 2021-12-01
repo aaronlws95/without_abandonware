@@ -420,7 +420,7 @@ PrefabInstance:
     - target: {fileID: 2445929919707344135, guid: eaf09e3c9a825124fa0a09414b0da25b, type: 3}
       propertyPath: m_Text
       value: '"Yea, yea, I know I''ve said that but I''m on my fifth to not think
-        about it. Speaking of now thinking, down to catch that new Superhero flick?"
+        about it. Speaking of not thinking, down to catch that new Superhero flick?"
 
 
 '
@@ -1912,7 +1912,7 @@ Tilemap:
       - {fileID: -4788957983020198016, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
       - {fileID: 949473858868938986, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
       - {fileID: 7056826136318282590, guid: b2bcb0df4485b3f46aeb6311f4f55b3f, type: 3}
-      m_AnimationSpeed: 9
+      m_AnimationSpeed: 9.000001
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -6, y: 9, z: 0}
