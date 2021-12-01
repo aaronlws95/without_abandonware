@@ -257,12 +257,9 @@ public class Player : MonoBehaviour
         switch (_state)
         {
             case (MoveState.WALLRUN):
-<<<<<<< HEAD
-=======
                 anim.SetBool("wallrun", true);
                 anim.SetBool("bounce", false);
                 anim.SetBool("gravity", false);            
->>>>>>> Working-Master
                 moveState = _state;
                 sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
@@ -288,12 +285,9 @@ public class Player : MonoBehaviour
             case (MoveState.BOUNCE):
                 if (!bounceDisabled)
                 {
-<<<<<<< HEAD
-=======
                     anim.SetBool("wallrun", false);
                     anim.SetBool("bounce", true);
                     anim.SetBool("gravity", false);
->>>>>>> Working-Master
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];               
                     sm.PlaySound("Bounce");
