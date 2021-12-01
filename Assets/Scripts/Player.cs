@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R) && !reverseDisabled)
+                if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.R)) && !reverseDisabled)
                 {
                     isReversing = true;
                     reverseCount = 0f;
@@ -257,6 +257,12 @@ public class Player : MonoBehaviour
         switch (_state)
         {
             case (MoveState.WALLRUN):
+<<<<<<< HEAD
+=======
+                anim.SetBool("wallrun", true);
+                anim.SetBool("bounce", false);
+                anim.SetBool("gravity", false);            
+>>>>>>> Working-Master
                 moveState = _state;
                 sr.sprite = sprites[(int)moveState];            
                 sm.PlaySound("WallRun");
@@ -267,6 +273,9 @@ public class Player : MonoBehaviour
             case (MoveState.GRAVITY):
                 if (!gravityDisabled)
                 {
+                    anim.SetBool("wallrun", false);
+                    anim.SetBool("bounce", false);
+                    anim.SetBool("gravity", true);                     
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];                       
                     sm.PlaySound("Gravity");
@@ -279,6 +288,12 @@ public class Player : MonoBehaviour
             case (MoveState.BOUNCE):
                 if (!bounceDisabled)
                 {
+<<<<<<< HEAD
+=======
+                    anim.SetBool("wallrun", false);
+                    anim.SetBool("bounce", true);
+                    anim.SetBool("gravity", false);
+>>>>>>> Working-Master
                     moveState = _state;
                     sr.sprite = sprites[(int)moveState];               
                     sm.PlaySound("Bounce");
