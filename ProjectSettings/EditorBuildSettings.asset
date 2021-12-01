@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: 92c13c762a4929a4e823f369fa6f2fa8
   - enabled: 1
+    path: Assets/Scenes/Final Levels/-1 Epilepsy Warning.unity
+    guid: 91063769b3b8f154a974826fb791d044
+  - enabled: 1
     path: Assets/Scenes/Final Levels/0 - W.unity
     guid: bccdaf296e7affd47a5545ca45dd4ef2
   - enabled: 1
@@ -71,7 +74,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Levels/20 - Level 15T.unity
     guid: 21711a710e475be44b6b89ca8becb108
-  - enabled: 1
-    path: Assets/Scenes/Final Levels/-1 Epilepsy Warning.unity
-    guid: 91063769b3b8f154a974826fb791d044
   m_configObjects: {}
