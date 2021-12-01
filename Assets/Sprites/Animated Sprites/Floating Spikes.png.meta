@@ -1,31 +1,19 @@
 fileFormatVersion: 2
-guid: 5dd4a2ede0c854a4093a5c722202f59c
+guid: e2c58aea6ba229d4fb4dded0c23da2d2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8293177484361636633
-    second: lava_flow_0
+      213: 5399187697427154341
+    second: caltrops_v1_0
   - first:
-      213: -5888489655705959719
-    second: lava_flow_1
+      213: 1718656249535199174
+    second: caltrops_v1_1
   - first:
-      213: 2668240291089985000
-    second: lava_flow_2
+      213: -8924983797276485586
+    second: caltrops_v1_2
   - first:
-      213: -9151438604905906861
-    second: lava_flow_3
-  - first:
-      213: -3129867070053115980
-    second: lava_flow_4
-  - first:
-      213: 6725454554018441698
-    second: lava_flow_5
-  - first:
-      213: 5982579600690780852
-    second: lava_flow_6
-  - first:
-      213: -3884834546931959106
-    second: lava_flow_7
+      213: 1029937976246667293
+    second: caltrops_v1_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,107 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lava_flow_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e46b516407b8ec80800000000000000
-      internalID: -8293177484361636633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lava_flow_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9d285105bd1e74ea0800000000000000
-      internalID: -5888489655705959719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lava_flow_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8edadc5686e770520800000000000000
-      internalID: 2668240291089985000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lava_flow_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35d79c2431f8ff080800000000000000
-      internalID: -9151438604905906861
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lava_flow_4
+      name: caltrops_v1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -235,24 +123,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b79a478b7a7094d0800000000000000
-      internalID: -3129867070053115980
+      spriteID: 5a50eccca94cdea40800000000000000
+      internalID: 5399187697427154341
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lava_flow_5
+      name: caltrops_v1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -260,24 +144,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e96d4da84d955d50800000000000000
-      internalID: 6725454554018441698
+      spriteID: 6c7fc8cc0c4e9d710800000000000000
+      internalID: 1718656249535199174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lava_flow_6
+      name: caltrops_v1_2
       rect:
         serializedVersion: 2
         x: 0
@@ -285,24 +165,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ba1ca32374660350800000000000000
-      internalID: 5982579600690780852
+      spriteID: e28d731e586142480800000000000000
+      internalID: -8924983797276485586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: lava_flow_7
+      name: caltrops_v1_3
       rect:
         serializedVersion: 2
         x: 32
@@ -310,18 +186,14 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -11, y: 11}
-        - {x: -11, y: -11}
-        - {x: 11, y: -11}
-        - {x: 11, y: 11}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eba74f2ff8b461ac0800000000000000
-      internalID: -3884834546931959106
+      spriteID: d180edee1231b4e00800000000000000
+      internalID: 1029937976246667293
       vertices: []
       indices: 
       edges: []
