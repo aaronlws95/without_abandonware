@@ -160,7 +160,7 @@ MonoBehaviour:
   moveState: 0
   playerState: 0
   stateChangeCooldown: 0
-  reverseCooldown: 0
+  reverseCooldown: 0.25
   reverseDisabled: 0
   defaultWallRunSpeed: 8
   minWallRunSpeed: 8
